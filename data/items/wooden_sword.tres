@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://csg8vtrjrcqq4"]
+
+[ext_resource type="Script" uid="uid://dvh1b20wqbxjb" path="res://scripts/resources/item_data.gd" id="1_v28gj"]
+
+[resource]
+script = ExtResource("1_v28gj")
+item_name = "Wooden Sword"
+item_type = "Weapon"
+attack_bonus = 5
+metadata/_custom_type_script = "uid://dvh1b20wqbxjb"

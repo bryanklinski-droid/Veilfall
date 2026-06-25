@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="CharacterData" format=3 uid="uid://cfpl4cgs63oan"]
+
+[ext_resource type="Script" uid="uid://bhyqbif28rel0" path="res://scripts/characters/character_data.gd" id="1_pecha"]
+
+[resource]
+script = ExtResource("1_pecha")
+display_name = "Lyra"
+max_hp = 80
+hp = 80
+max_mp = 80
+mp = 80
+attack = 6
+defense = 6
+magic = 20
+metadata/_custom_type_script = "uid://bhyqbif28rel0"

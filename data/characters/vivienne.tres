@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="CharacterData" format=3 uid="uid://b853c3s41vvl7"]
+
+[ext_resource type="Script" uid="uid://bhyqbif28rel0" path="res://scripts/characters/character_data.gd" id="1_1aq6v"]
+
+[resource]
+script = ExtResource("1_1aq6v")
+display_name = "Vivienne"
+max_mp = 60
+mp = 60
+attack = 7
+magic = 17
+speed = 12
+metadata/_custom_type_script = "uid://bhyqbif28rel0"

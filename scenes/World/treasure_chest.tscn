@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://csm07u1o6gmwi"]
+
+[ext_resource type="Script" uid="uid://cs264crb6mt51" path="res://scenes/World/treasure_chest.gd" id="1_e6dot"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5aq51"]
+
+[node name="TreasureChest" type="Area2D" unique_id=663256161]
+script = ExtResource("1_e6dot")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1652523449]
+shape = SubResource("RectangleShape2D_5aq51")

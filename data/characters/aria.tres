@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="CharacterData" format=3 uid="uid://bbiqguvpqh1un"]
+
+[ext_resource type="Script" uid="uid://bhyqbif28rel0" path="res://scripts/characters/character_data.gd" id="1_e4lk0"]
+[ext_resource type="Resource" uid="uid://csg8vtrjrcqq4" path="res://data/items/wooden_sword.tres" id="2_facpd"]
+
+[resource]
+script = ExtResource("1_e4lk0")
+display_name = "Aria"
+max_hp = 120
+hp = 120
+max_mp = 40
+mp = 40
+attack = 12
+magic = 15
+speed = 11
+weapon = ExtResource("2_facpd")
+metadata/_custom_type_script = "uid://bhyqbif28rel0"

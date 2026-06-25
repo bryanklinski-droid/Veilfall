@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="CharacterData" format=3 uid="uid://bshse0gad8vsd"]
+
+[ext_resource type="Script" uid="uid://bhyqbif28rel0" path="res://scripts/characters/character_data.gd" id="1_5dklm"]
+
+[resource]
+script = ExtResource("1_5dklm")
+display_name = "Freya"
+max_hp = 115
+hp = 115
+max_mp = 20
+mp = 20
+attack = 17
+defense = 11
+magic = 5
+speed = 14
+metadata/_custom_type_script = "uid://bhyqbif28rel0"

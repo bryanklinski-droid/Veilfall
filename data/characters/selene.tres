@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="CharacterData" format=3 uid="uid://c1a8it7qx1jlq"]
+
+[ext_resource type="Script" uid="uid://bhyqbif28rel0" path="res://scripts/characters/character_data.gd" id="1_2ve37"]
+
+[resource]
+script = ExtResource("1_2ve37")
+display_name = "Selene"
+max_hp = 90
+hp = 90
+attack = 15
+defense = 8
+magic = 7
+speed = 18
+metadata/_custom_type_script = "uid://bhyqbif28rel0"

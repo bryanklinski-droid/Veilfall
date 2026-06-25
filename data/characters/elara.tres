@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="CharacterData" format=3 uid="uid://y8vvuaepqqpm"]
+
+[ext_resource type="Script" uid="uid://bhyqbif28rel0" path="res://scripts/characters/character_data.gd" id="1_sgd0e"]
+
+[resource]
+script = ExtResource("1_sgd0e")
+display_name = "Elara"
+max_hp = 160
+hp = 160
+max_mp = 25
+mp = 25
+attack = 13
+defense = 18
+magic = 8
+speed = 7
+metadata/_custom_type_script = "uid://bhyqbif28rel0"
