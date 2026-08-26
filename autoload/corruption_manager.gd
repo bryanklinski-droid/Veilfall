@@ -27,12 +27,21 @@ func advance_day(days: int = 1) -> void:
 func register_defeat(had_companions: bool, while_escaping: bool = false) -> void:
 	if not had_companions:
 		GameState.companionless_defeats += 1
+		GameState.consecutive_companion_defeats = 0
+		capture_hero()
+		return
+
+	GameState.consecutive_companion_defeats += 1
+	if GameState.consecutive_companion_defeats >= 3:
 		capture_hero()
 		return
 
 	if while_escaping:
 		GameState.escape_defeats += 1
 		advance_day(1)
+
+func register_victory() -> void:
+	GameState.consecutive_companion_defeats = 0
 
 func capture_hero() -> void:
 	if GameState.hero_captured:
