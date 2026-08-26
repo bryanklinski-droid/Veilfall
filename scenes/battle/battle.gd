@@ -28,7 +28,7 @@ func _ready() -> void:
 func player_attack() -> void:
 	if aria == null or battle_over:
 		return
-	enemy_hp = max(enemy_hp - aria.get_attack(), 0)
+	enemy_hp = maxi(enemy_hp - aria.get_attack(), 0)
 	print("You attacked! Enemy HP:", enemy_hp)
 	if enemy_hp <= 0:
 		end_battle(true)
@@ -39,11 +39,11 @@ func player_attack() -> void:
 func enemy_attack() -> void:
 	if aria == null or battle_over:
 		return
-	var damage := max(5 - aria.get_defense(), 1)
+	var damage := maxi(5 - aria.get_defense(), 1)
 	if defending:
 		damage = maxi(1, int(damage * 0.5))
 	defending = false
-	player_hp = max(player_hp - damage, 0)
+	player_hp = maxi(player_hp - damage, 0)
 	print("Enemy attacked! Player HP:", player_hp)
 	if player_hp <= 0:
 		end_battle(false)
@@ -86,15 +86,13 @@ func _on_item_button_pressed() -> void:
 	if battle_over or not player_turn or aria == null:
 		return
 	var item_id := "small_potion"
-	var potion_count := InventoryManager.get_item_count(item_id)
-	if potion_count <= 0:
-		item_id = "potions"
-		potion_count = InventoryManager.get_item_count(item_id)
-	if potion_count <= 0:
+	if not InventoryManager.has_item(item_id):
 		message_label.text = "No Potions Left!"
 		return
 
-	InventoryManager.remove_item(item_id, 1)
+	if not InventoryManager.remove_item(item_id, 1):
+		message_label.text = "No Potions Left!"
+		return
 	player_hp = mini(player_hp + 50, aria.max_hp)
 	message_label.text = "Used a Potion"
 	update_potion_label()
