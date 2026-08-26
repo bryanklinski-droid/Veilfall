@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="CharacterData" format=3]
+
+[ext_resource type="Script" path="res://scripts/characters/character_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+display_name = "Veilheart Dragon"
+level = 20
+max_hp = 1500
+hp = 1500
+max_mp = 180
+mp = 180
+attack = 78
+defense = 48
+magic = 62
+speed = 16
