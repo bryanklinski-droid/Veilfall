@@ -4,9 +4,8 @@ const SAVE_PATH := "user://veilfall_save.json"
 
 func save_game() -> bool:
 	var save_data := {
-		"version": 2,
+		"version": 3,
 		"game_state": {
-			"potions": GameState.potions,
 			"party": GameState.party,
 			"companions": GameState.companions,
 			"corruption_stage": GameState.corruption_stage,
@@ -53,18 +52,19 @@ func load_game() -> bool:
 		push_error("Save file is missing required sections.")
 		return false
 
-	GameState.potions = int(game_state_data.get("potions", 0))
 	GameState.party.clear()
-	for member in game_state_data.get("party", ["Aria"]):
-		GameState.party.append(str(member))
+	var saved_party = game_state_data.get("party", ["Aria"])
+	if saved_party is Array:
+		for member in saved_party:
+			GameState.party.append(str(member))
 	if GameState.party.is_empty():
 		GameState.party.append("Aria")
 
-	GameState.corruption_stage = int(game_state_data.get("corruption_stage", 0))
-	GameState.corruption_days_remaining = int(game_state_data.get("corruption_days_remaining", 0))
-	GameState.escape_defeats = int(game_state_data.get("escape_defeats", 0))
-	GameState.companionless_defeats = int(game_state_data.get("companionless_defeats", 0))
-	GameState.consecutive_companion_defeats = int(game_state_data.get("consecutive_companion_defeats", 0))
+	GameState.corruption_stage = clampi(int(game_state_data.get("corruption_stage", 0)), 0, CorruptionManager.MAX_CORRUPTION_STAGE)
+	GameState.corruption_days_remaining = maxi(int(game_state_data.get("corruption_days_remaining", 0)), 0)
+	GameState.escape_defeats = maxi(int(game_state_data.get("escape_defeats", 0)), 0)
+	GameState.companionless_defeats = maxi(int(game_state_data.get("companionless_defeats", 0)), 0)
+	GameState.consecutive_companion_defeats = maxi(int(game_state_data.get("consecutive_companion_defeats", 0)), 0)
 	GameState.hero_captured = bool(game_state_data.get("hero_captured", false))
 
 	var saved_companions = game_state_data.get("companions", {})
@@ -73,7 +73,7 @@ func load_game() -> bool:
 			if saved_companions.has(name) and saved_companions[name] is Dictionary:
 				GameState.companions[name] = saved_companions[name]
 
-	InventoryManager.items.clear()
+	InventoryManager.clear_inventory()
 	for item_id in inventory_data:
 		var amount := int(inventory_data[item_id])
 		if amount > 0:
