@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="CharacterData" format=3]
+
+[ext_resource type="Script" path="res://scripts/characters/character_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+display_name = "Veil Stalker"
+level = 6
+max_hp = 115
+hp = 115
+max_mp = 35
+mp = 35
+attack = 21
+defense = 9
+magic = 15
+speed = 20
