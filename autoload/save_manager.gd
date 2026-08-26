@@ -4,13 +4,23 @@ const SAVE_PATH := "user://veilfall_save.json"
 
 func save_game() -> bool:
 	var save_data := {
-		"version": 1,
+		"version": 2,
 		"game_state": {
 			"potions": GameState.potions,
 			"party": GameState.party,
-			"companions": GameState.companions
+			"companions": GameState.companions,
+			"corruption_stage": GameState.corruption_stage,
+			"corruption_days_remaining": GameState.corruption_days_remaining,
+			"escape_defeats": GameState.escape_defeats,
+			"companionless_defeats": GameState.companionless_defeats,
+			"consecutive_companion_defeats": GameState.consecutive_companion_defeats,
+			"hero_captured": GameState.hero_captured
 		},
-		"inventory": InventoryManager.items
+		"inventory": InventoryManager.items,
+		"events": {
+			"completed": EventManager.completed_events,
+			"active": EventManager.active_event_id
+		}
 	}
 
 	var file := FileAccess.open(SAVE_PATH, FileAccess.WRITE)
@@ -50,6 +60,13 @@ func load_game() -> bool:
 	if GameState.party.is_empty():
 		GameState.party.append("Aria")
 
+	GameState.corruption_stage = int(game_state_data.get("corruption_stage", 0))
+	GameState.corruption_days_remaining = int(game_state_data.get("corruption_days_remaining", 0))
+	GameState.escape_defeats = int(game_state_data.get("escape_defeats", 0))
+	GameState.companionless_defeats = int(game_state_data.get("companionless_defeats", 0))
+	GameState.consecutive_companion_defeats = int(game_state_data.get("consecutive_companion_defeats", 0))
+	GameState.hero_captured = bool(game_state_data.get("hero_captured", false))
+
 	var saved_companions = game_state_data.get("companions", {})
 	if saved_companions is Dictionary:
 		for name in GameState.companions:
@@ -62,6 +79,14 @@ func load_game() -> bool:
 		if amount > 0:
 			InventoryManager.items[str(item_id)] = amount
 
+	var event_data = parsed.get("events", {})
+	EventManager.reset_events()
+	if event_data is Dictionary:
+		var completed = event_data.get("completed", {})
+		if completed is Dictionary:
+			EventManager.completed_events = completed
+		EventManager.active_event_id = str(event_data.get("active", ""))
+
 	return true
 
 func has_save() -> bool:
@@ -69,4 +94,4 @@ func has_save() -> bool:
 
 func delete_save() -> void:
 	if has_save():
-		DirAccess.remove_absolute(SAVE_PATH)
+		DirAccess.remove_absolute(ProjectSettings.globalize_path(SAVE_PATH))
