@@ -1,6 +1,5 @@
 extends Node
 
-var potions: int = 0
 var party: Array[String] = ["Aria"]
 var companions = {
 	"Elara": {"recruited": false, "bond": 0, "captured": false, "corruption_stage": 0},
@@ -25,7 +24,6 @@ func recruit_companion(name: String) -> void:
 		party.append(name)
 
 func reset_new_game() -> void:
-	potions = 0
 	party = ["Aria"]
 	corruption_stage = 0
 	corruption_days_remaining = 0
@@ -42,4 +40,4 @@ func reset_new_game() -> void:
 		}
 
 func _ready() -> void:
-	print(party)
+	pass
