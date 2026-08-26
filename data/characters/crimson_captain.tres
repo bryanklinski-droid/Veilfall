@@ -4,4 +4,14 @@
 
 [resource]
 script = ExtResource("1_l5ysw")
+display_name = "Crimson Captain"
+level = 8
+max_hp = 260
+hp = 260
+max_mp = 40
+mp = 40
+attack = 32
+defense = 20
+magic = 12
+speed = 14
 metadata/_custom_type_script = "uid://bhyqbif28rel0"
