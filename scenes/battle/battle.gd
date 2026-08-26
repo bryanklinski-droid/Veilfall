@@ -41,7 +41,7 @@ func enemy_attack() -> void:
 		return
 	var damage := max(5 - aria.get_defense(), 1)
 	if defending:
-		damage = max(1, damage / 2)
+		damage = maxi(1, int(damage * 0.5))
 	defending = false
 	player_hp = max(player_hp - damage, 0)
 	print("Enemy attacked! Player HP:", player_hp)
