@@ -5,6 +5,7 @@ extends Node2D
 @onready var message_label: Label = $UI/MessageLabel
 @onready var potion_label: Label = $UI/PotionLabel
 @export var aria: CharacterData
+@export var is_boss_battle := false
 
 var player_turn := true
 var battle_over := false
@@ -20,7 +21,7 @@ func _ready() -> void:
 		update_hp_labels()
 		update_potion_label()
 		return
-	player_hp = clamp(aria.hp, 0, aria.max_hp)
+	player_hp = clampi(aria.hp, 0, aria.max_hp)
 	update_hp_labels()
 	update_potion_label()
 
@@ -57,6 +58,11 @@ func end_player_turn() -> void:
 func end_battle(victory: bool) -> void:
 	battle_over = true
 	player_turn = false
+	if is_boss_battle:
+		if victory:
+			CorruptionManager.register_victory()
+		else:
+			CorruptionManager.register_defeat(GameState.party.size() > 1)
 	message_label.text = "Victory" if victory else "Defeat"
 
 func _on_attack_button_pressed() -> void:
@@ -79,15 +85,17 @@ func _on_defend_button_pressed() -> void:
 func _on_item_button_pressed() -> void:
 	if battle_over or not player_turn or aria == null:
 		return
-	var potion_count := InventoryManager.get_item_count("small_potion")
+	var item_id := "small_potion"
+	var potion_count := InventoryManager.get_item_count(item_id)
 	if potion_count <= 0:
-		potion_count = InventoryManager.get_item_count("potions")
-		if potion_count <= 0:
-			message_label.text = "No Potions Left!"
-			return
-	var item_id := "small_potion" if InventoryManager.has_item("small_potion") else "potions"
+		item_id = "potions"
+		potion_count = InventoryManager.get_item_count(item_id)
+	if potion_count <= 0:
+		message_label.text = "No Potions Left!"
+		return
+
 	InventoryManager.remove_item(item_id, 1)
-	player_hp = min(player_hp + 50, aria.max_hp)
+	player_hp = mini(player_hp + 50, aria.max_hp)
 	message_label.text = "Used a Potion"
 	update_potion_label()
 	update_hp_labels()
