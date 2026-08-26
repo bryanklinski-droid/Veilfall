@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="CharacterData" format=3]
+
+[ext_resource type="Script" path="res://scripts/characters/character_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+display_name = "Ashen Knight"
+level = 10
+max_hp = 480
+hp = 480
+max_mp = 60
+mp = 60
+attack = 48
+defense = 30
+magic = 18
+speed = 12
