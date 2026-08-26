@@ -17,6 +17,16 @@ func recruit_companion(name: String) -> void:
 	if not party.has(name):
 		party.append(name)
 
+func reset_new_game() -> void:
+	potions = 0
+	party = ["Aria"]
+	for name in companions:
+		companions[name] = {
+			"recruited": false,
+			"bond": 0,
+			"captured": false,
+			"corruption_stage": 0
+		}
+
 func _ready() -> void:
-	# Companions are recruited through gameplay, not automatically at startup.
 	print(party)
