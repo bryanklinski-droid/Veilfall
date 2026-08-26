@@ -4,4 +4,14 @@
 
 [resource]
 script = ExtResource("1_v2rt5")
+display_name = "Goblin"
+level = 1
+max_hp = 45
+hp = 45
+max_mp = 10
+mp = 10
+attack = 9
+defense = 4
+magic = 3
+speed = 8
 metadata/_custom_type_script = "uid://bhyqbif28rel0"
