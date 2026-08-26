@@ -4,8 +4,7 @@ func _ready() -> void:
 	print("Hello from the title screen!")
 
 func start_new_game() -> void:
-	GameState.potions = 0
-	GameState.party = ["Aria"]
+	GameState.reset_new_game()
 	InventoryManager.items.clear()
 	InventoryManager.add_item("cell_key", 1)
 
