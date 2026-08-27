@@ -6,7 +6,6 @@
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_player"]
 radius = 14.0
 height = 28.0
-
 [sub_resource type="CircleShape2D" id="CircleShape2D_interaction"]
 radius = 48.0
 
@@ -14,27 +13,22 @@ radius = 48.0
 collision_layer = 1
 collision_mask = 1
 script = ExtResource("1_player")
-
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_player_tex")
-position = Vector2(0, -14)
-
+position = Vector2(0,-14)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_player")
-
 [node name="InteractionArea" type="Area2D" parent="."]
-collision_layer = 0
-collision_mask = 2
-monitoring = true
-
+collision_layer=0
+collision_mask=2
+monitoring=true
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea"]
-shape = SubResource("CircleShape2D_interaction")
-
+shape=SubResource("CircleShape2D_interaction")
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(0, -20)
-position_smoothing_enabled = true
-position_smoothing_speed = 7.0
-limit_left = 0
-limit_top = 0
-limit_right = 1536
-limit_bottom = 1024
+position=Vector2(0,-20)
+position_smoothing_enabled=true
+position_smoothing_speed=7.0
+limit_left=0
+limit_top=0
+limit_right=2048
+limit_bottom=1536
