@@ -1,0 +1,11 @@
+[gd_resource type="Resource" format=3 uid="uid://bl3glkdjhogjw"]
+
+[ext_resource type="Script" path="res://scripts/dialogue/dialogue_data.gd" id="1_dialogue"]
+
+[resource]
+script = ExtResource("1_dialogue")
+dialogue_id = "scholar_daemon_greeting"
+speaker_name = "Scholar Daemon"
+text = "Fascinating! I sense you are capable. I have... inquiries that require investigation. Interested?"
+portrait_path = "res://assets/portraits/scholar_daemon.png"
+auto_advance_delay = 0.0

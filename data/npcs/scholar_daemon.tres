@@ -1,0 +1,12 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://f7l5j2k4m8r3e"]
+
+[ext_resource type="Script" path="res://scripts/characters/npc_data.gd" id="1_npc"]
+
+[resource]
+script = ExtResource("1_npc")
+npc_id = "scholar_daemon"
+display_name = "Scholar Daemon"
+npc_type = "quest_giver"
+description = "An eccentric scholar obsessed with ancient mysteries. Has unusual requests but pays well."
+portrait_path = "res://assets/portraits/scholar_daemon.png"
+quests_offered = ["artifact_hunt", "library_research", "ancient_ruins"]

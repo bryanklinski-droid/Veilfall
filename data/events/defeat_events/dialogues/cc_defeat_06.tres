@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="DialogueData" format=3 uid="uid://cc_defeat_06"]
+
+[ext_resource type="Script" path="res://scripts/dialogue/dialogue_data.gd" id="1_r2x3t"]
+
+[resource]
+script = ExtResource("1_r2x3t")
+dialogue_id = "cc_defeat_06"
+speaker_name = "Crimson Captain"
+text = "I've broken stronger than you without pausing for breath. Without even remembering it afterward."
+portrait_path = "res://assets/portraits/crimson_captain.png"
+auto_advance_delay = 0.0

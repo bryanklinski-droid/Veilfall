@@ -1,0 +1,11 @@
+[gd_resource type="Resource" format=3 uid="uid://ct6bs81q8kf2k"]
+
+[ext_resource type="Script" path="res://scripts/dialogue/dialogue_data.gd" id="1_dialogue"]
+
+[resource]
+script = ExtResource("1_dialogue")
+dialogue_id = "blacksmith_marcus_greeting"
+speaker_name = "Marcus"
+text = "Well met. I forge only the finest weapons and armor. A warrior's worth is determined by their steel!"
+portrait_path = "res://assets/portraits/blacksmith_marcus.png"
+auto_advance_delay = 0.0

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="glowGradient" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#1a0033;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0a0015;stop-opacity:1" />
+    </radialGradient>
+    <linearGradient id="corruptionGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#2d0052;stop-opacity:0.6" />
+      <stop offset="50%" style="stop-color:#1a0033;stop-opacity:0.8" />
+      <stop offset="100%" style="stop-color:#0d001a;stop-opacity:0.9" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Main background -->
+  <rect width="1920" height="1080" fill="url(#glowGradient)"/>
+  
+  <!-- Corruption overlay gradient -->
+  <rect width="1920" height="1080" fill="url(#corruptionGradient)"/>
+  
+  <!-- Atmospheric particles/corruption wisps -->
+  <circle cx="200" cy="150" r="80" fill="#4d0080" opacity="0.3" filter="blur(40px)"/>
+  <circle cx="1720" cy="300" r="120" fill="#3d0066" opacity="0.25" filter="blur(50px)"/>
+  <circle cx="960" cy="900" r="200" fill="#2d0052" opacity="0.2" filter="blur(60px)"/>
+  <circle cx="400" cy="800" r="150" fill="#4d0080" opacity="0.2" filter="blur(45px)"/>
+  <circle cx="1600" cy="700" r="100" fill="#3d0066" opacity="0.25" filter="blur(35px)"/>
+  
+  <!-- Vignette effect (dark edges) -->
+  <radialGradient id="vignette" cx="50%" cy="50%" r="70%">
+    <stop offset="0%" style="stop-color:#000000;stop-opacity:0" />
+    <stop offset="100%" style="stop-color:#000000;stop-opacity:0.4" />
+  </radialGradient>
+  <rect width="1920" height="1080" fill="url(#vignette)"/>
+  
+  <!-- Subtle corruption lines (representing darkness spreading) -->
+  <line x1="0" y1="0" x2="1920" y2="1080" stroke="#4d0080" stroke-width="2" opacity="0.1"/>
+  <line x1="1920" y1="0" x2="0" y2="1080" stroke="#4d0080" stroke-width="2" opacity="0.1"/>
+  <path d="M 0 400 Q 480 350 960 400 T 1920 400" stroke="#3d0066" stroke-width="1" fill="none" opacity="0.15"/>
+  <path d="M 0 600 Q 480 650 960 600 T 1920 600" stroke="#2d0052" stroke-width="1" fill="none" opacity="0.12"/>
+  
+  <!-- Corruption particles (small glowing dots) -->
+  <circle cx="300" cy="250" r="2" fill="#8844ff" opacity="0.6"/>
+  <circle cx="600" cy="400" r="1.5" fill="#8844ff" opacity="0.5"/>
+  <circle cx="900" cy="200" r="2" fill="#aa66ff" opacity="0.4"/>
+  <circle cx="1200" cy="500" r="1.5" fill="#8844ff" opacity="0.55"/>
+  <circle cx="1500" cy="300" r="2" fill="#aa66ff" opacity="0.45"/>
+  <circle cx="450" cy="650" r="1.5" fill="#8844ff" opacity="0.5"/>
+  <circle cx="1350" cy="850" r="2" fill="#8844ff" opacity="0.6"/>
+  <circle cx="750" cy="900" r="1.5" fill="#aa66ff" opacity="0.4"/>
+</svg>

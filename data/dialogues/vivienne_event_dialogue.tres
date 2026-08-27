@@ -1,0 +1,11 @@
+[gd_resource type="Resource" format=3 uid="uid://d4jahq68hntrq"]
+
+[ext_resource type="Script" path="res://scripts/dialogue/dialogue_data.gd" id="1_dialogue"]
+
+[resource]
+script = ExtResource("1_dialogue")
+dialogue_id = "vivienne_event_dialogue"
+speaker_name = "Vivienne (Legacy)"
+text = "My lineage awakens within me... and with it comes power. But it's your belief in me that truly matters."
+portrait_path = "res://assets/portraits/vivienne.png"
+auto_advance_delay = 0.0

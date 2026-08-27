@@ -1,0 +1,13 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://k1n7m5p8q6g4h"]
+
+[ext_resource type="Script" path="res://scripts/characters/npc_data.gd" id="1_npc"]
+
+[resource]
+script = ExtResource("1_npc")
+npc_id = "vivienne_event_legacy"
+display_name = "Vivienne (Legacy)"
+npc_type = "companion_event"
+description = "Vivienne's ancestral legacy comes to light, granting her new power and deepening the party's connection."
+companion_id = "Vivienne"
+bond_requirement = 3
+is_one_time_event = false

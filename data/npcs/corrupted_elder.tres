@@ -1,0 +1,13 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://m3p9o7r0s8k6l"]
+
+[ext_resource type="Script" path="res://scripts/characters/npc_data.gd" id="1_npc"]
+
+[resource]
+script = ExtResource("1_npc")
+npc_id = "corrupted_elder"
+display_name = "Elder (Corrupted)"
+npc_type = "corruption_event"
+description = "The Elder has been overtaken by corruption. This twisted form serves the darkness."
+portrait_path = "res://assets/portraits/corrupted_elder.png"
+corruption_threshold = 3
+transforms_on_corruption = true

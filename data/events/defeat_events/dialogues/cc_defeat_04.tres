@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="DialogueData" format=3 uid="uid://cc_defeat_04"]
+
+[ext_resource type="Script" path="res://scripts/dialogue/dialogue_data.gd" id="1_r2x3t"]
+
+[resource]
+script = ExtResource("1_r2x3t")
+dialogue_id = "cc_defeat_04"
+speaker_name = "Crimson Captain"
+text = "You dragged these women into a war they can't survive. Every bruise on their bodies, every wound — that is your fault. Your incompetence. Your arrogance."
+portrait_path = "res://assets/portraits/crimson_captain.png"
+auto_advance_delay = 0.0

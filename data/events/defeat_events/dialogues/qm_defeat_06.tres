@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="DialogueData" format=3 uid="uid://qm_defeat_06"]
+
+[ext_resource type="Script" path="res://scripts/dialogue/dialogue_data.gd" id="1_r2x3t"]
+
+[resource]
+script = ExtResource("1_r2x3t")
+dialogue_id = "qm_defeat_06"
+speaker_name = "Queen Morrigan"
+text = "You're not a hero. You're not even a cautionary tale. You are a small, forgettable thing that mistook hope for power."
+portrait_path = "res://assets/portraits/queen_morrigan.png"
+auto_advance_delay = 0.0

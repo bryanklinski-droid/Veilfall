@@ -1,0 +1,12 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://g6k3j1h5m2l9b"]
+
+[ext_resource type="Script" path="res://scripts/characters/npc_data.gd" id="1_npc"]
+
+[resource]
+script = ExtResource("1_npc")
+npc_id = "guard_captain_blake"
+display_name = "Captain Blake"
+npc_type = "quest_giver"
+description = "The town guard captain. Has security concerns and always needs aid protecting the people."
+portrait_path = "res://assets/portraits/guard_captain_blake.png"
+quests_offered = ["goblin_caves", "monster_hunt", "protect_caravan"]

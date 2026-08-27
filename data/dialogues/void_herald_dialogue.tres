@@ -1,0 +1,11 @@
+[gd_resource type="Resource" format=3 uid="uid://bsqor21mesxff"]
+
+[ext_resource type="Script" path="res://scripts/dialogue/dialogue_data.gd" id="1_dialogue"]
+
+[resource]
+script = ExtResource("1_dialogue")
+dialogue_id = "void_herald_dialogue"
+speaker_name = "Void Herald"
+text = "The end times approach. The darkness spreads. Your resistance merely delays the inevitable."
+portrait_path = "res://assets/portraits/void_herald.png"
+auto_advance_delay = 0.0

@@ -1,0 +1,11 @@
+[gd_resource type="Resource" format=3 uid="uid://dc370c676xfd6"]
+
+[ext_resource type="Script" path="res://scripts/dialogue/dialogue_data.gd" id="1_dialogue"]
+
+[resource]
+script = ExtResource("1_dialogue")
+dialogue_id = "freya_event_dialogue"
+speaker_name = "Freya (Wild)"
+text = "The primal force within awakens! With you beside me, I feel unstoppable. This is my true self!"
+portrait_path = "res://assets/portraits/freya.png"
+auto_advance_delay = 0.0

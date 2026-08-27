@@ -1,0 +1,13 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://i7l5k3n9m6o2d"]
+
+[ext_resource type="Script" path="res://scripts/characters/npc_data.gd" id="1_npc"]
+
+[resource]
+script = ExtResource("1_npc")
+npc_id = "lyra_event_dreamer"
+display_name = "Lyra (Dreams)"
+npc_type = "companion_event"
+description = "Lyra's dream manifestation, revealing her inner thoughts and strengthening your bond through understanding."
+companion_id = "Lyra"
+bond_requirement = 2
+is_one_time_event = false

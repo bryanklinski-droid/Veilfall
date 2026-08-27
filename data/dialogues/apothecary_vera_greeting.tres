@@ -1,0 +1,11 @@
+[gd_resource type="Resource" format=3 uid="uid://b3ucfwgivhqoi"]
+
+[ext_resource type="Script" path="res://scripts/dialogue/dialogue_data.gd" id="1_dialogue"]
+
+[resource]
+script = ExtResource("1_dialogue")
+dialogue_id = "apothecary_vera_greeting"
+speaker_name = "Vera"
+text = "Ah, welcome! My potions are crafted with care. Each one is imbued with nature's essence."
+portrait_path = "res://assets/portraits/apothecary_vera.png"
+auto_advance_delay = 0.0

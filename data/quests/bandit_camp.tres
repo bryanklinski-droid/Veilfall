@@ -1,0 +1,19 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://b5k2j3m8n4p1x"]
+
+[ext_resource type="Script" path="res://scripts/quests/quest_data.gd" id="1_k9j5m"]
+
+[resource]
+script = ExtResource("1_k9j5m")
+quest_id = "bandit_camp"
+quest_name = "Clear Bandit Camp"
+description = "Bandits have been terrorizing travelers. Clear out their camp."
+quest_type = "main"
+is_active = false
+is_completed = false
+current_stage = 0
+rewards = {
+	"experience": 700,
+	"gold": 550,
+	"items": {}
+}
+quest_log = []

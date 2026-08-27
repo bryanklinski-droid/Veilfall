@@ -1,0 +1,11 @@
+[gd_resource type="Resource" format=3 uid="uid://c5tj3co7dticr"]
+
+[ext_resource type="Script" path="res://scripts/dialogue/dialogue_data.gd" id="1_dialogue"]
+
+[resource]
+script = ExtResource("1_dialogue")
+dialogue_id = "lyra_event_dialogue"
+speaker_name = "Lyra (Dream)"
+text = "In my dreams, I see us together... laughing, fighting, growing stronger. Is this what connection truly feels like?"
+portrait_path = "res://assets/portraits/lyra.png"
+auto_advance_delay = 0.0

@@ -1,0 +1,12 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://c8x9p3m2l7g5k"]
+
+[ext_resource type="Script" path="res://scripts/characters/npc_data.gd" id="1_npc"]
+
+[resource]
+script = ExtResource("1_npc")
+npc_id = "apothecary_vera"
+display_name = "Vera (Apothecary)"
+npc_type = "store_keeper"
+description = "A skilled herbalist and healer who crafts potions and remedies. Her shop smells of rare herbs and magical essences."
+portrait_path = "res://assets/portraits/apothecary_vera.png"
+trade_enabled = true

@@ -1,19 +1,16 @@
 [gd_scene format=3 uid="uid://ylwj148lgat7"]
 
 [ext_resource type="PackedScene" uid="uid://csm07u1o6gmwi" path="res://scenes/World/treasure_chest.tscn" id="1_c4yfj"]
-[ext_resource type="PackedScene" path="res://scenes/World/player.tscn" id="2_player"]
 
 [node name="WorldMap" type="Node2D" unique_id=1637557160]
 
-[node name="Player" parent="." instance=ExtResource("2_player")]
+[node name="Player" type="CharacterBody2D" parent="." unique_id=123456789]
 position = Vector2(100, 100)
 
 [node name="TreasureChest" parent="." unique_id=663256161 instance=ExtResource("1_c4yfj")]
-position = Vector2(250, 100)
-item_id = "small_potion"
+item_id = "potions"
 amount = 3
+chest_id = "worldmap_potions_1"
 
 [node name="Prison Cell Chest" parent="." unique_id=572846509 instance=ExtResource("1_c4yfj")]
-position = Vector2(400, 100)
-item_id = "cell_key"
-amount = 1
+chest_id = "prison_cell_chest"

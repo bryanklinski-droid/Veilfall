@@ -1,0 +1,11 @@
+[gd_resource type="Resource" format=3 uid="uid://cd0bk8v8ksb6m"]
+
+[ext_resource type="Script" path="res://scripts/dialogue/dialogue_data.gd" id="1_dialogue"]
+
+[resource]
+script = ExtResource("1_dialogue")
+dialogue_id = "elara_event_dialogue"
+speaker_name = "Elara (Memory)"
+text = "I remember now... fragments of my past return to me when we're together. Thank you for standing by my side."
+portrait_path = "res://assets/portraits/elara.png"
+auto_advance_delay = 0.0

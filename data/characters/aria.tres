@@ -2,6 +2,9 @@
 
 [ext_resource type="Script" uid="uid://bhyqbif28rel0" path="res://scripts/characters/character_data.gd" id="1_e4lk0"]
 [ext_resource type="Resource" uid="uid://csg8vtrjrcqq4" path="res://data/items/wooden_sword.tres" id="2_facpd"]
+[ext_resource type="Script" uid="uid://covnkmy3qoabc" path="res://scripts/resources/skill_data.gd" id="2_uhtlg"]
+[ext_resource type="Resource" uid="uid://b5gjcxrwk8wq8" path="res://data/skills/arcane_strike.tres" id="3_skill1"]
+[ext_resource type="Resource" uid="uid://cm8k0vxpnbx7o" path="res://data/skills/restore.tres" id="4_skill2"]
 
 [resource]
 script = ExtResource("1_e4lk0")
@@ -14,4 +17,5 @@ attack = 12
 magic = 15
 speed = 11
 weapon = ExtResource("2_facpd")
+starting_skills = Array[ExtResource("2_uhtlg")]([ExtResource("3_skill1"), ExtResource("4_skill2")])
 metadata/_custom_type_script = "uid://bhyqbif28rel0"

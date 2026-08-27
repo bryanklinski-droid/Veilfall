@@ -1,0 +1,11 @@
+[gd_resource type="Resource" format=3 uid="uid://w6sntxvvr6pa"]
+
+[ext_resource type="Script" path="res://scripts/dialogue/dialogue_data.gd" id="1_dialogue"]
+
+[resource]
+script = ExtResource("1_dialogue")
+dialogue_id = "corrupted_elder_dialogue"
+speaker_name = "Corrupted Elder"
+text = "The Elder you knew is gone... I am what remains. The corruption is inevitable. Join us."
+portrait_path = "res://assets/portraits/corrupted_elder.png"
+auto_advance_delay = 0.0

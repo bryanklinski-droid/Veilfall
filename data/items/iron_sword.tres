@@ -1,0 +1,20 @@
+[gd_resource type="Resource" format=3 uid="uid://c3k1j6m2p8q4x"]
+
+[ext_resource type="Script" path="res://scripts/resources/item_data.gd" id="1_i8k3j"]
+
+[resource]
+script = ExtResource("1_i8k3j")
+item_id = "iron_sword"
+display_name = "Iron Sword"
+description = "A sturdy iron blade. Better than wood, worse than steel."
+item_type = "weapon"
+hp_restore = 0
+mp_restore = 0
+attack_bonus = 12
+weight = 2
+defense_bonus = 0
+magic_bonus = 0
+special_effect = ""
+sell_price = 125
+is_unique = false
+is_key_item = false
