@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 100 20" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="healthGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#00ff00;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#ffff00;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ff0000;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="corruptionGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#0a0015;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#4d0080;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Bar background -->
+  <rect x="0" y="0" width="100" height="20" fill="none" stroke="#8844ff" stroke-width="1" opacity="0.5"/>
+  <rect x="1" y="1" width="98" height="18" fill="#1a0033" opacity="0.8"/>
+  
+  <!-- Health bar (fully filled as example) -->
+  <rect x="2" y="2" width="96" height="8" fill="url(#healthGradient)" opacity="0.9"/>
+  
+  <!-- Corruption indicator -->
+  <rect x="2" y="10" width="30" height="8" fill="url(#corruptionGradient)" opacity="0.8"/>
+  <rect x="32" y="10" width="66" height="8" fill="#0d001a" opacity="0.4"/>
+</svg>

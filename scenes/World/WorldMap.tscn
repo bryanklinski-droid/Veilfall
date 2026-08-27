@@ -4,8 +4,13 @@
 
 [node name="WorldMap" type="Node2D" unique_id=1637557160]
 
+[node name="Player" type="CharacterBody2D" parent="." unique_id=123456789]
+position = Vector2(100, 100)
+
 [node name="TreasureChest" parent="." unique_id=663256161 instance=ExtResource("1_c4yfj")]
 item_id = "potions"
 amount = 3
+chest_id = "worldmap_potions_1"
 
 [node name="Prison Cell Chest" parent="." unique_id=572846509 instance=ExtResource("1_c4yfj")]
+chest_id = "prison_cell_chest"

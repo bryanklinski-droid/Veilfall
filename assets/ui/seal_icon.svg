@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="sealGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#aa66ff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#4d0080;stop-opacity:0.5" />
+    </radialGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Outer corruption ring -->
+  <circle cx="100" cy="100" r="95" fill="none" stroke="#4d0080" stroke-width="3" opacity="0.8"/>
+  <circle cx="100" cy="100" r="90" fill="none" stroke="#8844ff" stroke-width="1" opacity="0.4"/>
+  
+  <!-- Inner glow circle -->
+  <circle cx="100" cy="100" r="75" fill="url(#sealGlow)" opacity="0.3"/>
+  
+  <!-- Crown symbol (representing kingdom) -->
+  <g filter="url(#glow)" transform="translate(100, 60)">
+    <!-- Crown base -->
+    <line x1="-20" y1="0" x2="20" y2="0" stroke="#aa66ff" stroke-width="3" stroke-linecap="round"/>
+    <!-- Crown points -->
+    <line x1="-15" y1="0" x2="-12" y2="-15" stroke="#aa66ff" stroke-width="2" stroke-linecap="round"/>
+    <line x1="0" y1="0" x2="0" y2="-20" stroke="#aa66ff" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="15" y1="0" x2="12" y2="-15" stroke="#aa66ff" stroke-width="2" stroke-linecap="round"/>
+    <!-- Gems on crown -->
+    <circle cx="-12" cy="-15" r="2" fill="#ffff00"/>
+    <circle cx="0" cy="-20" r="2.5" fill="#ffff00"/>
+    <circle cx="12" cy="-15" r="2" fill="#ffff00"/>
+  </g>
+  
+  <!-- Corruption wisps around symbol -->
+  <path d="M 70 70 Q 60 80 70 90" stroke="#4d0080" stroke-width="2" fill="none" opacity="0.6" stroke-linecap="round"/>
+  <path d="M 130 70 Q 140 80 130 90" stroke="#4d0080" stroke-width="2" fill="none" opacity="0.6" stroke-linecap="round"/>
+  
+  <!-- Center corruption mark -->
+  <circle cx="100" cy="110" r="8" fill="none" stroke="#4d0080" stroke-width="1.5"/>
+  <circle cx="100" cy="110" r="6" fill="none" stroke="#8844ff" stroke-width="1" opacity="0.7"/>
+  <circle cx="100" cy="110" r="3" fill="#4d0080" opacity="0.8"/>
+  
+  <!-- Inner text circle (subtle) -->
+  <circle cx="100" cy="100" r="50" fill="none" stroke="#aa66ff" stroke-width="0.5" opacity="0.3" stroke-dasharray="3,2"/>
+  
+  <!-- Decorative corners -->
+  <circle cx="20" cy="20" r="2" fill="#aa66ff" opacity="0.5"/>
+  <circle cx="180" cy="20" r="2" fill="#aa66ff" opacity="0.5"/>
+  <circle cx="20" cy="180" r="2" fill="#aa66ff" opacity="0.5"/>
+  <circle cx="180" cy="180" r="2" fill="#aa66ff" opacity="0.5"/>
+</svg>

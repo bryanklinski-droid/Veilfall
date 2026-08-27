@@ -1,7 +1,20 @@
-[gd_resource type="Resource" script_class="CharacterData" format=3 uid="uid://dferrtf6bhdnd"]
+[gd_resource type="Resource" script_class="EnemyData" format=3 uid="uid://dferrtf6bhdnd"]
 
-[ext_resource type="Script" uid="uid://bhyqbif28rel0" path="res://scripts/characters/character_data.gd" id="1_v2rt5"]
+[ext_resource type="Script" uid="uid://dkfx3y4noj0nc" path="res://scripts/characters/enemy_data.gd" id="1_v2rt5"]
+[ext_resource type="Script" uid="uid://covnkmy3qoabc" path="res://scripts/resources/skill_data.gd" id="2_luk4o"]
 
 [resource]
 script = ExtResource("1_v2rt5")
-metadata/_custom_type_script = "uid://bhyqbif28rel0"
+experience_reward = 80
+gold_reward = 35
+loot_table = Array[String](["small_potion"])
+loot_chances = Array[float]([0.3])
+display_name = "Goblin"
+max_hp = 25
+hp = 25
+max_mp = 5
+mp = 5
+attack = 8
+defense = 3
+magic = 2
+speed = 6

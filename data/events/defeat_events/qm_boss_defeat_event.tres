@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="DefeatEventData" format=3 uid="uid://qm_boss_defeat_event"]
+
+[ext_resource type="Script" path="res://scripts/events/defeat_event_data.gd" id="1_defevent"]
+[ext_resource type="Resource" path="res://data/events/defeat_events/dialogues/qm_defeat_01.tres" id="2_qm01"]
+[ext_resource type="Resource" path="res://data/events/defeat_events/dialogues/qm_defeat_02.tres" id="3_qm02"]
+[ext_resource type="Resource" path="res://data/events/defeat_events/dialogues/qm_defeat_03.tres" id="4_qm03"]
+[ext_resource type="Resource" path="res://data/events/defeat_events/dialogues/qm_defeat_04.tres" id="5_qm04"]
+[ext_resource type="Resource" path="res://data/events/defeat_events/dialogues/qm_defeat_05.tres" id="5_qm05"]
+[ext_resource type="Resource" path="res://data/events/defeat_events/dialogues/qm_defeat_06.tres" id="6_qm06"]
+[ext_resource type="Resource" path="res://data/events/defeat_events/dialogues/qm_defeat_07.tres" id="7_qm07"]
+[ext_resource type="Resource" path="res://data/events/defeat_events/dialogues/qm_defeat_08.tres" id="8_qm08"]
+
+[resource]
+script = ExtResource("1_defevent")
+event_id = "queen_morrigan_defeat"
+event_type = "boss_defeat"
+trigger_character = "Queen Morrigan"
+is_story_event = true
+corrupts_player = true
+corruption_increase = 2
+initial_dialogue = ExtResource("2_qm01")
+encounter_dialogues = [ExtResource("3_qm02"), ExtResource("4_qm03"), ExtResource("5_qm04"), ExtResource("5_qm05"), ExtResource("6_qm06"), ExtResource("7_qm07")]
+outcome_dialogue = ExtResource("8_qm08")
+affected_companions = ["Elara", "Lyra", "Selene", "Vivienne", "Freya"]
+bond_changes = {}
+recovery_location = "res://scenes/World/WorldMap.tscn"

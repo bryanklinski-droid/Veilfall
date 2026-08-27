@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://c6srenukfm8tt"]
+
+[ext_resource type="Script" path="res://scripts/dialogue/dialogue_data.gd" id="1_dialogue"]
+
+[resource]
+script = ExtResource("1_dialogue")
+dialogue_id = "selene_event_dialogue"
+speaker_name = "Selene (Shadow)"
+text = "The shadows reveal what I've hidden... My past is no longer a burden when shared with you."
+portrait_path = "res://assets/portraits/selene.png"
+auto_advance_delay = 0.0

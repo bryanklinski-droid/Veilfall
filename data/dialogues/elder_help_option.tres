@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="DialogueOption" format=3 uid="uid://cc49x7d4wqwc7"]
+
+[ext_resource type="Script" uid="uid://d3f8j3np2x4lt" path="res://scripts/dialogue/dialogue_option.gd" id="1_n0cex"]
+
+[resource]
+script = ExtResource("1_n0cex")
+text = "I'll help you find Elara."
+next_dialogue_id = "elder_gratitude"
+action = "quest_start"
+action_param = "find_elara"

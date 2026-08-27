@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://c37wckfa45ji2"]
+
+[ext_resource type="Script" path="res://scripts/dialogue/dialogue_data.gd" id="1_dialogue"]
+
+[resource]
+script = ExtResource("1_dialogue")
+dialogue_id = "merchant_thomas_greeting"
+speaker_name = "Thomas"
+text = "Welcome, traveler! I have fine goods if you're interested. No one finds better prices in three provinces!"
+portrait_path = "res://assets/portraits/merchant_thomas.png"
+auto_advance_delay = 0.0

@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="DialogueData" format=3 uid="uid://bfvx3bvlvhdwv"]
+
+[ext_resource type="Script" uid="uid://d4qp22fmyc9ks" path="res://scripts/dialogue/dialogue_data.gd" id="1_r2x3t"]
+[ext_resource type="Resource" uid="uid://cc49x7d4wqwc7" path="res://data/dialogues/elder_help_option.tres" id="2_p28mf"]
+
+[resource]
+script = ExtResource("1_r2x3t")
+dialogue_id = "elder_opening"
+speaker_name = "Elder"
+text = "Aria! Thank the spirits you've come. Our village is in grave danger. Elara has gone missing in the forest, and we fear she's fallen to the corruption."
+options = [ExtResource("2_p28mf")]

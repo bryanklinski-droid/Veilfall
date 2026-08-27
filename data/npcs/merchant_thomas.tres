@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=3 uid="uid://bxm8p2r4y8g5j"]
+
+[ext_resource type="Script" path="res://scripts/characters/npc_data.gd" id="1_npc"]
+
+[resource]
+script = ExtResource("1_npc")
+npc_id = "merchant_thomas"
+display_name = "Thomas (Merchant)"
+npc_type = "store_keeper"
+description = "A seasoned merchant who runs a well-stocked general store. Known for fair prices and reliable goods."
+portrait_path = "res://assets/portraits/merchant_thomas.png"
+trade_enabled = true

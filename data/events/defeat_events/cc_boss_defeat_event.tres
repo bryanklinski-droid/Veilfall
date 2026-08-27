@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="DefeatEventData" format=3 uid="uid://cc_boss_defeat_event"]
+
+[ext_resource type="Script" path="res://scripts/events/defeat_event_data.gd" id="1_defevent"]
+[ext_resource type="Resource" path="res://data/events/defeat_events/dialogues/cc_defeat_01.tres" id="2_cc01"]
+[ext_resource type="Resource" path="res://data/events/defeat_events/dialogues/cc_defeat_02.tres" id="3_cc02"]
+[ext_resource type="Resource" path="res://data/events/defeat_events/dialogues/cc_defeat_03.tres" id="4_cc03"]
+[ext_resource type="Resource" path="res://data/events/defeat_events/dialogues/cc_defeat_04.tres" id="5_cc04"]
+[ext_resource type="Resource" path="res://data/events/defeat_events/dialogues/cc_defeat_05.tres" id="6_cc05"]
+[ext_resource type="Resource" path="res://data/events/defeat_events/dialogues/cc_defeat_06.tres" id="7_cc06"]
+[ext_resource type="Resource" path="res://data/events/defeat_events/dialogues/cc_defeat_07.tres" id="8_cc07"]
+
+[resource]
+script = ExtResource("1_defevent")
+event_id = "crimson_captain_defeat"
+event_type = "boss_defeat"
+trigger_character = "Crimson Captain"
+is_story_event = true
+corrupts_player = true
+corruption_increase = 1
+initial_dialogue = ExtResource("2_cc01")
+encounter_dialogues = [ExtResource("3_cc02"), ExtResource("4_cc03"), ExtResource("5_cc04"), ExtResource("6_cc05"), ExtResource("7_cc06")]
+outcome_dialogue = ExtResource("8_cc07")
+affected_companions = ["Elara", "Lyra", "Selene", "Vivienne", "Freya"]
+bond_changes = {}
+recovery_location = "res://scenes/World/WorldMap.tscn"

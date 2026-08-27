@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://6v0yuncxj580"]
+
+[ext_resource type="Script" path="res://scripts/dialogue/dialogue_data.gd" id="1_dialogue"]
+
+[resource]
+script = ExtResource("1_dialogue")
+dialogue_id = "guard_captain_blake_greeting"
+speaker_name = "Captain Blake"
+text = "Good to see someone capable. The realm grows darker by the day. We need help to protect the town."
+portrait_path = "res://assets/portraits/guard_captain_blake.png"
+auto_advance_delay = 0.0

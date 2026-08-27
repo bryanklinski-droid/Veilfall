@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="AreaData" format=3 uid="uid://cr06660c18ewu"]
+
+[ext_resource type="Script" uid="uid://bhyqbif28rel0" path="res://scripts/characters/character_data.gd" id="1_s83d4"]
+[ext_resource type="Script" uid="uid://cmwgu0rqdokce" path="res://scripts/areas/area_data.gd" id="1_v4r5o"]
+[ext_resource type="Resource" uid="uid://dferrtf6bhdnd" path="res://data/characters/goblin.tres" id="2_enemy1"]
+
+[resource]
+script = ExtResource("1_v4r5o")
+area_id = "dark_forest"
+area_name = "Dark Forest"
+description = "A corrupted forest shrouded in darkness. Elara was last seen here."
+connected_areas = {
+"village": "east_exit"
+}
+enemies = Array[ExtResource("1_s83d4")]([ExtResource("2_enemy1")])
+npcs = Array[String](["elder_opening"])
+music_path = "res://assets/audio/music/dark_forest.ogg"
+difficulty_level = 2

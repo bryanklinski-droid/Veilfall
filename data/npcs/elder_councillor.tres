@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=3 uid="uid://e5k6l8m3n9p1d"]
+
+[ext_resource type="Script" path="res://scripts/characters/npc_data.gd" id="1_npc"]
+
+[resource]
+script = ExtResource("1_npc")
+npc_id = "elder_councillor"
+display_name = "Elder Councillor"
+npc_type = "quest_giver"
+description = "A wise elder who leads the town council. Knows of many troubles that need solving."
+portrait_path = "res://assets/portraits/elder_councillor.png"
+quests_offered = ["forest_exploration", "bandit_camp", "corruption_investigation"]

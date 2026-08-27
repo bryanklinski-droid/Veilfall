@@ -1,0 +1,19 @@
+[gd_scene load_steps=2 format=3 uid="uid://d8v2p4k3m1q6x"]
+
+[ext_resource type="Script" path="res://scripts/quests/quest_data.gd" id="1_k9j5m"]
+
+[resource]
+script = ExtResource("1_k9j5m")
+quest_id = "potion_delivery"
+quest_name = "Deliver Potions"
+description = "The healer needs potions delivered to the village elder."
+quest_type = "side"
+is_active = false
+is_completed = false
+current_stage = 0
+rewards = {
+	"experience": 150,
+	"gold": 100,
+	"items": {}
+}
+quest_log = []

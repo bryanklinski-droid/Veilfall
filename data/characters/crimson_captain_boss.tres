@@ -1,0 +1,34 @@
+[gd_scene format=3 uid="uid://c3l62nkh5n5x6"]
+
+[ext_resource type="Script" path="res://scripts/characters/boss_data.gd" id="1_a0j7x"]
+
+[resource]
+script = ExtResource("1_a0j7x")
+character_id = "crimson_captain"
+display_name = "Crimson Captain"
+level = 5
+experience = 0
+max_hp = 150
+hp = 150
+max_mp = 50
+mp = 50
+attack = 18
+defense = 14
+magic = 12
+speed = 10
+corruption_stage = 0
+captured = false
+starting_skills = []
+learned_skills = []
+phase_thresholds = [100, 50]
+phase_abilities = [[], []]
+is_story_boss = true
+boss_rewards = {
+	"experience": 500,
+	"gold": 1000,
+	"items": {}
+}
+experience_reward = 800
+gold_reward = 1500
+loot_table = []
+loot_chances = {}

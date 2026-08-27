@@ -17,11 +17,26 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-GameState="*uid://cnlatmjpfo7br"
-SaveManager="*uid://gqkskkymyvi"
-InventoryManager="*uid://cbcbs3bcimb1s"
-CorruptionManager="*uid://4yttqjfjnak3"
-EventManager="*uid://bvs7xq27lx0t3"
+GameState="*res://autoload/state/game_state.gd"
+SaveManager="*res://autoload/state/save_manager.gd"
+InventoryManager="*res://autoload/state/inventory_manager.gd"
+CorruptionManager="*res://autoload/systems/corruption_manager.gd"
+EventManager="*res://autoload/systems/event_manager.gd"
+DialogueManager="*res://autoload/systems/dialogue_manager.gd"
+AreaManager="*res://autoload/systems/area_manager.gd"
+AudioManager="*res://autoload/services/audio_manager.gd"
+BondManager="*res://autoload/services/bond_manager.gd"
+EffectsManager="*res://autoload/services/effects_manager.gd"
+ShopManager="*res://autoload/services/shop_manager.gd"
+SkillTreeManager="*res://autoload/services/skill_tree_manager.gd"
+DungeonManager="*res://autoload/services/dungeon_manager.gd"
+AnimationManager="*res://autoload/services/animation_manager.gd"
+TimeManager="*res://autoload/services/time_manager.gd"
+CompanionQuestManager="*res://autoload/services/companion_quest_manager.gd"
+TransitionManager="*res://autoload/services/transition_manager.gd"
+BalanceConfig="*res://autoload/services/balance_config.gd"
+NPCManager="*res://autoload/systems/npc_manager.gd"
+DefeatEventManager="*res://autoload/systems/defeat_event_manager.gd"
 
 [display]
 

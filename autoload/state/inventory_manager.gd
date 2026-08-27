@@ -3,13 +3,13 @@ extends Node
 var items: Dictionary = {}
 
 
-func add_item(item_id: String, amount: int = 1):
+func add_item(item_id: String, amount: int = 1) -> void:
 	if items.has(item_id):
 		items[item_id] += amount
 	else:
 		items[item_id] = amount
 
-func remove_item(item_id: String, amount: int = 1):
+func remove_item(item_id: String, amount: int = 1) -> void:
 	if not items.has(item_id):
 		return
 

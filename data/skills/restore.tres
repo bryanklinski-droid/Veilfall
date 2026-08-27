@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="SkillData" format=3 uid="uid://cm8k0vxpnbx7o"]
+
+[ext_resource type="Script" uid="uid://d4nq7mjhvs6pd" path="res://scripts/resources/skill_data.gd" id="1_r0pwz"]
+
+[resource]
+script = ExtResource("1_r0pwz")
+skill_name = "Restore"
+description = "Heal an ally for a moderate amount of HP."
+skill_type = "Magic"
+mp_cost = 20
+power = 40
+accuracy = 1.0
+hits = 1
+target_type = "single_party"
+effect = "heal"
+learn_level = 3

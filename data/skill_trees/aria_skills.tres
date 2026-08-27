@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="SkillTreeData" format=3 uid="uid://dpj6pv73ardv8"]
+
+[ext_resource type="Script" uid="uid://cqx77bt2acdxc" path="res://scripts/utilities/skill_tree_data.gd" id="1_f5rlc"]
+
+[resource]
+script = ExtResource("1_f5rlc")
+character_id = "aria"
+metadata/_custom_type_script = "uid://cqx77bt2acdxc"

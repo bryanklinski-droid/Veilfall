@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="DialogueData" format=3 uid="uid://cc_defeat_01"]
+
+[ext_resource type="Script" uid="uid://d4qp22fmyc9ks" path="res://scripts/dialogue/dialogue_data.gd" id="1_r2x3t"]
+
+[resource]
+script = ExtResource("1_r2x3t")
+dialogue_id = "cc_defeat_01"
+speaker_name = "Crimson Captain"
+text = "..."
+portrait_path = "res://assets/portraits/crimson_captain.png"
+auto_advance_delay = 2.5

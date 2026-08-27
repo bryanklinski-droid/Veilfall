@@ -1,0 +1,19 @@
+[gd_scene load_steps=2 format=3 uid="uid://c4j8k3p2m7n9x"]
+
+[ext_resource type="Script" path="res://scripts/quests/quest_data.gd" id="1_k9j5m"]
+
+[resource]
+script = ExtResource("1_k9j5m")
+quest_id = "forest_exploration"
+quest_name = "Explore the Dark Forest"
+description = "The Dark Forest holds many secrets. Explore and discover its mysteries."
+quest_type = "side"
+is_active = false
+is_completed = false
+current_stage = 0
+rewards = {
+	"experience": 300,
+	"gold": 200,
+	"items": {}
+}
+quest_log = []

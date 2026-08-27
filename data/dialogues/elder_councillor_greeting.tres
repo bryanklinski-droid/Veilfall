@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://bxjh87dc7id01"]
+
+[ext_resource type="Script" path="res://scripts/dialogue/dialogue_data.gd" id="1_dialogue"]
+
+[resource]
+script = ExtResource("1_dialogue")
+dialogue_id = "elder_councillor_greeting"
+speaker_name = "Elder Councillor"
+text = "Ah, you have arrived. The town needs your aid. Would you hear of matters that require your attention?"
+portrait_path = "res://assets/portraits/elder_councillor.png"
+auto_advance_delay = 0.0

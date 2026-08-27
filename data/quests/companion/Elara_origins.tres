@@ -1,0 +1,20 @@
+[gd_scene load_steps=2 format=3 uid="uid://c8m5j3q0m2r8k"]
+
+[ext_resource type="Script" path="res://scripts/quests/quest_data.gd" id="1_k9j5m"]
+
+[resource]
+script = ExtResource("1_k9j5m")
+quest_id = "Elara_origins"
+quest_name = "Elara's Origins"
+description = "Learn about Elara's mysterious past and her connection to the corruption."
+quest_type = "companion"
+is_active = false
+is_completed = false
+stages = []
+current_stage = 0
+rewards = {
+	"experience": 300,
+	"gold": 200,
+	"items": {}
+}
+quest_log = []

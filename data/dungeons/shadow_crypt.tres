@@ -1,0 +1,19 @@
+[gd_scene load_steps=2 format=3 uid="uid://b4yf8w8r2qc1k"]
+
+[ext_resource type="Script" path="res://scripts/dungeons/dungeon_data.gd" id="1_m5j8k"]
+
+[resource]
+script = ExtResource("1_m5j8k")
+dungeon_id = "shadow_crypt"
+dungeon_name = "Shadow Crypt"
+description = "An ancient crypt corrupted by dark magic. The Crimson Captain is rumored to be here."
+entrance_area = "dark_forest"
+floors = []
+boss_enemy_id = "crimson_captain_boss"
+rewards = {
+	"experience": 2000,
+	"gold": 2000,
+	"items": {}
+}
+current_floor = 0
+is_completed = false

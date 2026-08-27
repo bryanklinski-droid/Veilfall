@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://n4q0p8s1t9m7n"]
+
+[ext_resource type="Script" path="res://scripts/characters/npc_data.gd" id="1_npc"]
+
+[resource]
+script = ExtResource("1_npc")
+npc_id = "shadow_merchant"
+display_name = "Shadow Merchant"
+npc_type = "corruption_event"
+description = "A mysterious figure that emerges when corruption reaches dangerous levels. Offers dark artifacts."
+portrait_path = "res://assets/portraits/shadow_merchant.png"
+corruption_threshold = 4
+trade_enabled = true

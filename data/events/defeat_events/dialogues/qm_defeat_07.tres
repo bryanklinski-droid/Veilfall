@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="DialogueData" format=3 uid="uid://qm_defeat_07"]
+
+[ext_resource type="Script" uid="uid://d4qp22fmyc9ks" path="res://scripts/dialogue/dialogue_data.gd" id="1_r2x3t"]
+
+[resource]
+script = ExtResource("1_r2x3t")
+dialogue_id = "qm_defeat_07"
+speaker_name = "Queen Morrigan"
+text = "The corruption takes everything. Your kingdom. Your companions. That fragile little will you still think you possess. It already has you. You just haven't felt it yet."
+portrait_path = "res://assets/portraits/queen_morrigan.png"
+auto_advance_delay = 0.0

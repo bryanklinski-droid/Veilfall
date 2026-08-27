@@ -10,37 +10,3 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_3c752")
-
-[node name="ColorRect" type="ColorRect" parent="." unique_id=905315370]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="Label" type="Label" parent="." unique_id=332630816]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
-text = "Veilfall: Corruption of the Kingdom"
-
-[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=2089286479]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="NewGameButton" type="Button" parent="VBoxContainer" unique_id=1976263538]
-layout_mode = 2
-text = "New Game"
-
-[node name="ContinueButton" type="Button" parent="VBoxContainer" unique_id=1209493764]
-layout_mode = 2
-text = "Continue"
-
-[node name="SettingsButton" type="Button" parent="VBoxContainer" unique_id=1409744745]
-layout_mode = 2
-text = "Settings"
-
-[node name="QuitButton" type="Button" parent="VBoxContainer" unique_id=988384165]
-layout_mode = 2
-text = "Quit"
-
-[connection signal="pressed" from="VBoxContainer/NewGameButton" to="." method="_on_new_game_button_pressed"]

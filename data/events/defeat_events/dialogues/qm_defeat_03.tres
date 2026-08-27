@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="DialogueData" format=3 uid="uid://qm_defeat_03"]
+
+[ext_resource type="Script" uid="uid://d4qp22fmyc9ks" path="res://scripts/dialogue/dialogue_data.gd" id="1_r2x3t"]
+
+[resource]
+script = ExtResource("1_r2x3t")
+dialogue_id = "qm_defeat_03"
+speaker_name = "Queen Morrigan"
+text = "I watched you from the moment you left that wretched little village. Every stumbling step. Every naive, desperate hope burning in your chest like a candle in a storm."
+portrait_path = "res://assets/portraits/queen_morrigan.png"
+auto_advance_delay = 0.0

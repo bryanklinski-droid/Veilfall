@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://j9m6l4o7p5e3f"]
+
+[ext_resource type="Script" path="res://scripts/characters/npc_data.gd" id="1_npc"]
+
+[resource]
+script = ExtResource("1_npc")
+npc_id = "selene_event_shadow"
+display_name = "Selene (Shadow)"
+npc_type = "companion_event"
+description = "A shadow of Selene's past emerges, unlocking memories of her time before meeting the party."
+companion_id = "Selene"
+bond_requirement = 4
+is_one_time_event = false

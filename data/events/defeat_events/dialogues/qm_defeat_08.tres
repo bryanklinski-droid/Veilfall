@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="DialogueData" format=3 uid="uid://qm_defeat_08"]
+
+[ext_resource type="Script" uid="uid://d4qp22fmyc9ks" path="res://scripts/dialogue/dialogue_data.gd" id="1_r2x3t"]
+
+[resource]
+script = ExtResource("1_r2x3t")
+dialogue_id = "qm_defeat_08"
+speaker_name = "Queen Morrigan"
+text = "Now lie there. Remember this feeling — the weight of it, the silence of it. This is what powerlessness truly feels like. I want you to know it well before the end."
+portrait_path = "res://assets/portraits/queen_morrigan.png"
+auto_advance_delay = 0.0

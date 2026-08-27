@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://drc7k8q6yw4ip"]
+
+[ext_resource type="Script" path="res://scripts/dialogue/dialogue_data.gd" id="1_dialogue"]
+
+[resource]
+script = ExtResource("1_dialogue")
+dialogue_id = "shadow_merchant_dialogue"
+speaker_name = "Shadow Merchant"
+text = "I deal in rare... items. Artifacts of power that your 'good' merchants would never offer. Interested?"
+portrait_path = "res://assets/portraits/shadow_merchant.png"
+auto_advance_delay = 0.0
