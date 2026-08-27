@@ -4,4 +4,14 @@
 
 [resource]
 script = ExtResource("1_afg2j")
+display_name = "Wolf"
+level = 1
+max_hp = 55
+hp = 55
+max_mp = 10
+mp = 10
+attack = 11
+defense = 5
+magic = 2
+speed = 13
 metadata/_custom_type_script = "uid://bhyqbif28rel0"

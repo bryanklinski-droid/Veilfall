@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="CharacterData" format=3]
+
+[ext_resource type="Script" path="res://scripts/characters/character_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+display_name = "Dire Wolf"
+level = 5
+max_hp = 180
+hp = 180
+max_mp = 20
+mp = 20
+attack = 28
+defense = 11
+magic = 4
+speed = 22

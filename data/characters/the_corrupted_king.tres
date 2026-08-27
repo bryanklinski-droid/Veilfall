@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="CharacterData" format=3]
+
+[ext_resource type="Script" path="res://scripts/characters/character_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+display_name = "The Corrupted King"
+level = 25
+max_hp = 2400
+hp = 2400
+max_mp = 240
+mp = 240
+attack = 105
+defense = 65
+magic = 85
+speed = 20

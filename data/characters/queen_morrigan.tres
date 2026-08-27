@@ -4,4 +4,14 @@
 
 [resource]
 script = ExtResource("1_wlp6m")
+display_name = "Queen Morrigan"
+level = 15
+max_hp = 900
+hp = 900
+max_mp = 120
+mp = 120
+attack = 55
+defense = 35
+magic = 50
+speed = 18
 metadata/_custom_type_script = "uid://bhyqbif28rel0"
