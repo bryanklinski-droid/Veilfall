@@ -19,6 +19,16 @@ func _ready() -> void:
 	_play_intro_animation()
 	new_game_button.grab_focus()
 
+func _unhandled_key_input(event: InputEvent) -> void:
+	# Z is the game's universal confirm/interact key. Godot's UI buttons normally
+	# activate with ui_accept (Enter/Space), so explicitly route Z to the focused
+	# menu button without changing the project's global UI mappings.
+	if event is InputEventKey and event.pressed and not event.echo and event.physical_keycode == KEY_Z:
+		var focused := get_viewport().gui_get_focus_owner()
+		if focused is Button and not focused.disabled:
+			get_viewport().set_input_as_handled()
+			focused.pressed.emit()
+
 func _setup_ui() -> void:
 	# Full-screen background.
 	var background := TextureRect.new()
