@@ -7,6 +7,7 @@ const STONE := preload("res://assets/art/world/greyhaven_stone.svg")
 
 func _ready() -> void:
 	z_index = 1
+	_add_road_wear()
 	_add_cobbles()
 	_add_road_edge_growth()
 	_add_foliage()
@@ -22,18 +23,23 @@ func _sprite(texture: Texture2D, pos: Vector2, scale_value := 1.0, mod := Color.
 	add_child(s)
 	return s
 
+func _patch(points: PackedVector2Array, color: Color) -> void:
+	var p := Polygon2D.new()
+	p.polygon = points
+	p.color = color
+	add_child(p)
+
 func _embedded_stone(pos: Vector2, size: Vector2, rotation_value: float, stone_color: Color) -> void:
-	# Two flat polygons read as a stone pressed into the road rather than a sprite sitting on top of it.
 	var shadow := Polygon2D.new()
 	shadow.polygon = PackedVector2Array([
 		Vector2(-0.52, -0.25), Vector2(-0.24, -0.50), Vector2(0.24, -0.47),
 		Vector2(0.53, -0.16), Vector2(0.43, 0.30), Vector2(0.08, 0.49),
 		Vector2(-0.38, 0.35)
 	])
-	shadow.position = pos + Vector2(1.5, 2.0)
+	shadow.position = pos + Vector2(1.0, 1.5)
 	shadow.scale = size
 	shadow.rotation = rotation_value
-	shadow.color = Color(0.08, 0.07, 0.06, 0.22)
+	shadow.color = Color(0.07, 0.06, 0.05, 0.16)
 	add_child(shadow)
 
 	var stone := Polygon2D.new()
@@ -48,51 +54,75 @@ func _embedded_stone(pos: Vector2, size: Vector2, rotation_value: float, stone_c
 	stone.color = stone_color
 	add_child(stone)
 
+func _add_road_wear() -> void:
+	# Broad translucent dirt variation breaks up the flat road without changing collisions.
+	var patches := [
+		[PackedVector2Array([Vector2(928, 250), Vector2(1018, 238), Vector2(1042, 325), Vector2(947, 344)]), Color(0.18, 0.12, 0.08, 0.10)],
+		[PackedVector2Array([Vector2(934, 500), Vector2(1024, 486), Vector2(1055, 590), Vector2(945, 612)]), Color(0.12, 0.09, 0.07, 0.09)],
+		[PackedVector2Array([Vector2(920, 665), Vector2(1040, 650), Vector2(1060, 740), Vector2(925, 755)]), Color(0.22, 0.16, 0.10, 0.09)],
+		[PackedVector2Array([Vector2(725, 718), Vector2(905, 715), Vector2(912, 802), Vector2(735, 810)]), Color(0.16, 0.11, 0.08, 0.08)],
+		[PackedVector2Array([Vector2(1090, 713), Vector2(1320, 705), Vector2(1328, 790), Vector2(1098, 798)]), Color(0.14, 0.10, 0.07, 0.08)],
+		[PackedVector2Array([Vector2(936, 980), Vector2(1030, 968), Vector2(1050, 1080), Vector2(942, 1092)]), Color(0.18, 0.12, 0.08, 0.09)],
+		[PackedVector2Array([Vector2(925, 1220), Vector2(1038, 1205), Vector2(1048, 1325), Vector2(938, 1340)]), Color(0.12, 0.09, 0.06, 0.08)]
+	]
+	for data in patches:
+		_patch(data[0], data[1])
+
+	# Thin worn wheel tracks add directionality while staying subtle.
+	for data in [
+		[PackedVector2Array([Vector2(954, 0), Vector2(962, 260), Vector2(956, 520), Vector2(966, 790), Vector2(958, 1060), Vector2(968, 1536)]), 2.0, Color(0.10, 0.07, 0.05, 0.12)],
+		[PackedVector2Array([Vector2(1010, 0), Vector2(1004, 270), Vector2(1014, 540), Vector2(1006, 795), Vector2(1018, 1070), Vector2(1010, 1536)]), 2.0, Color(0.10, 0.07, 0.05, 0.10)]
+	]:
+		var line := Line2D.new()
+		line.points = data[0]
+		line.width = data[1]
+		line.default_color = data[2]
+		add_child(line)
+
 func _add_cobbles() -> void:
-	# Individual, incomplete cobbling. Dirt remains visible between every stone and coverage thins toward the outskirts.
+	# Darker, flatter, incomplete cobbling. The stones are meant to merge into the dirt rather than pop against it.
 	var stones := [
-		[Vector2(956, 130), Vector2(18, 11), -0.18, Color(0.34, 0.34, 0.31, 0.72)],
-		[Vector2(989, 145), Vector2(15, 10), 0.10, Color(0.39, 0.38, 0.34, 0.68)],
-		[Vector2(1020, 124), Vector2(17, 9), -0.06, Color(0.31, 0.32, 0.30, 0.66)],
-		[Vector2(969, 205), Vector2(14, 9), 0.17, Color(0.36, 0.36, 0.33, 0.62)],
-		[Vector2(1007, 232), Vector2(19, 11), -0.12, Color(0.30, 0.31, 0.29, 0.66)],
-		[Vector2(950, 330), Vector2(16, 10), 0.08, Color(0.38, 0.37, 0.34, 0.64)],
-		[Vector2(986, 350), Vector2(19, 12), -0.04, Color(0.32, 0.33, 0.31, 0.70)],
-		[Vector2(1021, 329), Vector2(14, 9), 0.14, Color(0.40, 0.39, 0.35, 0.58)],
-		[Vector2(965, 430), Vector2(13, 8), -0.15, Color(0.35, 0.35, 0.32, 0.56)],
-		[Vector2(1004, 466), Vector2(18, 10), 0.05, Color(0.29, 0.30, 0.28, 0.62)],
-		[Vector2(948, 555), Vector2(17, 10), 0.11, Color(0.37, 0.36, 0.32, 0.66)],
-		[Vector2(987, 574), Vector2(15, 9), -0.08, Color(0.32, 0.33, 0.30, 0.60)],
-		[Vector2(1022, 548), Vector2(20, 11), 0.18, Color(0.41, 0.39, 0.35, 0.58)],
-		[Vector2(957, 665), Vector2(15, 9), -0.04, Color(0.31, 0.32, 0.29, 0.62)],
-		[Vector2(995, 688), Vector2(18, 11), 0.12, Color(0.37, 0.36, 0.33, 0.68)],
-		[Vector2(1030, 674), Vector2(13, 8), -0.17, Color(0.29, 0.30, 0.28, 0.56)],
-		[Vector2(926, 744), Vector2(17, 10), 0.06, Color(0.35, 0.35, 0.32, 0.66)],
-		[Vector2(966, 760), Vector2(20, 12), -0.10, Color(0.30, 0.31, 0.29, 0.72)],
-		[Vector2(1009, 742), Vector2(16, 10), 0.15, Color(0.40, 0.39, 0.35, 0.68)],
-		[Vector2(1044, 773), Vector2(18, 11), -0.02, Color(0.33, 0.34, 0.31, 0.64)],
-		[Vector2(1092, 754), Vector2(15, 9), 0.13, Color(0.36, 0.35, 0.32, 0.58)],
-		[Vector2(838, 768), Vector2(16, 9), -0.14, Color(0.33, 0.34, 0.31, 0.54)],
-		[Vector2(751, 749), Vector2(14, 8), 0.09, Color(0.38, 0.37, 0.33, 0.48)],
-		[Vector2(645, 775), Vector2(12, 7), -0.10, Color(0.31, 0.32, 0.29, 0.40)],
-		[Vector2(1180, 766), Vector2(16, 9), -0.06, Color(0.33, 0.33, 0.30, 0.52)],
-		[Vector2(1285, 748), Vector2(13, 8), 0.12, Color(0.39, 0.37, 0.34, 0.45)],
-		[Vector2(1405, 776), Vector2(11, 7), -0.14, Color(0.30, 0.31, 0.29, 0.36)],
-		[Vector2(958, 860), Vector2(16, 9), 0.10, Color(0.37, 0.36, 0.33, 0.60)],
-		[Vector2(1000, 884), Vector2(19, 11), -0.05, Color(0.31, 0.32, 0.30, 0.66)],
-		[Vector2(1025, 970), Vector2(14, 8), 0.15, Color(0.39, 0.38, 0.34, 0.56)],
-		[Vector2(970, 1012), Vector2(18, 10), -0.11, Color(0.33, 0.34, 0.31, 0.62)],
-		[Vector2(950, 1120), Vector2(14, 9), 0.06, Color(0.36, 0.35, 0.32, 0.54)],
-		[Vector2(1008, 1146), Vector2(17, 10), -0.15, Color(0.30, 0.31, 0.29, 0.58)],
-		[Vector2(974, 1272), Vector2(16, 9), 0.12, Color(0.38, 0.37, 0.34, 0.50)],
-		[Vector2(1018, 1325), Vector2(13, 8), -0.08, Color(0.32, 0.33, 0.30, 0.44)],
-		[Vector2(962, 1440), Vector2(12, 7), 0.09, Color(0.35, 0.35, 0.32, 0.36)]
+		[Vector2(956, 130), Vector2(14, 8), -0.18, Color(0.25, 0.25, 0.23, 0.52)],
+		[Vector2(989, 145), Vector2(12, 8), 0.10, Color(0.29, 0.28, 0.25, 0.48)],
+		[Vector2(1020, 124), Vector2(13, 7), -0.06, Color(0.23, 0.24, 0.22, 0.46)],
+		[Vector2(969, 205), Vector2(11, 7), 0.17, Color(0.27, 0.27, 0.24, 0.44)],
+		[Vector2(1007, 232), Vector2(15, 8), -0.12, Color(0.22, 0.23, 0.21, 0.46)],
+		[Vector2(950, 330), Vector2(13, 8), 0.08, Color(0.28, 0.27, 0.24, 0.46)],
+		[Vector2(986, 350), Vector2(15, 9), -0.04, Color(0.24, 0.25, 0.23, 0.50)],
+		[Vector2(1021, 329), Vector2(11, 7), 0.14, Color(0.30, 0.29, 0.25, 0.42)],
+		[Vector2(965, 430), Vector2(10, 6), -0.15, Color(0.26, 0.26, 0.23, 0.40)],
+		[Vector2(1004, 466), Vector2(14, 8), 0.05, Color(0.22, 0.23, 0.21, 0.44)],
+		[Vector2(948, 555), Vector2(13, 8), 0.11, Color(0.28, 0.27, 0.23, 0.46)],
+		[Vector2(987, 574), Vector2(12, 7), -0.08, Color(0.24, 0.25, 0.22, 0.42)],
+		[Vector2(1022, 548), Vector2(15, 8), 0.18, Color(0.30, 0.28, 0.24, 0.42)],
+		[Vector2(957, 665), Vector2(12, 7), -0.04, Color(0.23, 0.24, 0.22, 0.44)],
+		[Vector2(995, 688), Vector2(14, 8), 0.12, Color(0.27, 0.27, 0.24, 0.48)],
+		[Vector2(1030, 674), Vector2(10, 6), -0.17, Color(0.21, 0.22, 0.20, 0.40)],
+		[Vector2(926, 744), Vector2(13, 8), 0.06, Color(0.26, 0.26, 0.23, 0.46)],
+		[Vector2(966, 760), Vector2(15, 9), -0.10, Color(0.22, 0.23, 0.21, 0.50)],
+		[Vector2(1009, 742), Vector2(12, 8), 0.15, Color(0.29, 0.28, 0.25, 0.48)],
+		[Vector2(1044, 773), Vector2(14, 8), -0.02, Color(0.24, 0.25, 0.22, 0.46)],
+		[Vector2(1092, 754), Vector2(11, 7), 0.13, Color(0.27, 0.26, 0.23, 0.42)],
+		[Vector2(838, 768), Vector2(12, 7), -0.14, Color(0.24, 0.25, 0.22, 0.38)],
+		[Vector2(751, 749), Vector2(10, 6), 0.09, Color(0.28, 0.27, 0.24, 0.34)],
+		[Vector2(645, 775), Vector2(9, 5), -0.10, Color(0.22, 0.23, 0.21, 0.30)],
+		[Vector2(1180, 766), Vector2(12, 7), -0.06, Color(0.24, 0.24, 0.21, 0.38)],
+		[Vector2(1285, 748), Vector2(10, 6), 0.12, Color(0.28, 0.27, 0.23, 0.32)],
+		[Vector2(1405, 776), Vector2(8, 5), -0.14, Color(0.21, 0.22, 0.20, 0.26)],
+		[Vector2(958, 860), Vector2(12, 7), 0.10, Color(0.27, 0.26, 0.23, 0.42)],
+		[Vector2(1000, 884), Vector2(14, 8), -0.05, Color(0.23, 0.24, 0.22, 0.46)],
+		[Vector2(1025, 970), Vector2(10, 6), 0.15, Color(0.29, 0.28, 0.24, 0.40)],
+		[Vector2(970, 1012), Vector2(13, 8), -0.11, Color(0.24, 0.25, 0.22, 0.44)],
+		[Vector2(950, 1120), Vector2(10, 7), 0.06, Color(0.26, 0.26, 0.23, 0.38)],
+		[Vector2(1008, 1146), Vector2(13, 8), -0.15, Color(0.22, 0.23, 0.21, 0.40)],
+		[Vector2(974, 1272), Vector2(12, 7), 0.12, Color(0.28, 0.27, 0.24, 0.34)],
+		[Vector2(1018, 1325), Vector2(10, 6), -0.08, Color(0.24, 0.25, 0.22, 0.30)],
+		[Vector2(962, 1440), Vector2(9, 5), 0.09, Color(0.26, 0.26, 0.23, 0.24)]
 	]
 	for data in stones:
 		_embedded_stone(data[0], data[1], data[2], data[3])
 
 func _add_road_edge_growth() -> void:
-	# Low weeds soften the hard terrain boundary without obscuring the playable route.
 	var edge_growth := [
 		[Vector2(900, 315), 0.22], [Vector2(1070, 405), 0.18], [Vector2(895, 590), 0.20],
 		[Vector2(1080, 625), 0.16], [Vector2(888, 930), 0.20], [Vector2(1082, 1035), 0.18],
@@ -101,10 +131,9 @@ func _add_road_edge_growth() -> void:
 		[Vector2(1440, 825), 0.15], [Vector2(1640, 690), 0.14]
 	]
 	for data in edge_growth:
-		_sprite(FOLIAGE, data[0], data[1], Color(0.58, 0.68, 0.52, 0.56))
+		_sprite(FOLIAGE, data[0], data[1], Color(0.52, 0.62, 0.47, 0.50))
 
 func _add_foliage() -> void:
-	# Intentional clusters leave breathing room around the crossroads/player route.
 	var spots := [
 		[Vector2(170, 430), 0.72, Color(0.82, 0.91, 0.78, 0.88)],
 		[Vector2(365, 500), 0.86, Color(0.88, 0.95, 0.82, 0.90)],
@@ -120,7 +149,10 @@ func _add_foliage() -> void:
 		[Vector2(1185, 420), 0.40, Color(0.68, 0.77, 0.62, 0.72)],
 		[Vector2(1240, 530), 0.34, Color(0.61, 0.70, 0.55, 0.66)],
 		[Vector2(1325, 965), 0.38, Color(0.57, 0.65, 0.51, 0.66)],
-		[Vector2(1580, 995), 0.42, Color(0.48, 0.55, 0.44, 0.62)]
+		[Vector2(1580, 995), 0.42, Color(0.48, 0.55, 0.44, 0.62)],
+		[Vector2(1170, 610), 0.28, Color(0.62, 0.71, 0.56, 0.60)],
+		[Vector2(1510, 860), 0.30, Color(0.49, 0.55, 0.45, 0.58)],
+		[Vector2(1685, 805), 0.26, Color(0.40, 0.45, 0.38, 0.50)]
 	]
 	for data in spots:
 		_sprite(FOLIAGE, data[0], data[1], data[2])
@@ -129,18 +161,18 @@ func _add_roadside_props() -> void:
 	for data in [[Vector2(835, 360), 0.66], [Vector2(1135, 510), 0.56], [Vector2(830, 1120), 0.60], [Vector2(1160, 1240), 0.66]]:
 		_sprite(PINE, data[0], data[1])
 	for data in [[Vector2(785, 690), 0.64], [Vector2(1190, 850), 0.54], [Vector2(1380, 650), 0.48], [Vector2(1515, 870), 0.36]]:
-		_sprite(STONE, data[0], data[1], Color(0.82, 0.84, 0.78, 0.92))
+		_sprite(STONE, data[0], data[1], Color(0.76, 0.78, 0.72, 0.88))
 	for pos in [Vector2(865, 690), Vector2(1115, 690), Vector2(865, 875), Vector2(1115, 875)]:
-		var lantern := _sprite(LANTERN, pos, 0.56, Color(0.90, 0.86, 0.74, 0.82))
+		var lantern := _sprite(LANTERN, pos, 0.53, Color(0.88, 0.83, 0.70, 0.78))
 		lantern.z_index = 2
 
 func _add_corruption_transition() -> void:
-	# Vegetation loses saturation before purple contamination becomes obvious.
 	for data in [
 		[Vector2(1365, 430), 0.48, Color(0.48, 0.50, 0.42, 0.66)],
 		[Vector2(1465, 380), 0.44, Color(0.43, 0.42, 0.38, 0.62)],
 		[Vector2(1515, 650), 0.40, Color(0.42, 0.35, 0.40, 0.60)],
 		[Vector2(1590, 720), 0.38, Color(0.48, 0.30, 0.45, 0.58)],
-		[Vector2(1670, 670), 0.34, Color(0.52, 0.27, 0.48, 0.52)]
+		[Vector2(1670, 670), 0.34, Color(0.52, 0.27, 0.48, 0.52)],
+		[Vector2(1740, 735), 0.28, Color(0.56, 0.23, 0.50, 0.46)]
 	]:
 		_sprite(FOLIAGE, data[0], data[1], data[2])
