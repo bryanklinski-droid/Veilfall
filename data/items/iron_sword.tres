@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://c3k1j6m2p8q4x"]
+[gd_resource type="Resource" format=3 uid="uid://c3k1j6m2p8q4x"]
 
 [ext_resource type="Script" path="res://scripts/resources/item_data.gd" id="1_i8k3j"]
 

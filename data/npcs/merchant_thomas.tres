@@ -1,4 +1,4 @@
-[gd_scene load_steps=2 format=3 uid="uid://bxm8p2r4y8g5j"]
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://bxm8p2r4y8g5j"]
 
 [ext_resource type="Script" path="res://scripts/characters/npc_data.gd" id="1_npc"]
 

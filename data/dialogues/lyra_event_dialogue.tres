@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://c5tj3co7dticr"]
+[gd_resource type="Resource" format=3 uid="uid://c5tj3co7dticr"]
 
 [ext_resource type="Script" path="res://scripts/dialogue/dialogue_data.gd" id="1_dialogue"]
 

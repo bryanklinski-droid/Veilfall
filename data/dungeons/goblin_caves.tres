@@ -1,4 +1,4 @@
-[gd_scene load_steps=2 format=3 uid="uid://b7k1m4n3p2q8x"]
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://b7k1m4n3p2q8x"]
 
 [ext_resource type="Script" path="res://scripts/dungeons/dungeon_data.gd" id="1_m5j8k"]
 
