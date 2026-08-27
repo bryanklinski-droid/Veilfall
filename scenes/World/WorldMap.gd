@@ -1,9 +1,21 @@
 extends Node2D
 
+const GREYHAVEN_DRESSING := preload("res://scenes/World/greyhaven_dressing.gd")
+
 func _ready() -> void:
 	GameState.world_progress.current_scene = "res://scenes/World/WorldMap.tscn"
 	mark_area_visited("WorldMap")
+	_add_environment_dressing()
 	SaveManager.save_game()
+
+func _add_environment_dressing() -> void:
+	if has_node("GreyhavenDressing"):
+		return
+	var dressing := Node2D.new()
+	dressing.name = "GreyhavenDressing"
+	dressing.set_script(GREYHAVEN_DRESSING)
+	add_child(dressing)
+	move_child(dressing, 1)
 
 func mark_area_visited(area_name: String) -> void:
 	if not GameState.world_progress.visited_areas.has(area_name):
