@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3]
+[gd_scene load_steps=17 format=3]
 
 [ext_resource type="Script" path="res://scenes/World/WorldMap.gd" id="1_world"]
 [ext_resource type="PackedScene" path="res://scenes/World/treasure_chest.tscn" id="1_chest"]
@@ -8,6 +8,8 @@
 [ext_resource type="Texture2D" path="res://assets/world/rock.svg" id="7_rock"]
 [ext_resource type="Texture2D" path="res://assets/world/dead_tree.svg" id="8_dead"]
 [ext_resource type="Shader" path="res://shaders/corruption_pulse.gdshader" id="9_corruption"]
+[ext_resource type="Shader" path="res://shaders/ground_mottle.gdshader" id="10_ground"]
+[ext_resource type="Shader" path="res://shaders/road_grit.gdshader" id="11_road"]
 
 [sub_resource type="RectangleShape2D" id="wall_h"]
 size = Vector2(2048, 32)
@@ -17,31 +19,55 @@ size = Vector2(32, 1536)
 size = Vector2(150, 105)
 [sub_resource type="ShaderMaterial" id="corruption_material"]
 shader = ExtResource("9_corruption")
+[sub_resource type="ShaderMaterial" id="ground_material"]
+shader = ExtResource("10_ground")
+shader_parameter/color_a = Color(0.035,0.052,0.043,1)
+shader_parameter/color_b = Color(0.105,0.145,0.095,1)
+shader_parameter/detail_color = Color(0.19,0.135,0.085,1)
+shader_parameter/scale = 14.0
+[sub_resource type="ShaderMaterial" id="road_material"]
+shader = ExtResource("11_road")
+shader_parameter/dirt_a = Color(0.19,0.145,0.105,1)
+shader_parameter/dirt_b = Color(0.36,0.275,0.19,1)
+shader_parameter/stone = Color(0.13,0.125,0.12,1)
+shader_parameter/scale = 20.0
 
 [node name="WorldMap" type="Node2D"]
 script = ExtResource("1_world")
 
 [node name="Environment" type="Node2D" parent="."]
-
 [node name="Terrain" type="Node2D" parent="Environment"]
 [node name="Base" type="Polygon2D" parent="Environment/Terrain"]
+material = SubResource("ground_material")
 polygon = PackedVector2Array(0,0,2048,0,2048,1536,0,1536)
-color = Color(0.055,0.075,0.062,1)
-[node name="Clearing" type="Polygon2D" parent="Environment/Terrain"]
-polygon = PackedVector2Array(170,160,1870,160,1870,1360,170,1360)
-color = Color(0.105,0.145,0.112,1)
+color = Color(1,1,1,1)
+[node name="ClearingShade" type="Polygon2D" parent="Environment/Terrain"]
+polygon = PackedVector2Array(120,125,1925,125,1925,1410,120,1410)
+color = Color(0.055,0.09,0.062,0.38)
 [node name="RoadNS" type="Polygon2D" parent="Environment/Terrain"]
-polygon = PackedVector2Array(900,0,1080,0,1080,1536,900,1536)
-color = Color(0.25,0.215,0.18,1)
+material = SubResource("road_material")
+polygon = PackedVector2Array(875,0,1100,0,1080,1536,900,1536)
+color = Color(1,1,1,1)
 [node name="RoadEW" type="Polygon2D" parent="Environment/Terrain"]
-polygon = PackedVector2Array(0,670,2048,670,2048,830,0,830)
-color = Color(0.25,0.215,0.18,1)
-[node name="RoadWear1" type="Polygon2D" parent="Environment/Terrain"]
-polygon = PackedVector2Array(930,0,952,0,952,1536,930,1536)
-color = Color(0.19,0.165,0.145,1)
-[node name="RoadWear2" type="Polygon2D" parent="Environment/Terrain"]
-polygon = PackedVector2Array(1025,0,1043,0,1043,1536,1025,1536)
-color = Color(0.19,0.165,0.145,1)
+material = SubResource("road_material")
+polygon = PackedVector2Array(0,645,2048,680,2048,850,0,820)
+color = Color(1,1,1,1)
+[node name="RoadEdgeN" type="Line2D" parent="Environment/Terrain"]
+points = PackedVector2Array(875,0,900,1536)
+width = 8.0
+default_color = Color(0.08,0.065,0.05,0.45)
+[node name="RoadEdgeS" type="Line2D" parent="Environment/Terrain"]
+points = PackedVector2Array(1100,0,1080,1536)
+width = 8.0
+default_color = Color(0.08,0.065,0.05,0.45)
+[node name="RoadRut1" type="Line2D" parent="Environment/Terrain"]
+points = PackedVector2Array(940,0,952,620,950,1536)
+width = 10.0
+default_color = Color(0.12,0.095,0.075,0.42)
+[node name="RoadRut2" type="Line2D" parent="Environment/Terrain"]
+points = PackedVector2Array(1030,0,1022,620,1028,1536)
+width = 8.0
+default_color = Color(0.12,0.095,0.075,0.38)
 
 [node name="Corruption" type="Node2D" parent="Environment"]
 [node name="NorthEast" type="Polygon2D" parent="Environment/Corruption"]
@@ -51,12 +77,24 @@ polygon = PackedVector2Array(1420,190,1870,160,1930,510,1730,620,1390,510,1320,3
 points = PackedVector2Array(1460,255,1510,280,1555,350,1600,390,1680,430,1740,500)
 width = 12.0
 default_color = Color(0.48,0.12,0.55,0.82)
+[node name="VeinBranch1" type="Line2D" parent="Environment/Corruption"]
+points = PackedVector2Array(1570,365,1635,325,1705,300)
+width = 6.0
+default_color = Color(0.38,0.07,0.46,0.68)
+[node name="VeinBranch2" type="Line2D" parent="Environment/Corruption"]
+points = PackedVector2Array(1660,420,1700,470,1770,520)
+width = 5.0
+default_color = Color(0.38,0.07,0.46,0.62)
 
 [node name="Structures" type="Node2D" parent="Environment"]
+[node name="RuinShadow" type="Polygon2D" parent="Environment/Structures"]
+polygon = PackedVector2Array(1530,415,1785,415,1810,500,1510,500)
+color = Color(0.015,0.012,0.02,0.42)
 [node name="Ruin" type="Sprite2D" parent="Environment/Structures"]
 texture = ExtResource("6_ruin")
 position = Vector2(1650,350)
-scale = Vector2(1.35,1.35)
+scale = Vector2(1.55,1.55)
+modulate = Color(0.72,0.68,0.73,1)
 [node name="RuinBody" type="StaticBody2D" parent="Environment/Structures"]
 collision_layer = 1
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Environment/Structures/RuinBody"]
@@ -67,65 +105,99 @@ shape = SubResource("ruin_collision")
 [node name="T1" type="Sprite2D" parent="Environment/Vegetation"]
 texture=ExtResource("5_tree")
 position=Vector2(230,250)
-scale=Vector2(1.35,1.35)
+scale=Vector2(1.5,1.5)
+modulate=Color(0.58,0.73,0.58,1)
 [node name="T2" type="Sprite2D" parent="Environment/Vegetation"]
 texture=ExtResource("5_tree")
 position=Vector2(350,190)
+scale=Vector2(1.15,1.15)
+modulate=Color(0.52,0.68,0.54,1)
 [node name="T3" type="Sprite2D" parent="Environment/Vegetation"]
 texture=ExtResource("5_tree")
 position=Vector2(510,290)
-scale=Vector2(1.2,1.2)
+scale=Vector2(1.35,1.35)
+modulate=Color(0.60,0.72,0.55,1)
 [node name="T4" type="Sprite2D" parent="Environment/Vegetation"]
 texture=ExtResource("5_tree")
 position=Vector2(690,210)
+scale=Vector2(1.1,1.1)
+modulate=Color(0.48,0.64,0.5,1)
 [node name="T5" type="Sprite2D" parent="Environment/Vegetation"]
 texture=ExtResource("5_tree")
 position=Vector2(250,1120)
-scale=Vector2(1.25,1.25)
+scale=Vector2(1.45,1.45)
+modulate=Color(0.55,0.69,0.53,1)
 [node name="T6" type="Sprite2D" parent="Environment/Vegetation"]
 texture=ExtResource("5_tree")
 position=Vector2(430,1260)
+scale=Vector2(1.1,1.1)
+modulate=Color(0.46,0.62,0.49,1)
 [node name="T7" type="Sprite2D" parent="Environment/Vegetation"]
 texture=ExtResource("5_tree")
 position=Vector2(650,1160)
-scale=Vector2(1.3,1.3)
+scale=Vector2(1.5,1.5)
+modulate=Color(0.58,0.70,0.53,1)
 [node name="T8" type="Sprite2D" parent="Environment/Vegetation"]
 texture=ExtResource("5_tree")
 position=Vector2(1780,1120)
+scale=Vector2(1.2,1.2)
+modulate=Color(0.48,0.62,0.48,1)
 [node name="T9" type="Sprite2D" parent="Environment/Vegetation"]
 texture=ExtResource("5_tree")
 position=Vector2(1880,1280)
-scale=Vector2(1.3,1.3)
+scale=Vector2(1.5,1.5)
+modulate=Color(0.55,0.66,0.50,1)
 [node name="T10" type="Sprite2D" parent="Environment/Vegetation"]
 texture=ExtResource("5_tree")
 position=Vector2(1510,1230)
+scale=Vector2(1.15,1.15)
+modulate=Color(0.45,0.60,0.47,1)
 [node name="Dead1" type="Sprite2D" parent="Environment/Vegetation"]
 texture=ExtResource("8_dead")
 position=Vector2(1450,320)
+scale=Vector2(1.25,1.25)
+modulate=Color(0.48,0.34,0.48,1)
 [node name="Dead2" type="Sprite2D" parent="Environment/Vegetation"]
 texture=ExtResource("8_dead")
 position=Vector2(1810,500)
-scale=Vector2(1.2,1.2)
+scale=Vector2(1.45,1.45)
+modulate=Color(0.44,0.30,0.45,1)
 [node name="Dead3" type="Sprite2D" parent="Environment/Vegetation"]
 texture=ExtResource("8_dead")
 position=Vector2(1530,530)
+scale=Vector2(1.1,1.1)
+modulate=Color(0.42,0.29,0.43,1)
 
 [node name="Props" type="Node2D" parent="Environment"]
 [node name="R1" type="Sprite2D" parent="Environment/Props"]
 texture=ExtResource("7_rock")
 position=Vector2(780,590)
+scale=Vector2(1.15,1.15)
+modulate=Color(0.67,0.64,0.61,1)
 [node name="R2" type="Sprite2D" parent="Environment/Props"]
 texture=ExtResource("7_rock")
 position=Vector2(1210,910)
-scale=Vector2(0.8,0.8)
+scale=Vector2(0.85,0.85)
+modulate=Color(0.58,0.56,0.55,1)
 [node name="R3" type="Sprite2D" parent="Environment/Props"]
 texture=ExtResource("7_rock")
 position=Vector2(1330,1040)
-scale=Vector2(1.15,1.15)
+scale=Vector2(1.25,1.25)
+modulate=Color(0.64,0.61,0.59,1)
 [node name="R4" type="Sprite2D" parent="Environment/Props"]
 texture=ExtResource("7_rock")
 position=Vector2(560,930)
-scale=Vector2(0.7,0.7)
+scale=Vector2(0.75,0.75)
+modulate=Color(0.54,0.53,0.52,1)
+[node name="GrassPatch1" type="Polygon2D" parent="Environment/Props"]
+polygon=PackedVector2Array(735,500,825,485,855,540,800,565,720,550)
+color=Color(0.10,0.17,0.09,0.62)
+[node name="GrassPatch2" type="Polygon2D" parent="Environment/Props"]
+polygon=PackedVector2Array(1160,975,1260,960,1305,1010,1245,1050,1150,1030)
+color=Color(0.08,0.15,0.08,0.58)
+[node name="MudPatch" type="Polygon2D" parent="Environment/Props"]
+polygon=PackedVector2Array(840,790,930,765,1050,775,1120,820,1040,860,910,850)
+color=Color(0.12,0.085,0.065,0.48)
 
 [node name="Gameplay" type="Node2D" parent="."]
 [node name="Player" parent="Gameplay" instance=ExtResource("2_player")]
@@ -157,7 +229,7 @@ position=Vector2(2032,768)
 shape=SubResource("wall_v")
 
 [node name="Atmosphere" type="CanvasModulate" parent="."]
-color = Color(0.78,0.82,0.9,1)
+color = Color(0.70,0.75,0.82,1)
 
 [node name="HUD" type="CanvasLayer" parent="."]
 [node name="Backdrop" type="ColorRect" parent="HUD"]
@@ -165,21 +237,21 @@ offset_left=18.0
 offset_top=18.0
 offset_right=555.0
 offset_bottom=118.0
-color=Color(0.018,0.015,0.026,0.84)
+color=Color(0.018,0.015,0.026,0.88)
 mouse_filter=2
 [node name="Accent" type="ColorRect" parent="HUD"]
 offset_left=18.0
 offset_top=18.0
 offset_right=23.0
 offset_bottom=118.0
-color=Color(0.46,0.18,0.55,0.95)
+color=Color(0.55,0.15,0.65,0.95)
 mouse_filter=2
 [node name="AreaName" type="Label" parent="HUD"]
 offset_left=38.0
 offset_top=28.0
 offset_right=540.0
 offset_bottom=65.0
-theme_override_colors/font_color=Color(0.9,0.82,0.95,1)
+theme_override_colors/font_color=Color(0.92,0.84,0.96,1)
 theme_override_font_sizes/font_size=25
 text="GREYHAVEN OUTSKIRTS"
 [node name="Subtitle" type="Label" parent="HUD"]
@@ -187,13 +259,13 @@ offset_left=39.0
 offset_top=64.0
 offset_right=540.0
 offset_bottom=91.0
-theme_override_colors/font_color=Color(0.67,0.65,0.7,1)
+theme_override_colors/font_color=Color(0.69,0.67,0.72,1)
 text="The old north road • Corruption stirs to the east"
 [node name="Controls" type="Label" parent="HUD"]
 offset_left=39.0
 offset_top=92.0
 offset_right=540.0
 offset_bottom=113.0
-theme_override_colors/font_color=Color(0.48,0.45,0.53,1)
+theme_override_colors/font_color=Color(0.50,0.48,0.55,1)
 theme_override_font_sizes/font_size=12
 text="ARROWS Move     Z Interact     X Menu"
