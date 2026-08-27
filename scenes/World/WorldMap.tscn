@@ -1,16 +1,111 @@
-[gd_scene format=3 uid="uid://ylwj148lgat7"]
+[gd_scene load_steps=8 format=3]
 
-[ext_resource type="PackedScene" uid="uid://csm07u1o6gmwi" path="res://scenes/World/treasure_chest.tscn" id="1_c4yfj"]
+[ext_resource type="PackedScene" path="res://scenes/World/treasure_chest.tscn" id="1_chest"]
+[ext_resource type="PackedScene" path="res://scenes/World/player.tscn" id="2_player"]
+[ext_resource type="Texture2D" path="res://assets/world/grass_tile.svg" id="3_grass"]
+[ext_resource type="Texture2D" path="res://assets/world/road_tile.svg" id="4_road"]
+[ext_resource type="Texture2D" path="res://assets/world/tree.svg" id="5_tree"]
+[ext_resource type="Texture2D" path="res://assets/world/ruin.svg" id="6_ruin"]
 
-[node name="WorldMap" type="Node2D" unique_id=1637557160]
+[sub_resource type="RectangleShape2D" id="wall_h"]
+size = Vector2(1536, 32)
+[sub_resource type="RectangleShape2D" id="wall_v"]
+size = Vector2(32, 1024)
 
-[node name="Player" type="CharacterBody2D" parent="." unique_id=123456789]
-position = Vector2(100, 100)
+[node name="WorldMap" type="Node2D"]
 
-[node name="TreasureChest" parent="." unique_id=663256161 instance=ExtResource("1_c4yfj")]
+[node name="Ground" type="Node2D" parent="."]
+
+[node name="Base" type="Polygon2D" parent="Ground"]
+polygon = PackedVector2Array(0,0, 1536,0, 1536,1024, 0,1024)
+color = Color(0.105,0.16,0.125,1)
+
+[node name="VillageClearing" type="Polygon2D" parent="Ground"]
+polygon = PackedVector2Array(210,170, 1320,170, 1320,850, 210,850)
+color = Color(0.145,0.22,0.17,1)
+
+[node name="RoadVertical" type="Polygon2D" parent="Ground"]
+polygon = PackedVector2Array(690,0, 850,0, 850,1024, 690,1024)
+color = Color(0.31,0.27,0.22,1)
+
+[node name="RoadCross" type="Polygon2D" parent="Ground"]
+polygon = PackedVector2Array(210,450, 1320,450, 1320,590, 210,590)
+color = Color(0.31,0.27,0.22,1)
+
+[node name="CorruptionPatch" type="Polygon2D" parent="Ground"]
+polygon = PackedVector2Array(1110,190, 1320,170, 1390,310, 1260,390, 1080,330)
+color = Color(0.20,0.10,0.24,1)
+
+[node name="Ruin" type="Sprite2D" parent="."]
+texture = ExtResource("6_ruin")
+position = Vector2(1160,300)
+
+[node name="Trees" type="Node2D" parent="."]
+[node name="Tree1" type="Sprite2D" parent="Trees"]
+texture = ExtResource("5_tree")
+position = Vector2(250,240)
+[node name="Tree2" type="Sprite2D" parent="Trees"]
+texture = ExtResource("5_tree")
+position = Vector2(340,190)
+[node name="Tree3" type="Sprite2D" parent="Trees"]
+texture = ExtResource("5_tree")
+position = Vector2(1260,690)
+[node name="Tree4" type="Sprite2D" parent="Trees"]
+texture = ExtResource("5_tree")
+position = Vector2(1350,760)
+[node name="Tree5" type="Sprite2D" parent="Trees"]
+texture = ExtResource("5_tree")
+position = Vector2(220,760)
+[node name="Tree6" type="Sprite2D" parent="Trees"]
+texture = ExtResource("5_tree")
+position = Vector2(390,830)
+[node name="Tree7" type="Sprite2D" parent="Trees"]
+texture = ExtResource("5_tree")
+position = Vector2(1410,250)
+[node name="Tree8" type="Sprite2D" parent="Trees"]
+texture = ExtResource("5_tree")
+position = Vector2(105,500)
+
+[node name="Player" parent="." instance=ExtResource("2_player")]
+position = Vector2(770,700)
+
+[node name="TreasureChest" parent="." instance=ExtResource("1_chest")]
+position = Vector2(950,510)
 item_id = "potions"
 amount = 3
 chest_id = "worldmap_potions_1"
 
-[node name="Prison Cell Chest" parent="." unique_id=572846509 instance=ExtResource("1_c4yfj")]
+[node name="PrisonCellChest" parent="." instance=ExtResource("1_chest")]
+position = Vector2(1170,390)
 chest_id = "prison_cell_chest"
+
+[node name="Bounds" type="StaticBody2D" parent="."]
+collision_layer = 1
+collision_mask = 1
+[node name="Top" type="CollisionShape2D" parent="Bounds"]
+position = Vector2(768,16)
+shape = SubResource("wall_h")
+[node name="Bottom" type="CollisionShape2D" parent="Bounds"]
+position = Vector2(768,1008)
+shape = SubResource("wall_h")
+[node name="Left" type="CollisionShape2D" parent="Bounds"]
+position = Vector2(16,512)
+shape = SubResource("wall_v")
+[node name="Right" type="CollisionShape2D" parent="Bounds"]
+position = Vector2(1520,512)
+shape = SubResource("wall_v")
+
+[node name="HUD" type="CanvasLayer" parent="."]
+[node name="AreaName" type="Label" parent="HUD"]
+offset_left = 28.0
+offset_top = 24.0
+offset_right = 500.0
+offset_bottom = 70.0
+theme_override_font_sizes/font_size = 26
+text = "GREYHAVEN OUTSKIRTS"
+[node name="Controls" type="Label" parent="HUD"]
+offset_left = 28.0
+offset_top = 66.0
+offset_right = 500.0
+offset_bottom = 104.0
+text = "Arrow Keys: Move   Z: Interact   X: Menu"
