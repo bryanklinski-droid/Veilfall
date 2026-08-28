@@ -62,8 +62,8 @@ script = ExtResource("1_player")
 [node name="Sprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_aria")
 animation = &"idle_down"
-position = Vector2(0,-31)
-scale = Vector2(0.12,0.12)
+position = Vector2(0,-39)
+scale = Vector2(0.17,0.17)
 texture_filter = 1
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_player")
