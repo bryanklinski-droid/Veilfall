@@ -1,40 +1,51 @@
-[gd_scene load_steps=7 format=3]
+[gd_scene load_steps=8 format=3]
 
 [ext_resource type="Script" path="res://scripts/player/player_controller.gd" id="1_player"]
-[ext_resource type="Texture2D" path="res://assets/art/characters/aria_walk_down.svg" id="2_down"]
-[ext_resource type="Texture2D" path="res://assets/art/characters/aria_walk_up.svg" id="3_up"]
-[ext_resource type="Texture2D" path="res://assets/art/characters/aria_walk_side.svg" id="4_side"]
+[ext_resource type="Texture2D" path="res://assets/art/characters/aria_front.png" id="2_front"]
+[ext_resource type="Texture2D" path="res://assets/art/characters/aria_back.png" id="3_back"]
+[ext_resource type="Texture2D" path="res://assets/art/characters/aria_left.png" id="4_left"]
+[ext_resource type="Texture2D" path="res://assets/art/characters/aria_right.png" id="5_right"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_aria"]
 animations = [{
-"frames": [{"duration": 1.0, "texture": ExtResource("2_down")}],
+"frames": [{"duration": 1.0, "texture": ExtResource("2_front")}],
 "loop": true,
 "name": &"idle_down",
 "speed": 1.0
 }, {
-"frames": [{"duration": 1.0, "texture": ExtResource("4_side")}],
-"loop": true,
-"name": &"idle_side",
-"speed": 1.0
-}, {
-"frames": [{"duration": 1.0, "texture": ExtResource("3_up")}],
+"frames": [{"duration": 1.0, "texture": ExtResource("3_back")}],
 "loop": true,
 "name": &"idle_up",
 "speed": 1.0
 }, {
-"frames": [{"duration": 1.0, "texture": ExtResource("2_down")}],
+"frames": [{"duration": 1.0, "texture": ExtResource("4_left")}],
+"loop": true,
+"name": &"idle_left",
+"speed": 1.0
+}, {
+"frames": [{"duration": 1.0, "texture": ExtResource("5_right")}],
+"loop": true,
+"name": &"idle_right",
+"speed": 1.0
+}, {
+"frames": [{"duration": 1.0, "texture": ExtResource("2_front")}],
 "loop": true,
 "name": &"walk_down",
 "speed": 1.0
 }, {
-"frames": [{"duration": 1.0, "texture": ExtResource("4_side")}],
-"loop": true,
-"name": &"walk_side",
-"speed": 1.0
-}, {
-"frames": [{"duration": 1.0, "texture": ExtResource("3_up")}],
+"frames": [{"duration": 1.0, "texture": ExtResource("3_back")}],
 "loop": true,
 "name": &"walk_up",
+"speed": 1.0
+}, {
+"frames": [{"duration": 1.0, "texture": ExtResource("4_left")}],
+"loop": true,
+"name": &"walk_left",
+"speed": 1.0
+}, {
+"frames": [{"duration": 1.0, "texture": ExtResource("5_right")}],
+"loop": true,
+"name": &"walk_right",
 "speed": 1.0
 }]
 
@@ -51,8 +62,8 @@ script = ExtResource("1_player")
 [node name="Sprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_aria")
 animation = &"idle_down"
-position = Vector2(0,-32)
-scale = Vector2(0.72,0.72)
+position = Vector2(0,-34)
+scale = Vector2(0.64,0.64)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_player")
 [node name="InteractionArea" type="Area2D" parent="."]
