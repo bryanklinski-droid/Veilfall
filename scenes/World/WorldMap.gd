@@ -2,12 +2,14 @@ extends Node2D
 
 const GREYHAVEN_DRESSING := preload("res://scenes/World/greyhaven_dressing.gd")
 const GREYHAVEN_LANDMARK := preload("res://scenes/World/greyhaven_landmark.gd")
+const GREYHAVEN_REFERENCE_OVERHAUL := preload("res://scenes/World/greyhaven_reference_overhaul.gd")
 
 func _ready() -> void:
 	GameState.world_progress.current_scene = "res://scenes/World/WorldMap.tscn"
 	mark_area_visited("WorldMap")
 	_add_environment_dressing()
 	_add_landmark_layer()
+	_add_reference_overhaul()
 	_clear_cottage_tree_overlap()
 	_add_cottage_world_collision()
 	SaveManager.save_game()
@@ -30,8 +32,16 @@ func _add_landmark_layer() -> void:
 	add_child(landmark)
 	move_child(landmark, 2)
 
+func _add_reference_overhaul() -> void:
+	if has_node("GreyhavenReferenceOverhaul"):
+		return
+	var overhaul := Node2D.new()
+	overhaul.name = "GreyhavenReferenceOverhaul"
+	overhaul.set_script(GREYHAVEN_REFERENCE_OVERHAUL)
+	add_child(overhaul)
+	move_child(overhaul, 3)
+
 func _clear_cottage_tree_overlap() -> void:
-	# These legacy scene trees occupy the same footprint as the new cottage.
 	for path in [
 		"Environment/Vegetation/T4",
 		"Environment/Vegetation/T17",
@@ -41,8 +51,6 @@ func _clear_cottage_tree_overlap() -> void:
 		if tree != null:
 			tree.visible = false
 
-	# The older procedural dressing also places pines in this footprint. Hide only
-	# pines inside the cottage clearing; all other dressing remains untouched.
 	var dressing := get_node_or_null("GreyhavenDressing")
 	if dressing != null:
 		var clearing := Rect2(Vector2(390, 245), Vector2(350, 320))
@@ -54,8 +62,6 @@ func _clear_cottage_tree_overlap() -> void:
 						sprite.visible = false
 
 func _add_cottage_world_collision() -> void:
-	# Put the cottage collision beside the map's normal collision bodies rather than
-	# inside the visual landmark layer. This makes the house unambiguously solid.
 	var collision_root := get_node_or_null("Collision")
 	if collision_root == null or collision_root.has_node("CottageBody"):
 		return
@@ -66,11 +72,7 @@ func _add_cottage_world_collision() -> void:
 	body.collision_mask = 1
 	collision_root.add_child(body)
 
-	# Main building footprint. The visible house spans roughly x=404..706 and
-	# y=275..535; this blocks the physical wall/facade while leaving the apron below walkable.
 	_add_cottage_shape(body, Vector2(555, 455), Vector2(300, 160))
-	# Foundation wings keep Aria from slipping through either lower corner while
-	# preserving the centered approach to the doorstep.
 	_add_cottage_shape(body, Vector2(452, 535), Vector2(92, 26))
 	_add_cottage_shape(body, Vector2(658, 535), Vector2(92, 26))
 
