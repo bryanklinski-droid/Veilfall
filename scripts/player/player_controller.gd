@@ -4,19 +4,24 @@ extends CharacterBody2D
 @onready var interaction_area: Area2D = $InteractionArea
 @onready var sprite: AnimatedSprite2D = $Sprite2D
 
+const SPRITE_BASE_POSITION := Vector2(0.0, -32.0)
+const SPRITE_BASE_SCALE := Vector2(0.72, 0.72)
+const WALK_CYCLE_SPEED := 10.0
+
 var menu_open := false
 var menu_layer: CanvasLayer
 var menu_panel: Panel
 var facing := Vector2.DOWN
+var walk_phase := 0.0
 
 func _ready() -> void:
 	_create_menu()
-	_update_animation(Vector2.ZERO)
+	_update_animation(Vector2.ZERO, 0.0)
 
-func _physics_process(_delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	if menu_open:
 		velocity = Vector2.ZERO
-		_update_animation(Vector2.ZERO)
+		_update_animation(Vector2.ZERO, delta)
 		return
 
 	var direction := Vector2.ZERO
@@ -31,9 +36,9 @@ func _physics_process(_delta: float) -> void:
 
 	velocity = direction.normalized() * move_speed
 	move_and_slide()
-	_update_animation(direction)
+	_update_animation(direction, delta)
 
-func _update_animation(direction: Vector2) -> void:
+func _update_animation(direction: Vector2, delta: float) -> void:
 	if direction != Vector2.ZERO:
 		if abs(direction.x) > abs(direction.y):
 			facing = Vector2.RIGHT if direction.x > 0.0 else Vector2.LEFT
@@ -49,6 +54,23 @@ func _update_animation(direction: Vector2) -> void:
 	else:
 		sprite.flip_h = false
 		sprite.play("walk_down" if direction != Vector2.ZERO else "idle_down")
+
+	if direction != Vector2.ZERO:
+		walk_phase = fmod(walk_phase + delta * WALK_CYCLE_SPEED, TAU)
+		var step := sin(walk_phase)
+		var bounce := abs(sin(walk_phase))
+		# Keep the known-good single-frame SVGs and animate the whole sprite safely.
+		sprite.position = SPRITE_BASE_POSITION + Vector2(step * 0.65, -bounce * 1.8)
+		sprite.rotation = step * 0.018
+		sprite.scale = Vector2(
+			SPRITE_BASE_SCALE.x * (1.0 + bounce * 0.012),
+			SPRITE_BASE_SCALE.y * (1.0 - bounce * 0.018)
+		)
+	else:
+		walk_phase = 0.0
+		sprite.position = SPRITE_BASE_POSITION
+		sprite.rotation = 0.0
+		sprite.scale = SPRITE_BASE_SCALE
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed and not event.echo:
