@@ -1,27 +1,52 @@
 extends Node2D
 
-const GREYHAVEN_DRESSING := preload("res://scenes/World/greyhaven_dressing.gd")
 const GREYHAVEN_LANDMARK := preload("res://scenes/World/greyhaven_landmark.gd")
 const GREYHAVEN_REFERENCE_OVERHAUL := preload("res://scenes/World/greyhaven_reference_overhaul.gd")
 
 func _ready() -> void:
 	GameState.world_progress.current_scene = "res://scenes/World/WorldMap.tscn"
 	mark_area_visited("WorldMap")
-	_add_environment_dressing()
+	_prepare_reference_composition()
 	_add_landmark_layer()
 	_add_reference_overhaul()
-	_clear_cottage_tree_overlap()
 	_add_cottage_world_collision()
 	SaveManager.save_game()
 
-func _add_environment_dressing() -> void:
-	if has_node("GreyhavenDressing"):
-		return
-	var dressing := Node2D.new()
-	dressing.name = "GreyhavenDressing"
-	dressing.set_script(GREYHAVEN_DRESSING)
-	add_child(dressing)
-	move_child(dressing, 1)
+func _prepare_reference_composition() -> void:
+	# Retire the prototype dressing and the oversized legacy east-side ruin/corruption.
+	# The base terrain and road remain as the gameplay floor while the focused art layers
+	# below rebuild Greyhaven around the cottage -> road -> board -> corrupted ruin flow.
+	for path in [
+		"Environment/Corruption",
+		"Environment/Structures"
+	]:
+		var node := get_node_or_null(path)
+		if node != null:
+			node.visible = false
+
+	# The old broad forest-mass polygons read as giant geometric wedges underneath the
+	# new composition. Keep the actual ground shader but remove these prototype overlays.
+	for path in [
+		"Environment/Terrain/NorthForestMass",
+		"Environment/Terrain/SouthForestMass",
+		"Environment/Terrain/EastForestMass"
+	]:
+		var node := get_node_or_null(path)
+		if node != null:
+			node.visible = false
+
+	# Clear legacy trees from the cottage and the new eastern landmark corridor. Trees
+	# outside these zones remain as distant/foreground framing.
+	var vegetation := get_node_or_null("Environment/Vegetation")
+	if vegetation != null:
+		var cottage_clear := Rect2(Vector2(210, 190), Vector2(690, 520))
+		var east_clear := Rect2(Vector2(1260, 150), Vector2(720, 850))
+		var road_clear := Rect2(Vector2(820, 250), Vector2(360, 980))
+		for child in vegetation.get_children():
+			if child is Node2D:
+				var item := child as Node2D
+				if cottage_clear.has_point(item.position) or east_clear.has_point(item.position) or road_clear.has_point(item.position):
+					item.visible = false
 
 func _add_landmark_layer() -> void:
 	if has_node("GreyhavenLandmark"):
@@ -40,26 +65,6 @@ func _add_reference_overhaul() -> void:
 	overhaul.set_script(GREYHAVEN_REFERENCE_OVERHAUL)
 	add_child(overhaul)
 	move_child(overhaul, 3)
-
-func _clear_cottage_tree_overlap() -> void:
-	for path in [
-		"Environment/Vegetation/T4",
-		"Environment/Vegetation/T17",
-		"Environment/Vegetation/T18"
-	]:
-		var tree := get_node_or_null(path)
-		if tree != null:
-			tree.visible = false
-
-	var dressing := get_node_or_null("GreyhavenDressing")
-	if dressing != null:
-		var clearing := Rect2(Vector2(390, 245), Vector2(350, 320))
-		for child in dressing.get_children():
-			if child is Sprite2D:
-				var sprite := child as Sprite2D
-				if sprite.texture != null and sprite.texture.resource_path.ends_with("greyhaven_pine.svg"):
-					if clearing.has_point(sprite.position):
-						sprite.visible = false
 
 func _add_cottage_world_collision() -> void:
 	var collision_root := get_node_or_null("Collision")
