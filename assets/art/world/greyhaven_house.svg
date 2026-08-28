@@ -1,23 +1,69 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="256" height="220" viewBox="0 0 256 220">
 <defs>
- <linearGradient id="wall" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9a5b45"/><stop offset="1" stop-color="#5b332c"/></linearGradient>
- <linearGradient id="roof" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3c343d"/><stop offset="1" stop-color="#1e1b22"/></linearGradient>
- <linearGradient id="glow" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffd987"/><stop offset="1" stop-color="#f08b4a"/></linearGradient>
+  <linearGradient id="plaster" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8f705f"/><stop offset=".55" stop-color="#745447"/><stop offset="1" stop-color="#49352f"/></linearGradient>
+  <linearGradient id="timber" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#21191a"/><stop offset=".5" stop-color="#4f372d"/><stop offset="1" stop-color="#21191a"/></linearGradient>
+  <linearGradient id="roof" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#49434e"/><stop offset=".52" stop-color="#2b2931"/><stop offset="1" stop-color="#18171d"/></linearGradient>
+  <linearGradient id="stone" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#686a64"/><stop offset="1" stop-color="#343a37"/></linearGradient>
+  <radialGradient id="windowGlow"><stop offset="0" stop-color="#fff0af" stop-opacity=".98"/><stop offset=".55" stop-color="#f3b35b" stop-opacity=".82"/><stop offset="1" stop-color="#d46e38" stop-opacity=".08"/></radialGradient>
 </defs>
-<ellipse cx="128" cy="205" rx="102" ry="10" fill="#09090d" opacity=".28"/>
-<path d="M28 90 L128 18 228 90 214 103 128 43 42 103Z" fill="url(#roof)" stroke="#15131a" stroke-width="5"/>
-<rect x="47" y="88" width="162" height="102" rx="4" fill="url(#wall)" stroke="#2a1c1c" stroke-width="5"/>
-<path d="M63 91 V188 M91 91 V188 M165 91 V188 M193 91 V188" stroke="#2f2325" stroke-width="8" opacity=".7"/>
-<path d="M47 124 H209 M47 159 H209" stroke="#3a2728" stroke-width="7" opacity=".75"/>
-<rect x="109" y="125" width="38" height="65" rx="3" fill="#251a1d" stroke="#171116" stroke-width="4"/>
-<circle cx="138" cy="156" r="3" fill="#bd8d58"/>
-<rect x="64" y="112" width="28" height="30" fill="#22212a" stroke="#17161c" stroke-width="4"/>
-<rect x="67" y="115" width="22" height="24" fill="url(#glow)"/>
-<path d="M78 115 V139 M67 127 H89" stroke="#4a332c" stroke-width="3"/>
-<rect x="165" y="112" width="28" height="30" fill="#22212a" stroke="#17161c" stroke-width="4"/>
-<rect x="168" y="115" width="22" height="24" fill="url(#glow)"/>
-<path d="M179 115 V139 M168 127 H190" stroke="#4a332c" stroke-width="3"/>
-<rect x="36" y="176" width="184" height="15" fill="#3f332f" opacity=".9"/>
-<path d="M24 191 H232" stroke="#746259" stroke-width="5" opacity=".55"/>
-<path d="M50 82 Q128 45 206 82" stroke="#6e6674" stroke-width="3" opacity=".35" fill="none"/>
+<ellipse cx="128" cy="204" rx="111" ry="12" fill="#08090b" opacity=".34"/>
+<ellipse cx="83" cy="157" rx="40" ry="35" fill="#e6a052" opacity=".08"/>
+<ellipse cx="180" cy="157" rx="40" ry="35" fill="#e6a052" opacity=".08"/>
+
+<!-- crooked stone foundation -->
+<path d="M37 174L48 166L207 167L220 177L214 197L42 198Z" fill="url(#stone)" stroke="#242826" stroke-width="3"/>
+<path d="M45 181L72 174L94 183L118 174L145 183L169 174L198 182L216 177" fill="none" stroke="#85847b" stroke-width="2" opacity=".34"/>
+<path d="M66 171V193M106 173V196M151 173V195M190 172V194" stroke="#292f2c" stroke-width="2" opacity=".75"/>
+
+<!-- main plastered timber body -->
+<path d="M45 84L66 76L193 78L211 92L208 177L48 178Z" fill="url(#plaster)" stroke="#261c1d" stroke-width="4"/>
+<path d="M58 84V175M91 80V177M164 80V177M198 88V174" stroke="url(#timber)" stroke-width="8"/>
+<path d="M46 119H209M47 153H208" stroke="#3b2a27" stroke-width="6" opacity=".86"/>
+<path d="M59 118L90 84M91 119L60 86M165 119L198 88M198 120L165 83" stroke="#392723" stroke-width="5" opacity=".86"/>
+
+<!-- layered slate roof -->
+<path d="M21 91L66 56L122 17L177 46L232 88L218 104L126 48L38 106Z" fill="#15141a" stroke="#100f13" stroke-width="5"/>
+<path d="M27 85L70 52L124 21L177 50L226 86L213 96L126 45L42 98Z" fill="url(#roof)"/>
+<path d="M45 77L126 33L207 79M37 88L126 43L216 91" fill="none" stroke="#6e6873" stroke-width="2" opacity=".33"/>
+<path d="M57 68L74 75M78 57L97 65M102 44L121 52M136 45L156 54M161 57L181 66M186 70L205 81" stroke="#88808d" stroke-width="3" opacity=".22"/>
+<path d="M61 64L56 75M91 49L86 61M151 50L148 61M186 65L181 76" stroke="#1d1c22" stroke-width="3" opacity=".9"/>
+
+<!-- chimney -->
+<path d="M176 22L194 25L191 62L174 58Z" fill="#4b423e" stroke="#231e1f" stroke-width="3"/>
+<path d="M172 23L197 26L196 32L171 29Z" fill="#68605b"/>
+<path d="M182 15C177 9 181 5 188 7C192 2 199 5 199 11" fill="none" stroke="#77747d" stroke-width="4" opacity=".20" stroke-linecap="round"/>
+
+<!-- windows -->
+<g>
+  <rect x="66" y="112" width="31" height="32" rx="2" fill="#17171d" stroke="#21191a" stroke-width="4"/>
+  <rect x="70" y="116" width="23" height="24" fill="url(#windowGlow)"/>
+  <path d="M81.5 116V140M70 128H93" stroke="#49342c" stroke-width="3"/>
+  <rect x="162" y="111" width="31" height="33" rx="2" fill="#17171d" stroke="#21191a" stroke-width="4"/>
+  <rect x="166" y="115" width="23" height="25" fill="url(#windowGlow)"/>
+  <path d="M177.5 115V140M166 127.5H189" stroke="#49342c" stroke-width="3"/>
+</g>
+
+<!-- door, awning, steps -->
+<path d="M109 121H148L150 179H106Z" fill="#21191b" stroke="#171216" stroke-width="4"/>
+<path d="M113 126H144L145 176H110Z" fill="#362621"/>
+<path d="M113 145H145M128 126V176" stroke="#4d352a" stroke-width="2" opacity=".72"/>
+<circle cx="139" cy="151" r="3" fill="#c79a53"/>
+<path d="M99 119L128 105L157 120L150 126H106Z" fill="#2b252a" stroke="#17151a" stroke-width="3"/>
+<path d="M96 178H160L166 185H91Z" fill="#5e5a54" stroke="#292d2a" stroke-width="2"/>
+<path d="M90 186H167L174 194H82Z" fill="#4c504b" stroke="#292d2a" stroke-width="2"/>
+
+<!-- ivy and moss -->
+<g fill="#506345" opacity=".92">
+  <ellipse cx="48" cy="105" rx="7" ry="4"/><ellipse cx="53" cy="112" rx="8" ry="4"/><ellipse cx="49" cy="122" rx="6" ry="4"/>
+  <ellipse cx="204" cy="128" rx="8" ry="4"/><ellipse cx="201" cy="137" rx="7" ry="4"/><ellipse cx="206" cy="146" rx="6" ry="4"/>
+</g>
+<path d="M51 98C46 116 53 136 45 157M205 119C210 135 201 153 207 168" fill="none" stroke="#344634" stroke-width="2"/>
+<path d="M42 194C67 187 86 194 104 191C130 187 147 194 168 190C190 187 203 193 216 189" fill="none" stroke="#657252" stroke-width="5" opacity=".78"/>
+
+<!-- hanging roadside sign -->
+<path d="M211 104V153" stroke="#30231f" stroke-width="5"/>
+<path d="M209 108H237" stroke="#3d2c25" stroke-width="4"/>
+<path d="M231 108V116" stroke="#8b704d" stroke-width="2"/>
+<path d="M217 116H245L242 137H214Z" fill="#584031" stroke="#241b19" stroke-width="3"/>
+<path d="M221 122H239" stroke="#c79a5a" stroke-width="2" opacity=".6"/>
 </svg>
