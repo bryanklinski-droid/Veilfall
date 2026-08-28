@@ -4,24 +4,22 @@ extends CharacterBody2D
 @onready var interaction_area: Area2D = $InteractionArea
 @onready var sprite: AnimatedSprite2D = $Sprite2D
 
-const SPRITE_BASE_POSITION := Vector2(0.0, -32.0)
-const SPRITE_BASE_SCALE := Vector2(0.72, 0.72)
-const WALK_CYCLE_SPEED := 8.0
+const SPRITE_BASE_POSITION := Vector2(0.0, -34.0)
+const SPRITE_BASE_SCALE := Vector2(0.64, 0.64)
 
 var menu_open := false
 var menu_layer: CanvasLayer
 var menu_panel: Panel
 var facing := Vector2.DOWN
-var walk_phase := 0.0
 
 func _ready() -> void:
 	_create_menu()
-	_update_animation(Vector2.ZERO, 0.0)
+	_update_animation(Vector2.ZERO)
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	if menu_open:
 		velocity = Vector2.ZERO
-		_update_animation(Vector2.ZERO, delta)
+		_update_animation(Vector2.ZERO)
 		return
 
 	var direction := Vector2.ZERO
@@ -36,38 +34,29 @@ func _physics_process(delta: float) -> void:
 
 	velocity = direction.normalized() * move_speed
 	move_and_slide()
-	_update_animation(direction, delta)
+	_update_animation(direction)
 
-func _update_animation(direction: Vector2, delta: float) -> void:
+func _update_animation(direction: Vector2) -> void:
 	if direction != Vector2.ZERO:
 		if abs(direction.x) > abs(direction.y):
 			facing = Vector2.RIGHT if direction.x > 0.0 else Vector2.LEFT
 		else:
 			facing = Vector2.DOWN if direction.y > 0.0 else Vector2.UP
 
-	if facing == Vector2.LEFT or facing == Vector2.RIGHT:
-		sprite.flip_h = facing == Vector2.LEFT
-		sprite.play("walk_side" if direction != Vector2.ZERO else "idle_side")
+	sprite.flip_h = false
+	if facing == Vector2.LEFT:
+		sprite.play("walk_left" if direction != Vector2.ZERO else "idle_left")
+	elif facing == Vector2.RIGHT:
+		sprite.play("walk_right" if direction != Vector2.ZERO else "idle_right")
 	elif facing == Vector2.UP:
-		sprite.flip_h = false
 		sprite.play("walk_up" if direction != Vector2.ZERO else "idle_up")
 	else:
-		sprite.flip_h = false
 		sprite.play("walk_down" if direction != Vector2.ZERO else "idle_down")
 
-	if direction != Vector2.ZERO:
-		walk_phase = fmod(walk_phase + delta * WALK_CYCLE_SPEED, TAU)
-		var step: float = sin(walk_phase)
-		var bounce: float = absf(sin(walk_phase * 0.5))
-		# Keep motion understated until we have true frame-by-frame leg and cloak animation.
-		sprite.position = SPRITE_BASE_POSITION + Vector2(step * 0.20, -bounce * 0.45)
-		sprite.rotation = 0.0
-		sprite.scale = SPRITE_BASE_SCALE
-	else:
-		walk_phase = 0.0
-		sprite.position = SPRITE_BASE_POSITION
-		sprite.rotation = 0.0
-		sprite.scale = SPRITE_BASE_SCALE
+	# Preserve the concept-sheet sprite exactly; no procedural bounce or deformation.
+	sprite.position = SPRITE_BASE_POSITION
+	sprite.rotation = 0.0
+	sprite.scale = SPRITE_BASE_SCALE
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed and not event.echo:
