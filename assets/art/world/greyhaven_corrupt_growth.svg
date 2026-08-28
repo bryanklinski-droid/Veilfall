@@ -1,11 +1,14 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="260" height="180" viewBox="0 0 260 180">
-<g fill="none" stroke-linecap="round">
-  <path d="M8 151C50 120 62 154 103 112S169 95 252 34" stroke="#211923" stroke-width="14" opacity=".48"/>
-  <path d="M8 151C50 120 62 154 103 112S169 95 252 34" stroke="#5e2a63" stroke-width="4" opacity=".82"/>
-  <path d="M47 132l-13-29M92 120l17-31M141 93l-5-34M181 73l22-25M219 50l-3-26" stroke="#743079" stroke-width="3" opacity=".82"/>
-  <path d="M48 132l-13-29M92 120l17-31M141 93l-5-34M181 73l22-25M219 50l-3-26" stroke="#b14ab3" stroke-width="1.2" opacity=".7"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="280" height="190" viewBox="0 0 280 190">
+<defs><radialGradient id="node"><stop offset="0" stop-color="#c96fd1" stop-opacity=".58"/><stop offset="1" stop-color="#6d3375" stop-opacity="0"/></radialGradient></defs>
+<g fill="#17131a" opacity=".42"><path d="M4 159c38-23 68-10 94-37 26-28 44-43 78-42 33 1 56-18 96-55l7 15c-37 38-67 58-99 58-31 0-51 13-72 37-26 29-57 34-94 43z"/></g>
+<g fill="none" stroke-linecap="round" stroke-linejoin="round">
+<path d="M8 157c45-24 66-8 96-38 33-33 55-35 82-38 31-4 51-24 86-54" stroke="#241925" stroke-width="15" opacity=".62"/>
+<path d="M8 157c45-24 66-8 96-38 33-33 55-35 82-38 31-4 51-24 86-54" stroke="#66306e" stroke-width="4.5" opacity=".92"/>
+<path d="M49 139 31 110M88 128l15-34M129 102l-9-35M168 87l23-28M212 63l-2-29M235 50l25 2" stroke="#7e3d88" stroke-width="3.2" opacity=".9"/>
+<path d="M49 139 31 110M88 128l15-34M129 102l-9-35M168 87l23-28M212 63l-2-29M235 50l25 2" stroke="#c05fca" stroke-width="1.1" opacity=".66"/>
+<path d="M31 110 18 97M103 94l17-14M191 59l-8-18M210 34l12-13" stroke="#57265f" stroke-width="2.4" opacity=".76"/>
 </g>
-<g fill="#76307b" opacity=".62">
-  <circle cx="35" cy="102" r="3"/><circle cx="109" cy="88" r="4"/><circle cx="136" cy="58" r="3"/><circle cx="203" cy="48" r="3"/><circle cx="216" cy="23" r="2.5"/>
-</g>
+<g fill="#73347c" opacity=".72"><circle cx="31" cy="110" r="3"/><circle cx="104" cy="93" r="4"/><circle cx="120" cy="67" r="3"/><circle cx="191" cy="59" r="3.5"/><circle cx="210" cy="34" r="3"/></g>
+<g fill="url(#node)"><circle cx="104" cy="93" r="11"/><circle cx="191" cy="59" r="9"/></g>
+<g fill="#2f2732" opacity=".5"><ellipse cx="72" cy="151" rx="12" ry="4"/><ellipse cx="151" cy="101" rx="10" ry="3"/><ellipse cx="223" cy="68" rx="9" ry="3"/></g>
 </svg>
