@@ -2,17 +2,21 @@ extends CharacterBody2D
 
 @export var move_speed: float = 180.0
 @onready var interaction_area: Area2D = $InteractionArea
+@onready var sprite: AnimatedSprite2D = $Sprite2D
 
 var menu_open := false
 var menu_layer: CanvasLayer
 var menu_panel: Panel
+var facing := Vector2.DOWN
 
 func _ready() -> void:
 	_create_menu()
+	_update_animation(Vector2.ZERO)
 
 func _physics_process(_delta: float) -> void:
 	if menu_open:
 		velocity = Vector2.ZERO
+		_update_animation(Vector2.ZERO)
 		return
 
 	var direction := Vector2.ZERO
@@ -27,6 +31,24 @@ func _physics_process(_delta: float) -> void:
 
 	velocity = direction.normalized() * move_speed
 	move_and_slide()
+	_update_animation(direction)
+
+func _update_animation(direction: Vector2) -> void:
+	if direction != Vector2.ZERO:
+		if abs(direction.x) > abs(direction.y):
+			facing = Vector2.RIGHT if direction.x > 0.0 else Vector2.LEFT
+		else:
+			facing = Vector2.DOWN if direction.y > 0.0 else Vector2.UP
+
+	if facing == Vector2.LEFT or facing == Vector2.RIGHT:
+		sprite.flip_h = facing == Vector2.LEFT
+		sprite.play("walk_side" if direction != Vector2.ZERO else "idle_side")
+	elif facing == Vector2.UP:
+		sprite.flip_h = false
+		sprite.play("walk_up" if direction != Vector2.ZERO else "idle_up")
+	else:
+		sprite.flip_h = false
+		sprite.play("walk_down" if direction != Vector2.ZERO else "idle_down")
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed and not event.echo:
