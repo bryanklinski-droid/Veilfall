@@ -13,6 +13,7 @@ const STONE := preload("res://assets/art/world/greyhaven_stone.svg")
 
 func _ready() -> void:
 	z_index = 1
+	_add_organic_terrain_blends()
 	_add_ground_layers()
 	_add_road_wear()
 	_add_cobbles()
@@ -35,11 +36,33 @@ func _sprite(texture: Texture2D, pos: Vector2, scale_value := 1.0, mod := Color.
 	add_child(s)
 	return s
 
-func _patch(points: PackedVector2Array, color: Color) -> void:
+func _patch(points: PackedVector2Array, color: Color, patch_z := 0) -> void:
 	var p := Polygon2D.new()
 	p.polygon = points
 	p.color = color
+	p.z_index = patch_z
 	add_child(p)
+
+func _add_organic_terrain_blends() -> void:
+	# Irregular low-contrast terrain masses hide the old angular forest polygons and
+	# create the kind of layered verge seen in hand-composed JRPG maps.
+	var forest_blends := [
+		[PackedVector2Array([Vector2(0,520),Vector2(110,500),Vector2(225,525),Vector2(350,495),Vector2(470,530),Vector2(590,505),Vector2(700,545),Vector2(820,520),Vector2(900,565),Vector2(860,640),Vector2(720,625),Vector2(585,655),Vector2(430,628),Vector2(280,660),Vector2(130,630),Vector2(0,650)]),Color(0.07,0.12,0.075,0.34)],
+		[PackedVector2Array([Vector2(0,870),Vector2(135,845),Vector2(260,875),Vector2(390,850),Vector2(525,885),Vector2(665,860),Vector2(780,900),Vector2(845,970),Vector2(830,1080),Vector2(735,1035),Vector2(610,1065),Vector2(470,1030),Vector2(330,1070),Vector2(180,1035),Vector2(0,1070)]),Color(0.065,0.115,0.072,0.31)],
+		[PackedVector2Array([Vector2(1130,620),Vector2(1245,600),Vector2(1360,630),Vector2(1485,605),Vector2(1605,640),Vector2(1740,615),Vector2(1875,650),Vector2(2048,625),Vector2(2048,820),Vector2(1900,800),Vector2(1760,830),Vector2(1625,805),Vector2(1490,835),Vector2(1360,810),Vector2(1235,840),Vector2(1145,800)]),Color(0.06,0.105,0.07,0.30)]
+	]
+	for data in forest_blends:
+		_patch(data[0], data[1], -1)
+
+	# Smaller soil/leaf-litter tongues make the road transition feel grown-in instead of cut out.
+	var verge_patches := [
+		[PackedVector2Array([Vector2(820,585),Vector2(905,560),Vector2(930,625),Vector2(902,700),Vector2(820,680),Vector2(780,630)]),Color(0.16,0.13,0.09,0.18)],
+		[PackedVector2Array([Vector2(1065,420),Vector2(1145,405),Vector2(1180,455),Vector2(1150,520),Vector2(1070,535),Vector2(1038,485)]),Color(0.15,0.12,0.085,0.16)],
+		[PackedVector2Array([Vector2(845,940),Vector2(920,925),Vector2(945,985),Vector2(920,1050),Vector2(835,1060),Vector2(805,1005)]),Color(0.15,0.12,0.08,0.16)],
+		[PackedVector2Array([Vector2(1080,980),Vector2(1150,965),Vector2(1190,1010),Vector2(1165,1075),Vector2(1085,1090),Vector2(1045,1035)]),Color(0.13,0.105,0.08,0.14)]
+	]
+	for data in verge_patches:
+		_patch(data[0], data[1], 0)
 
 func _add_ground_layers() -> void:
 	var normal_detail := [
@@ -48,13 +71,13 @@ func _add_ground_layers() -> void:
 		[Vector2(1250,350),0.55,-0.04],[Vector2(1320,1080),0.60,0.05]
 	]
 	for data in normal_detail:
-		_sprite(GROUND_DETAIL, data[0], data[1], Color(0.82,0.88,0.72,0.62), data[2])
+		_sprite(GROUND_DETAIL, data[0], data[1], Color(0.82,0.88,0.72,0.54), data[2])
 	var sick_detail := [
 		[Vector2(1450,380),0.62,0.04],[Vector2(1510,610),0.72,-0.06],
 		[Vector2(1580,875),0.66,0.07],[Vector2(1740,990),0.58,-0.03]
 	]
 	for data in sick_detail:
-		_sprite(GROUND_DETAIL, data[0], data[1], Color(0.50,0.48,0.42,0.50), data[2])
+		_sprite(GROUND_DETAIL, data[0], data[1], Color(0.50,0.48,0.42,0.42), data[2])
 
 func _embedded_stone(pos: Vector2, size: Vector2, rotation_value: float, stone_color: Color) -> void:
 	var shadow := Polygon2D.new()
@@ -62,7 +85,7 @@ func _embedded_stone(pos: Vector2, size: Vector2, rotation_value: float, stone_c
 	shadow.position = pos + Vector2(1.0,1.5)
 	shadow.scale = size
 	shadow.rotation = rotation_value
-	shadow.color = Color(0.07,0.06,0.05,0.16)
+	shadow.color = Color(0.07,0.06,0.05,0.12)
 	add_child(shadow)
 	var stone := Polygon2D.new()
 	stone.polygon = PackedVector2Array([Vector2(-0.52,-0.28),Vector2(-0.25,-0.50),Vector2(0.23,-0.46),Vector2(0.52,-0.14),Vector2(0.41,0.28),Vector2(0.07,0.47),Vector2(-0.39,0.33)])
@@ -74,18 +97,18 @@ func _embedded_stone(pos: Vector2, size: Vector2, rotation_value: float, stone_c
 
 func _add_road_wear() -> void:
 	var patches := [
-		[PackedVector2Array([Vector2(928,250),Vector2(1018,238),Vector2(1042,325),Vector2(947,344)]),Color(0.18,0.12,0.08,0.10)],
-		[PackedVector2Array([Vector2(934,500),Vector2(1024,486),Vector2(1055,590),Vector2(945,612)]),Color(0.12,0.09,0.07,0.09)],
-		[PackedVector2Array([Vector2(920,665),Vector2(1040,650),Vector2(1060,740),Vector2(925,755)]),Color(0.22,0.16,0.10,0.09)],
-		[PackedVector2Array([Vector2(725,718),Vector2(905,715),Vector2(912,802),Vector2(735,810)]),Color(0.16,0.11,0.08,0.08)],
-		[PackedVector2Array([Vector2(1090,713),Vector2(1320,705),Vector2(1328,790),Vector2(1098,798)]),Color(0.14,0.10,0.07,0.08)],
-		[PackedVector2Array([Vector2(936,980),Vector2(1030,968),Vector2(1050,1080),Vector2(942,1092)]),Color(0.18,0.12,0.08,0.09)]
+		[PackedVector2Array([Vector2(928,250),Vector2(1018,238),Vector2(1042,325),Vector2(947,344)]),Color(0.18,0.12,0.08,0.08)],
+		[PackedVector2Array([Vector2(934,500),Vector2(1024,486),Vector2(1055,590),Vector2(945,612)]),Color(0.12,0.09,0.07,0.07)],
+		[PackedVector2Array([Vector2(920,665),Vector2(1040,650),Vector2(1060,740),Vector2(925,755)]),Color(0.22,0.16,0.10,0.07)],
+		[PackedVector2Array([Vector2(725,718),Vector2(905,715),Vector2(912,802),Vector2(735,810)]),Color(0.16,0.11,0.08,0.06)],
+		[PackedVector2Array([Vector2(1090,713),Vector2(1320,705),Vector2(1328,790),Vector2(1098,798)]),Color(0.14,0.10,0.07,0.06)],
+		[PackedVector2Array([Vector2(936,980),Vector2(1030,968),Vector2(1050,1080),Vector2(942,1092)]),Color(0.18,0.12,0.08,0.07)]
 	]
 	for data in patches:
 		_patch(data[0], data[1])
 	for data in [
-		[PackedVector2Array([Vector2(954,0),Vector2(962,260),Vector2(956,520),Vector2(966,790),Vector2(958,1060),Vector2(968,1536)]),2.0,Color(0.10,0.07,0.05,0.12)],
-		[PackedVector2Array([Vector2(1010,0),Vector2(1004,270),Vector2(1014,540),Vector2(1006,795),Vector2(1018,1070),Vector2(1010,1536)]),2.0,Color(0.10,0.07,0.05,0.10)]
+		[PackedVector2Array([Vector2(954,0),Vector2(962,260),Vector2(956,520),Vector2(966,790),Vector2(958,1060),Vector2(968,1536)]),1.5,Color(0.10,0.07,0.05,0.09)],
+		[PackedVector2Array([Vector2(1010,0),Vector2(1004,270),Vector2(1014,540),Vector2(1006,795),Vector2(1018,1070),Vector2(1010,1536)]),1.5,Color(0.10,0.07,0.05,0.08)]
 	]:
 		var line := Line2D.new()
 		line.points = data[0]
@@ -95,17 +118,17 @@ func _add_road_wear() -> void:
 
 func _add_cobbles() -> void:
 	var stones := [
-		[Vector2(956,130),Vector2(14,8),-0.18],[Vector2(989,145),Vector2(12,8),0.10],[Vector2(1007,232),Vector2(15,8),-0.12],
-		[Vector2(950,330),Vector2(13,8),0.08],[Vector2(986,350),Vector2(15,9),-0.04],[Vector2(1004,466),Vector2(14,8),0.05],
-		[Vector2(948,555),Vector2(13,8),0.11],[Vector2(987,574),Vector2(12,7),-0.08],[Vector2(957,665),Vector2(12,7),-0.04],
-		[Vector2(995,688),Vector2(14,8),0.12],[Vector2(926,744),Vector2(13,8),0.06],[Vector2(966,760),Vector2(15,9),-0.10],
-		[Vector2(1009,742),Vector2(12,8),0.15],[Vector2(1044,773),Vector2(14,8),-0.02],[Vector2(838,768),Vector2(12,7),-0.14],
-		[Vector2(751,749),Vector2(10,6),0.09],[Vector2(1180,766),Vector2(12,7),-0.06],[Vector2(1285,748),Vector2(10,6),0.12],
-		[Vector2(958,860),Vector2(12,7),0.10],[Vector2(1000,884),Vector2(14,8),-0.05],[Vector2(970,1012),Vector2(13,8),-0.11],
-		[Vector2(1008,1146),Vector2(13,8),-0.15],[Vector2(974,1272),Vector2(12,7),0.12]
+		[Vector2(956,130),Vector2(12,7),-0.18],[Vector2(989,145),Vector2(10,7),0.10],[Vector2(1007,232),Vector2(13,7),-0.12],
+		[Vector2(950,330),Vector2(11,7),0.08],[Vector2(986,350),Vector2(13,8),-0.04],[Vector2(1004,466),Vector2(12,7),0.05],
+		[Vector2(948,555),Vector2(11,7),0.11],[Vector2(987,574),Vector2(10,6),-0.08],[Vector2(957,665),Vector2(10,6),-0.04],
+		[Vector2(995,688),Vector2(12,7),0.12],[Vector2(926,744),Vector2(11,7),0.06],[Vector2(966,760),Vector2(13,8),-0.10],
+		[Vector2(1009,742),Vector2(10,7),0.15],[Vector2(1044,773),Vector2(12,7),-0.02],[Vector2(838,768),Vector2(10,6),-0.14],
+		[Vector2(751,749),Vector2(9,5),0.09],[Vector2(1180,766),Vector2(10,6),-0.06],[Vector2(1285,748),Vector2(9,5),0.12],
+		[Vector2(958,860),Vector2(10,6),0.10],[Vector2(1000,884),Vector2(12,7),-0.05],[Vector2(970,1012),Vector2(11,7),-0.11],
+		[Vector2(1008,1146),Vector2(11,7),-0.15],[Vector2(974,1272),Vector2(10,6),0.12]
 	]
 	for data in stones:
-		_embedded_stone(data[0], data[1], data[2], Color(0.25,0.25,0.22,0.44))
+		_embedded_stone(data[0], data[1], data[2], Color(0.29,0.28,0.25,0.34))
 
 func _add_boundaries() -> void:
 	for data in [
@@ -118,7 +141,6 @@ func _add_boundaries() -> void:
 		fence.z_index = 1
 
 func _add_composed_edges() -> void:
-	# Larger, overlapping environment masses replace the old "objects on a lawn" feeling.
 	for data in [
 		[Vector2(390,640),0.62,-0.04,Color(0.74,0.77,0.64,0.88)],
 		[Vector2(645,1120),0.56,0.03,Color(0.66,0.70,0.58,0.82)],
@@ -138,7 +160,6 @@ func _add_composed_edges() -> void:
 		var bed := _sprite(FLOWER_BED, data[0], data[1], data[3], data[2])
 		bed.z_index = 2
 
-	# A few overlapping trees anchor the masses instead of dotting trees uniformly across the field.
 	for data in [
 		[Vector2(330,520),0.92,-0.03,Color(0.84,0.90,0.82,0.96)],
 		[Vector2(510,500),0.72,0.02,Color(0.76,0.83,0.73,0.92)],
@@ -149,9 +170,22 @@ func _add_composed_edges() -> void:
 		tree.z_index = 3
 
 func _add_road_edge_growth() -> void:
-	var edge_growth := [[Vector2(900,315),0.22],[Vector2(1070,405),0.18],[Vector2(895,590),0.20],[Vector2(1080,625),0.16],[Vector2(888,930),0.20],[Vector2(1082,1035),0.18],[Vector2(530,680),0.18],[Vector2(700,820),0.16],[Vector2(1260,680),0.17],[Vector2(1440,825),0.15],[Vector2(1640,690),0.14]]
+	var edge_growth := [
+		[Vector2(895,300),0.20,-0.06],[Vector2(1082,385),0.18,0.05],[Vector2(887,565),0.19,0.03],[Vector2(1088,615),0.17,-0.05],
+		[Vector2(880,910),0.19,-0.04],[Vector2(1090,1018),0.18,0.04],[Vector2(515,680),0.18,-0.02],[Vector2(690,820),0.17,0.04],
+		[Vector2(1255,675),0.18,-0.04],[Vector2(1435,825),0.16,0.05],[Vector2(1635,690),0.15,-0.03]
+	]
 	for data in edge_growth:
-		_sprite(FOLIAGE, data[0], data[1], Color(0.52,0.62,0.47,0.50))
+		_sprite(FOLIAGE, data[0], data[1], Color(0.54,0.64,0.48,0.46), data[2])
+	# Small flower beds break the straight visual seam between grass and road.
+	for data in [
+		[Vector2(850,525),0.20,-0.04,Color(0.80,0.80,0.64,0.62)],
+		[Vector2(1120,590),0.17,0.05,Color(0.74,0.74,0.60,0.56)],
+		[Vector2(820,965),0.19,0.03,Color(0.78,0.77,0.62,0.58)],
+		[Vector2(1195,980),0.17,-0.04,Color(0.68,0.66,0.56,0.50)]
+	]:
+		var verge := _sprite(FLOWER_BED, data[0], data[1], data[3], data[2])
+		verge.z_index = 1
 
 func _add_foliage() -> void:
 	var spots := [
@@ -160,7 +194,7 @@ func _add_foliage() -> void:
 		[Vector2(1320,570),0.54],[Vector2(1185,420),0.40],[Vector2(1240,530),0.34],[Vector2(1170,610),0.28]
 	]
 	for data in spots:
-		_sprite(FOLIAGE, data[0], data[1], Color(0.76,0.86,0.70,0.72))
+		_sprite(FOLIAGE, data[0], data[1], Color(0.76,0.86,0.70,0.68))
 
 func _add_roadside_props() -> void:
 	for data in [[Vector2(835,360),0.66],[Vector2(1135,510),0.56],[Vector2(830,1120),0.60],[Vector2(1160,1240),0.66]]:
@@ -168,7 +202,7 @@ func _add_roadside_props() -> void:
 	for data in [[Vector2(785,690),0.64],[Vector2(1190,850),0.54],[Vector2(1380,650),0.48],[Vector2(1515,870),0.36]]:
 		_sprite(STONE, data[0], data[1], Color(0.76,0.78,0.72,0.88))
 	for pos in [Vector2(865,690),Vector2(1115,690),Vector2(865,875),Vector2(1115,875)]:
-		var lantern := _sprite(LANTERN, pos, 0.53, Color(0.88,0.83,0.70,0.78))
+		var lantern := _sprite(LANTERN, pos, 0.53, Color(0.88,0.83,0.70,0.82))
 		lantern.z_index = 2
 
 func _add_roadside_story_props() -> void:
@@ -187,10 +221,10 @@ func _add_corruption_transition() -> void:
 	]:
 		_sprite(FOLIAGE, data[0], data[1], data[2])
 	for data in [
-		[Vector2(1505,525),0.58,-0.16,Color(0.64,0.50,0.64,0.48)],
-		[Vector2(1630,650),0.72,0.10,Color(0.72,0.54,0.74,0.58)],
-		[Vector2(1740,790),0.86,-0.08,Color(0.82,0.60,0.84,0.66)],
-		[Vector2(1810,960),0.74,0.16,Color(0.76,0.52,0.78,0.62)]
+		[Vector2(1505,525),0.58,-0.16,Color(0.60,0.47,0.60,0.42)],
+		[Vector2(1630,650),0.72,0.10,Color(0.67,0.50,0.69,0.50)],
+		[Vector2(1740,790),0.86,-0.08,Color(0.74,0.54,0.76,0.56)],
+		[Vector2(1810,960),0.74,0.16,Color(0.68,0.47,0.70,0.52)]
 	]:
 		var growth := _sprite(CORRUPT_GROWTH, data[0], data[1], data[3], data[2])
 		growth.z_index = 1
