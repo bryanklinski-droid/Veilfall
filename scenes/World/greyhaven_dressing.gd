@@ -4,6 +4,7 @@ const FOLIAGE := preload("res://assets/art/world/greyhaven_foliage_cluster.svg")
 const GROUND_DETAIL := preload("res://assets/art/world/greyhaven_ground_detail.svg")
 const FENCE := preload("res://assets/art/world/greyhaven_fence.svg")
 const CORRUPT_GROWTH := preload("res://assets/art/world/greyhaven_corrupt_growth.svg")
+const ROADSIDE_CLUTTER := preload("res://assets/art/world/greyhaven_roadside_clutter.svg")
 const LANTERN := preload("res://assets/art/world/greyhaven_lantern.svg")
 const PINE := preload("res://assets/art/world/greyhaven_pine.svg")
 const STONE := preload("res://assets/art/world/greyhaven_stone.svg")
@@ -17,7 +18,9 @@ func _ready() -> void:
 	_add_road_edge_growth()
 	_add_foliage()
 	_add_roadside_props()
+	_add_roadside_story_props()
 	_add_corruption_transition()
+	_add_foreground_frame()
 
 func _sprite(texture: Texture2D, pos: Vector2, scale_value := 1.0, mod := Color.WHITE, rotation_value := 0.0) -> Sprite2D:
 	var s := Sprite2D.new()
@@ -132,6 +135,14 @@ func _add_roadside_props() -> void:
 		var lantern := _sprite(LANTERN, pos, 0.53, Color(0.88,0.83,0.70,0.78))
 		lantern.z_index = 2
 
+func _add_roadside_story_props() -> void:
+	for data in [
+		[Vector2(670,780),0.44,-0.04,Color(0.86,0.80,0.68,0.88)],
+		[Vector2(1280,910),0.40,0.05,Color(0.74,0.68,0.58,0.82)]
+	]:
+		var clutter := _sprite(ROADSIDE_CLUTTER, data[0], data[1], data[3], data[2])
+		clutter.z_index = 2
+
 func _add_corruption_transition() -> void:
 	for data in [
 		[Vector2(1365,430),0.48,Color(0.48,0.50,0.42,0.66)],[Vector2(1465,380),0.44,Color(0.43,0.42,0.38,0.62)],
@@ -147,3 +158,14 @@ func _add_corruption_transition() -> void:
 	]:
 		var growth := _sprite(CORRUPT_GROWTH, data[0], data[1], data[3], data[2])
 		growth.z_index = 1
+
+func _add_foreground_frame() -> void:
+	# Larger edge silhouettes create foreground depth without covering the central playable space.
+	for data in [
+		[Vector2(85,1390),1.48,-0.04,Color(0.70,0.78,0.70,0.90)],
+		[Vector2(260,1460),1.15,0.02,Color(0.66,0.74,0.66,0.86)],
+		[Vector2(1890,1410),1.52,0.04,Color(0.48,0.50,0.47,0.82)],
+		[Vector2(2020,1320),1.18,-0.03,Color(0.43,0.44,0.42,0.80)]
+	]:
+		var tree := _sprite(PINE, data[0], data[1], data[3], data[2])
+		tree.z_index = 4
