@@ -1,10 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="80" height="128" viewBox="0 0 80 128">
-<defs><radialGradient id="g"><stop offset="0" stop-color="#ffe6a0" stop-opacity=".95"/><stop offset=".4" stop-color="#f3a34d" stop-opacity=".55"/><stop offset="1" stop-color="#f3a34d" stop-opacity="0"/></radialGradient></defs>
-<circle cx="50" cy="52" r="30" fill="url(#g)"/>
-<path d="M24 119 V23 Q24 13 35 13 H55" fill="none" stroke="#332722" stroke-width="7" stroke-linecap="round"/>
-<path d="M53 13 V28" stroke="#332722" stroke-width="5"/>
-<path d="M42 29 H64 L61 58 H45Z" fill="#242027" stroke="#17151a" stroke-width="4"/>
-<path d="M47 34 H59 L57 52 H49Z" fill="#ffc76a"/>
-<path d="M44 30 L53 23 63 30" fill="none" stroke="#332722" stroke-width="4"/>
-<path d="M17 119 H32" stroke="#211b19" stroke-width="7" stroke-linecap="round"/>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="96" height="144" viewBox="0 0 96 144"><defs><radialGradient id="glow"><stop offset="0" stop-color="#ffe9a6" stop-opacity=".82"/><stop offset=".35" stop-color="#e8a04f" stop-opacity=".38"/><stop offset="1" stop-color="#d47b34" stop-opacity="0"/></radialGradient><linearGradient id="metal" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#1d1918"/><stop offset=".48" stop-color="#544236"/><stop offset="1" stop-color="#201918"/></linearGradient></defs><ellipse cx="56" cy="53" rx="38" ry="36" fill="url(#glow)"/><ellipse cx="31" cy="133" rx="20" ry="5" fill="#0a0b09" opacity=".45"/><path d="M28 132V28q0-15 15-15h24" fill="none" stroke="#171516" stroke-width="9"/><path d="M28 132V28q0-15 15-15h24" fill="none" stroke="url(#metal)" stroke-width="5"/><path d="M65 13v18" stroke="#332921" stroke-width="5"/><path d="M50 33h29l-4 32H54z" fill="#211d1c" stroke="#121112" stroke-width="4"/><path d="M55 38h18l-3 21H58z" fill="#f0b85d"/><path d="M59 41h10l-2 15h-7z" fill="#ffe5a0"/><path d="M50 34 64 25l15 9" fill="none" stroke="#3b3028" stroke-width="4"/><path d="M53 65h23l-5 7H58z" fill="#161415"/><path d="M17 132h24" stroke="#181515" stroke-width="8"/><path d="M20 128h18" stroke="#4b392c" stroke-width="3"/><circle cx="29" cy="46" r="2" fill="#76563a"/><circle cx="29" cy="91" r="2" fill="#76563a"/></svg>
