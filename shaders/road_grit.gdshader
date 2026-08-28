@@ -4,7 +4,6 @@ uniform vec4 dirt_a : source_color = vec4(0.22, 0.18, 0.14, 1.0);
 uniform vec4 dirt_b : source_color = vec4(0.34, 0.27, 0.20, 1.0);
 uniform vec4 stone : source_color = vec4(0.16, 0.15, 0.15, 1.0);
 uniform float scale = 18.0;
-uniform float pixel_grid = 96.0;
 
 float hash(vec2 p) {
 	p = fract(p * vec2(127.1, 311.7));
@@ -12,38 +11,28 @@ float hash(vec2 p) {
 	return fract(p.x * p.y);
 }
 
-vec2 snap_uv(vec2 uv) {
-	return (floor(uv * pixel_grid) + 0.5) / pixel_grid;
+float noise(vec2 p) {
+	vec2 i = floor(p);
+	vec2 f = fract(p);
+	f = f * f * (3.0 - 2.0 * f);
+	return mix(mix(hash(i), hash(i + vec2(1.0, 0.0)), f.x), mix(hash(i + vec2(0.0, 1.0)), hash(i + vec2(1.0, 1.0)), f.x), f.y);
 }
 
 void fragment() {
-	vec2 uv = snap_uv(UV);
-	vec2 large_cell = floor(uv * scale);
-	vec2 small_cell = floor(uv * scale * 5.0);
-	float broad = hash(large_cell);
-	float grit = hash(small_cell + vec2(5.0, 9.0));
-	float chip = hash(floor(uv * scale * 8.0) + vec2(17.0, 3.0));
+	float broad = noise(UV * scale * 0.62);
+	float grit = noise(UV * scale * 3.4 + vec2(5.2, 8.7));
+	float chip = noise(UV * scale * 8.0 + vec2(17.0, 3.0));
 
-	vec4 col = dirt_a;
-	if (broad > 0.34) {
-		col = mix(dirt_a, dirt_b, 0.52);
-	}
-	if (broad > 0.72) {
-		col = dirt_b;
-	}
+	vec4 col = mix(dirt_a, dirt_b, smoothstep(0.18, 0.86, broad));
+	col.rgb *= 0.92 + grit * 0.14;
 
-	// Discrete stone chips and compressed dirt clusters create a tile-like JRPG road surface.
-	if (grit > 0.88) {
-		col.rgb = mix(col.rgb, stone.rgb, 0.64);
-	}
-	if (chip > 0.95) {
-		col.rgb *= 0.84;
-	}
+	float stone_mask = smoothstep(0.91, 0.975, chip);
+	col.rgb = mix(col.rgb, stone.rgb, stone_mask * 0.48);
 
-	// Two soft-but-stepped wagon ruts run along the north/south road.
-	float left_rut = step(abs(uv.x - 0.34), 0.025);
-	float right_rut = step(abs(uv.x - 0.66), 0.025);
-	col.rgb *= 1.0 - (left_rut + right_rut) * 0.07;
+	// Soft compacted wagon ruts: visible on inspection, not thick drawn lines.
+	float left_rut = 1.0 - smoothstep(0.018, 0.05, abs(UV.x - 0.34));
+	float right_rut = 1.0 - smoothstep(0.018, 0.05, abs(UV.x - 0.66));
+	col.rgb *= 1.0 - (left_rut + right_rut) * 0.045;
 
 	COLOR = col;
 }
