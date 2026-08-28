@@ -1,11 +1,13 @@
 extends Node2D
 
 const GREYHAVEN_DRESSING := preload("res://scenes/World/greyhaven_dressing.gd")
+const GREYHAVEN_LANDMARK := preload("res://scenes/World/greyhaven_landmark.gd")
 
 func _ready() -> void:
 	GameState.world_progress.current_scene = "res://scenes/World/WorldMap.tscn"
 	mark_area_visited("WorldMap")
 	_add_environment_dressing()
+	_add_landmark_layer()
 	SaveManager.save_game()
 
 func _add_environment_dressing() -> void:
@@ -16,6 +18,15 @@ func _add_environment_dressing() -> void:
 	dressing.set_script(GREYHAVEN_DRESSING)
 	add_child(dressing)
 	move_child(dressing, 1)
+
+func _add_landmark_layer() -> void:
+	if has_node("GreyhavenLandmark"):
+		return
+	var landmark := Node2D.new()
+	landmark.name = "GreyhavenLandmark"
+	landmark.set_script(GREYHAVEN_LANDMARK)
+	add_child(landmark)
+	move_child(landmark, 2)
 
 func mark_area_visited(area_name: String) -> void:
 	if not GameState.world_progress.visited_areas.has(area_name):
