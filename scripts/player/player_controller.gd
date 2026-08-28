@@ -15,8 +15,10 @@ var facing := Vector2.DOWN
 func _ready() -> void:
 	_create_menu()
 	_update_animation(Vector2.ZERO)
+	_update_depth()
 
 func _physics_process(_delta: float) -> void:
+	_update_depth()
 	if menu_open:
 		velocity = Vector2.ZERO
 		_update_animation(Vector2.ZERO)
@@ -34,7 +36,13 @@ func _physics_process(_delta: float) -> void:
 
 	velocity = direction.normalized() * move_speed
 	move_and_slide()
+	_update_depth()
 	_update_animation(direction)
+
+func _update_depth() -> void:
+	# Sort the character by her feet position so she appears behind objects to the south
+	# and in front of objects to the north instead of being trapped on one fixed layer.
+	z_index = clampi(int(global_position.y), 0, 2000)
 
 func _update_animation(direction: Vector2) -> void:
 	if direction != Vector2.ZERO:
