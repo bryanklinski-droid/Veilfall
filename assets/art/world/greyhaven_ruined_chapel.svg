@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="430" height="500" viewBox="0 0 430 500">
+<defs>
+ <linearGradient id="stone" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#666b66"/><stop offset=".55" stop-color="#424844"/><stop offset="1" stop-color="#272d2a"/></linearGradient>
+ <linearGradient id="dark" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#26262b"/><stop offset="1" stop-color="#090b0d"/></linearGradient>
+ <filter id="glow"><feGaussianBlur stdDeviation="6"/></filter>
+</defs>
+<ellipse cx="220" cy="455" rx="178" ry="24" fill="#080b09" opacity=".48"/>
+<path d="M72 438V150l46-32 34 14 36-82 42 44 42-22 24 67 57 18v281z" fill="url(#stone)" stroke="#242925" stroke-width="12"/>
+<path d="M112 424V183l36-18 26 16 24-74 30 40 34-18 18 58 38 13v224z" fill="#4a504c" opacity=".75"/>
+<path d="M162 432V303q0-83 62-83t62 83v129z" fill="url(#dark)" stroke="#777c73" stroke-width="13"/>
+<path d="M184 430V306q0-57 40-57t40 57v124z" fill="#090a0c"/>
+<g fill="#777c73" stroke="#343936" stroke-width="5">
+ <path d="M48 440h70v-43H61z"/><path d="M304 440h83v-56h-69z"/><path d="M80 350h54v-38H87z"/><path d="M307 334h60v-42h-52z"/>
+</g>
+<g stroke="#252b28" stroke-width="5" opacity=".85"><path d="M96 160l24 30-18 36 26 30-19 42"/><path d="M294 152l-21 34 19 33-27 31 18 40"/><path d="M143 117l27 24-11 29"/><path d="M340 205l-22 22 17 31"/></g>
+<g fill="#232b22"><circle cx="99" cy="194" r="19"/><circle cx="326" cy="224" r="17"/></g>
+<g fill="none" stroke="#596846" stroke-width="11" stroke-linecap="round"><path d="M76 418q22-55 16-111t35-99"/><path d="M349 414q-29-54-12-103t-22-94"/><path d="M123 438q26-48 20-87"/></g>
+<g fill="#738354"><ellipse cx="88" cy="340" rx="21" ry="10"/><ellipse cx="106" cy="288" rx="19" ry="9"/><ellipse cx="340" cy="350" rx="22" ry="10"/><ellipse cx="323" cy="292" rx="18" ry="9"/></g>
+<g stroke="#b84df1" stroke-width="5" fill="none" opacity=".82"><path d="M198 448l18-46-9-31 23-41-7-38"/><path d="M260 450l-13-38 12-30-15-35"/><path d="M109 442l19-31-8-25"/><path d="M331 442l-18-29 9-30"/></g>
+<g stroke="#d969ff" stroke-width="12" opacity=".18" filter="url(#glow)"><path d="M198 448l18-46-9-31 23-41"/><path d="M260 450l-13-38 12-30"/></g>
+<g fill="#8c5b9d"><circle cx="215" cy="403" r="5"/><circle cx="250" cy="383" r="4"/><circle cx="123" cy="414" r="4"/><circle cx="317" cy="414" r="4"/></g>
+</svg>
