@@ -6,13 +6,13 @@ extends CharacterBody2D
 
 const SPRITE_BASE_POSITION := Vector2(0.0, -32.0)
 const SPRITE_BASE_SCALE := Vector2(0.72, 0.72)
-const WALK_CYCLE_SPEED := 10.0
+const WALK_CYCLE_SPEED: float = 10.0
 
 var menu_open := false
 var menu_layer: CanvasLayer
 var menu_panel: Panel
 var facing := Vector2.DOWN
-var walk_phase := 0.0
+var walk_phase: float = 0.0
 
 func _ready() -> void:
 	_create_menu()
@@ -57,8 +57,8 @@ func _update_animation(direction: Vector2, delta: float) -> void:
 
 	if direction != Vector2.ZERO:
 		walk_phase = fmod(walk_phase + delta * WALK_CYCLE_SPEED, TAU)
-		var step := sin(walk_phase)
-		var bounce := abs(sin(walk_phase))
+		var step: float = sin(walk_phase)
+		var bounce: float = absf(sin(walk_phase))
 		# Keep the known-good single-frame SVGs and animate the whole sprite safely.
 		sprite.position = SPRITE_BASE_POSITION + Vector2(step * 0.65, -bounce * 1.8)
 		sprite.rotation = step * 0.018
