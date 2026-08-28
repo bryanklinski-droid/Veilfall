@@ -4,8 +4,8 @@ extends CharacterBody2D
 @onready var interaction_area: Area2D = $InteractionArea
 @onready var sprite: AnimatedSprite2D = $Sprite2D
 
-const SPRITE_BASE_POSITION := Vector2(0.0, -39.0)
-const SPRITE_BASE_SCALE := Vector2(0.17, 0.17)
+const SPRITE_BASE_POSITION := Vector2(0.0, -35.0)
+const SPRITE_BASE_SCALE := Vector2(0.15, 0.15)
 
 var menu_open := false
 var menu_layer: CanvasLayer
