@@ -91,12 +91,14 @@ func _add_house_composition() -> void:
 	]:
 		_sprite(STONE, stone_data[0], stone_data[1], Color(0.88,0.89,0.84,0.68), stone_data[2], -2)
 
-	# Sort tall scenery from the point where it meets the ground.
+	# Tall scenery sorts from its visual ground-contact point, not its texture center.
 	_sprite(PINE, Vector2(315,328), 1.30, Color(0.70,0.80,0.70,0.96), -0.04, 70)
 	_sprite(PINE, Vector2(775,315), 1.12, Color(0.66,0.76,0.67,0.94), 0.04, 60)
 	_sprite(PINE, Vector2(265,458), 0.94, Color(0.58,0.69,0.61,0.92), 0.03, 50)
 
-	_sprite(HOUSE, Vector2(555,405), 1.18, Color(0.92,0.94,0.90,1.0), 0.0, 105)
+	# The cottage image is centered at y=405 and its visible foundation reaches about y=535.
+	# Sorting at that foundation line lets Aria render in front once her feet pass the doorstep.
+	_sprite(HOUSE, Vector2(555,405), 1.18, Color(0.92,0.94,0.90,1.0), 0.0, 130)
 
 	_sprite(MOSSY_WALL, Vector2(465,548), 0.66, Color(0.78,0.80,0.72,0.88), -0.025, 4)
 	_sprite(MOSSY_WALL, Vector2(665,550), 0.58, Color(0.72,0.76,0.67,0.84), 0.035, 4)
@@ -110,10 +112,14 @@ func _add_house_composition() -> void:
 	_ellipse(Vector2(812,585), Vector2(78,34), Color(0.95,0.58,0.25,0.075), -1)
 	_sprite(LANTERN, Vector2(810,535), 0.58, Color(1.0,0.90,0.72,0.98), 0.0, 45)
 
-	# Collision follows the physical footprint, not the full visible art.
-	_add_static_box("HouseCollision", Vector2(555,482), Vector2(300,112))
-	_add_static_box("LeftFoundationWallCollision", Vector2(465,552), Vector2(150,28))
-	_add_static_box("RightFoundationWallCollision", Vector2(665,554), Vector2(132,26))
+	# Use a shallow rear-wall footprint instead of one large box covering the entire facade.
+	# This leaves the doorstep/front apron walkable while still preventing passage through the house.
+	_add_static_box("HouseRearCollision", Vector2(555,462), Vector2(296,62))
+	_add_static_box("HouseLeftFrontCollision", Vector2(475,512), Vector2(118,38))
+	_add_static_box("HouseRightFrontCollision", Vector2(635,512), Vector2(118,38))
+	# The central gap is the doorway/step approach.
+	_add_static_box("LeftFoundationWallCollision", Vector2(465,552), Vector2(150,24))
+	_add_static_box("RightFoundationWallCollision", Vector2(665,554), Vector2(132,24))
 	_add_static_box("FenceCollision", Vector2(350,590), Vector2(120,20))
 	_add_static_box("ClutterCollision", Vector2(744,579), Vector2(76,34))
 	_add_static_circle("LanternCollision", Vector2(810,572), 13.0)
