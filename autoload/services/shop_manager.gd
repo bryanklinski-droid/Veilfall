@@ -73,9 +73,9 @@ func sell_item(item_id: String, amount: int = 1) -> bool:
 	var item_data = shop.get_item_data(item_id)
 	if not item_data:
 		return false
-	
-	# Check if player has item
-	if not InventoryManager.has_item(item_id):
+	# Check if player has enough of the item to sell
+	if amount <= 0 or InventoryManager.get_item_count(item_id) < amount:
+		return false
 		return false
 	
 	var sell_price = int(item_data["price"] * 0.5)  # Sell for 50% of buy price
