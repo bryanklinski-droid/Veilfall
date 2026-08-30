@@ -74,7 +74,7 @@ func sell_item(item_id: String, amount: int = 1) -> bool:
 	if not item_data:
 		return false
 	
-	# Check if player has item
+	if amount <= 0 or InventoryManager.get_item_count(item_id) < amount:
 	if not InventoryManager.has_item(item_id):
 		return false
 	
