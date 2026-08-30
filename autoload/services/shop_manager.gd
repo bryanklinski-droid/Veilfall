@@ -63,10 +63,7 @@ func buy_item(item_id: String) -> bool:
 	print("Purchased: ", item_id, " for ", price, " gold")
 	SaveManager.save_game()
 	return true
-
-## Sell item to current shop
-func sell_item(item_id: String, amount: int = 1) -> bool:
-	if current_shop == "":
+	if current_shop == "" or amount <= 0:
 		return false
 	
 	var shop = shops[current_shop]
@@ -74,6 +71,9 @@ func sell_item(item_id: String, amount: int = 1) -> bool:
 	if not item_data:
 		return false
 	
+	# Check if player owns the requested amount
+	if InventoryManager.get_item_count(item_id) < amount:
+		return false
 	# Check if player has item
 	if not InventoryManager.has_item(item_id):
 		return false
