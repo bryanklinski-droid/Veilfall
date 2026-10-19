@@ -3,7 +3,7 @@ extends Node
 var party: Array[String] = ["Aria"]
 var party_gold: int = 0
 var party_experience: int = 0
-var player_stats := {
+const STARTING_PLAYER_STATS := {
 	"hp": 120,
 	"max_hp": 120,
 	"mp": 40,
@@ -15,6 +15,8 @@ var player_stats := {
 	"magic": 15,
 	"speed": 11
 }
+
+var player_stats: Dictionary = STARTING_PLAYER_STATS.duplicate(true)
 
 var corruption_level: int = 0
 var corruption_stage: int = 0
@@ -43,6 +45,8 @@ func reset_new_game() -> void:
 	party = ["Aria"]
 	party_gold = 0
 	party_experience = 0
+	# A new game must not inherit level, HP, MP or other stats from a loaded save.
+	player_stats = STARTING_PLAYER_STATS.duplicate(true)
 	corruption_level = 0
 	corruption_stage = 0
 	corruption_days_remaining = 7
