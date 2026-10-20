@@ -236,22 +236,29 @@ func _on_continue_button_pressed() -> void:
 		_set_menu_enabled(true)
 		status_label.text = "The save file could not be loaded."
 		return
-	await _transition_to_world()
+	await _transition_to_world(_get_continue_scene())
+
+func _get_continue_scene() -> String:
+	# Only restore saved world scenes; older saves fall back to Greyhaven.
+	var saved_scene: Variant = GameState.world_progress.get("current_scene", "")
+	if saved_scene is String and saved_scene.begins_with("res://scenes/World/") and saved_scene.ends_with(".tscn") and not saved_scene.contains("..") and ResourceLoader.exists(saved_scene, "PackedScene"):
+		return saved_scene
+	return WORLD_SCENE
 
 func _on_quit_button_pressed() -> void:
 	if not busy:
 		get_tree().quit()
 
-func _transition_to_world() -> void:
-	if not ResourceLoader.exists(WORLD_SCENE):
+func _transition_to_world(scene_path: String = WORLD_SCENE) -> void:
+	if not ResourceLoader.exists(scene_path, "PackedScene"):
 		busy = false
 		_set_menu_enabled(true)
-		status_label.text = "World scene is missing: %s" % WORLD_SCENE
-		push_error("WorldMap.tscn not found")
+		status_label.text = "World scene is missing: %s" % scene_path
+		push_error("World scene not found: %s" % scene_path)
 		return
 
 	transition_overlay.mouse_filter = Control.MOUSE_FILTER_STOP
 	var tween := create_tween()
 	tween.tween_property(transition_overlay, "modulate:a", 1.0, 0.35)
 	await tween.finished
-	get_tree().change_scene_to_file(WORLD_SCENE)
+	get_tree().change_scene_to_file(scene_path)
