@@ -1,13 +1,18 @@
 extends Node
 
 const SAVE_PATH := "user://savegame.json"
+const TITLE_SCENE := "res://scenes/title/TitleScreen.tscn"
+
+# A session begins only after New Game saves or Continue loads successfully.
+# The title screen must not overwrite a damaged or unreadable existing save.
+var _session_active := false
 
 func _ready() -> void:
 	get_tree().scene_changed.connect(_on_scene_changed)
-	load_game()
 
-func _on_scene_changed() -> void:
-	save_game()
+func _on_scene_changed(scene: Node) -> void:
+	if _session_active and scene.scene_file_path != TITLE_SCENE:
+		save_game()
 
 func save_game() -> void:
 	var data := {
@@ -33,6 +38,7 @@ func save_game() -> void:
 		return
 	file.store_string(JSON.stringify(data))
 	file.close()
+	_session_active = true
 
 func load_game() -> bool:
 	if not has_save_file():
@@ -63,6 +69,7 @@ func load_game() -> bool:
 	GameState.escape_defeats = int(data.get("escape_defeats", 0))
 	GameState.world_progress = data.get("world_progress", GameState.world_progress)
 	_restore_character_states(data.get("character_states", {}))
+	_session_active = true
 	return true
 
 func _capture_character_states() -> Dictionary:
@@ -98,6 +105,7 @@ func has_save_file() -> bool:
 	return FileAccess.file_exists(SAVE_PATH)
 
 func delete_save() -> bool:
+	_session_active = false
 	if FileAccess.file_exists(SAVE_PATH):
 		return DirAccess.remove_absolute(SAVE_PATH) == OK
 	return true
