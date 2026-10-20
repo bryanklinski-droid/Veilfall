@@ -324,7 +324,7 @@ default_color=Color(0.24,0.16,0.10,0.68)
 position = Vector2(990,930)
 [node name="RoadsideChest" parent="Gameplay" instance=ExtResource("1_chest")]
 position = Vector2(1210,750)
-item_id = "potions"
+item_id = "small_potion"
 amount = 3
 chest_id = "worldmap_potions_1"
 [node name="RuinChest" parent="Gameplay" instance=ExtResource("1_chest")]
