@@ -28,6 +28,7 @@ Reassess live scene execution and asset quality before marking work complete. Th
 - [ ] Verify chest collection is one-time, inventory stays consistent and shops cannot create unlimited gold.
 - [ ] Verify quest NPC interaction, dialogue, accepting/completing a quest, and reward persistence.
 - [ ] Connect visible exploration encounters to functional turn-based battle, victory/defeat and item/XP/gold rewards.
+- [ ] Include a first playable enemy grab/capture attempt in Greyhaven combat, with a readable warning, character restraint, a struggle/escape action and an ally rescue; see [core capture combat issue #6](https://github.com/bryanklinski-droid/Veilfall/issues/6).
 - [ ] Verify at least one recruitable companion and a bond or corruption state change from regular play.
 - [ ] Deliver an understandable first objective with a beginning, gameplay loop and resolution.
 **Gate:** A tester can play a complete 15–30 minute Greyhaven experience without debug commands, dead ends or critical errors.
@@ -35,6 +36,8 @@ Reassess live scene execution and asset quality before marking work complete. Th
 ### Milestone 2 — Combat depth and progression (P1)
 - [ ] Validate enemy roster/resources, encounter spawning, targeting, damage, status effects and progression.
 - [ ] Integrate varied regular enemies, elites, minibosses, and scripted multiphase bosses.
+- [ ] Treat enemy grab/restraint/capture mechanics as a **core part of most standard battles**, not an optional side system: enemy-family AI/data, grab resistance, captured state, rescue options, distinct enemy behaviors, and tactical recovery (issue #6).
+- [ ] Add distinct grab/capture sequences for elites, minibosses and bosses, with telegraphing and counterplay; avoid combat softlocks.
 - [ ] Polish skill selection, items in combat, feedback, combat animation and battle HUD.
 - [ ] Tune economy, XP, rewards, equipment, consumables and difficulty against actual playtests.
 - [ ] Test win, lose, retreat, retry and save/load boundaries, including defeat event behavior.
@@ -44,6 +47,7 @@ Reassess live scene execution and asset quality before marking work complete. Th
 - [ ] Outline a complete main story with beginning, escalation, climax and ending, plus meaningful branching.
 - [ ] Develop Aria and the main companions with recruitment, bonds, individual quest arcs and expressive dialogue.
 - [ ] Integrate world and character corruption, consequences, choice feedback and defeat/capture recovery routes.
+- [ ] Integrate capture outcomes with adult-character reactions, bonds, corruption and defeat/recovery events; when sexual threats or assault are implied, use non-graphic fade-to-black/aftermath, adult-only eligibility and appropriate content warnings (issue #6).
 - [ ] Write consistent dialogue, quest flags, NPC scheduling and alternate outcomes; avoid unreachable events.
 - [ ] Ensure adult-only content and cast eligibility are verified where relevant; use clear boundaries and platform-compliant packaging.
 **Gate:** Major systems affect the narrative, and the story can be played from start through conclusion.
@@ -52,6 +56,7 @@ Reassess live scene execution and asset quality before marking work complete. Th
 - [ ] Lock art scale, asset pipeline, color palette, art naming and scene layering.
 - [ ] Finish Greyhaven's terrain, paths, readable buildings, interiors, props, lanterns, environmental depth and lighting.
 - [ ] Create consistent original top-down character sprites, NPC/enemy battle images, portraits and clear reaction/expression sets.
+- [ ] Include original, readable grab/struggle/rescue animations and character reaction expressions in combat-art passes, keeping gameplay and collisions intact (issue #6).
 - [ ] Integrate readable violet/magenta corruption effects, atmospheric FX and restrained animation.
 - [ ] Expand to additional towns, forests, ruins, dungeons and castles *only after* Greyhaven's loop is working.
 - [ ] Keep collisions, interaction hooks, navigation and game logic separate from replaceable art.
@@ -68,6 +73,7 @@ Reassess live scene execution and asset quality before marking work complete. Th
 ### Milestone 6 — QA, packaging and release (P0 to ship)
 - [ ] Full playthroughs: new game, Continue, alternate branches, corruption stages and endings.
 - [ ] Automated/manual regressions: invalid saves, quest softlocks, inventory exploits, transitions, battle failures and bosses.
+- [ ] Regression-test grab/capture targeting, interrupted restraints, escape and ally rescue, combat victory/defeat/retreat, save/load and protection against softlocks (issue #6).
 - [ ] Optimize loading, FPS, memory, audio, save integrity and project size on intended hardware.
 - [ ] Check originality/licensing, adult content classification, warnings and target storefront requirements.
 - [ ] Export installable builds, verify clean-machine installs, controller/keyboard and packaging integrity.
@@ -80,7 +86,7 @@ Reassess live scene execution and asset quality before marking work complete. Th
 
 **Per-run protocol**
 1. Read the latest branch head, relevant files, recent commits and this roadmap.
-2. Identify the highest-priority incomplete gate, keeping the scope small enough for one safe change.
+2. Identify the highest-priority incomplete gate, keeping the scope small enough for one safe change. Treat issue #6 as a required **core combat** gate after crash/build and baseline battle-loop blockers, never as optional late-game content.
 3. Inspect dependencies before editing; do not overwrite `main` or unrelated files.
 4. Implement on `art-overhaul`, preserving existing behavior.
 5. Run tests when possible; if Godot is unavailable, state clearly that runtime verification remains pending.
@@ -91,11 +97,11 @@ Reassess live scene execution and asset quality before marking work complete. Th
 - Monday: assess blockers, choose the next milestone work and review changes.
 - Tuesday: critical code and game-flow stabilization.
 - Wednesday: original art, UI and environments.
-- Thursday: encounters, progression, characters, quests and story.
+- Thursday: encounters, progression, characters, quests and story; specifically track grab/capture combat coverage, counterplay and issue #6.
 - Friday: integration, manual-test preparation, regression fixes and milestone acceptance.
 - Weekend: finish urgent blocking work or polish the next highest-priority gate.
 
-**Backlog rules:** Critical parse/crash/data-loss bugs outrank all art/content. Working gameplay outranks volume of content. Tests/validation outrank a cosmetic change that might cause regressions. A finished playable slice outranks many incomplete features. Stop feature expansion when the game is release-ready.
+**Backlog rules:** Core grab/capture mechanics must appear in the majority of typical combat encounters once the combat baseline is stable. Plan for enemy-specific capture abilities, struggle/rescue and non-graphic adult consequences while building combat, not after combat is considered complete. Critical parse/crash/data-loss bugs outrank all art/content. Working gameplay outranks volume of content. Tests/validation outrank a cosmetic change that might cause regressions. A finished playable slice outranks many incomplete features. Stop feature expansion when the game is release-ready.
 
 ## Initial verified GitHub work (2026-10-19)
 - [x] Ported protection against zero/negative or over-inventory shop sales to `art-overhaul` from `main`.
