@@ -4,7 +4,7 @@ extends EnemyData
 ## Boss-specific mechanics and rewards
 
 @export var phase_thresholds: Array[int] = [100, 50]  # HP thresholds for phase changes
-@export var phase_abilities: Array[Array] = []  # Abilities available in each phase
+@export var phase_abilities: Array = []  # Per-phase skill arrays; Godot does not export nested typed arrays
 @export var is_story_boss: bool = false  # Affects story progression
 @export var boss_rewards: Dictionary = {
 	"experience": 500,
@@ -26,10 +26,13 @@ func get_current_phase() -> int:
 
 ## Get abilities available in current phase
 func get_phase_abilities() -> Array[SkillData]:
-	var phase = get_current_phase()
-	if phase < phase_abilities.size():
-		return phase_abilities[phase]
-	return []
+	var skills: Array[SkillData] = []
+	var phase := get_current_phase()
+	if phase < phase_abilities.size() and phase_abilities[phase] is Array:
+		for ability in phase_abilities[phase]:
+			if ability is SkillData:
+				skills.append(ability)
+	return skills
 
 ## Boss enters next phase
 func advance_phase() -> void:

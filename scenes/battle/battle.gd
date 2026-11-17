@@ -30,6 +30,7 @@ func _ready() -> void:
 		if member_name == "Aria":
 			member.hp = int(GameState.player_stats.get("hp", member.hp))
 			member.mp = int(GameState.player_stats.get("mp", member.mp))
+		BondManager.apply_bond_modifiers(member)
 		party_members.append(member)
 
 	var enemies: Array[CharacterData] = []
