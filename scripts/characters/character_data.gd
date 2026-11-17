@@ -76,9 +76,13 @@ func learn_skill(skill: SkillData) -> bool:
 
 ## Get all available skills for current level
 func get_available_skills() -> Array[SkillData]:
-	var available = []
+	# Exported starting_skills are loaded after _init(), so include them directly.
+	var available: Array[SkillData] = []
+	for skill in starting_skills:
+		if skill != null and skill.learn_level <= level and not available.has(skill):
+			available.append(skill)
 	for skill in learned_skills:
-		if skill.learn_level <= level:
+		if skill != null and skill.learn_level <= level and not available.has(skill):
 			available.append(skill)
 	return available
 

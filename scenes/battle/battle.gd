@@ -4,157 +4,108 @@ var battle_manager: BattleManager
 var battle_ui: BattleUI
 
 @export var default_enemies: Array[CharacterData] = []
-@export var show_debug: bool = true
+@export var show_debug := false
+
+const WORLD_SCENE := "res://scenes/World/WorldMap.tscn"
 
 func _ready() -> void:
 	battle_manager = BattleManager.new()
-	add_child(battle_manager)
 	battle_manager.name = "BattleManager"
-	
+	add_child(battle_manager)
+
 	battle_ui = BattleUI.new()
-	add_child(battle_ui)
-	battle_ui.battle_manager = battle_manager
 	battle_ui.name = "BattleUI"
-	
-	# Connect battle signals
-	battle_manager.battle_started.connect(_on_battle_started)
-	battle_manager.turn_changed.connect(_on_turn_changed)
-	battle_manager.unit_acted.connect(_on_unit_acted)
-	battle_manager.unit_defeated.connect(_on_unit_defeated)
+	battle_ui.battle_manager = battle_manager
+	add_child(battle_ui)
+
 	battle_manager.battle_ended.connect(_on_battle_ended)
 	battle_ui.action_selected.connect(_on_action_selected)
-	
-	# Start battle with party vs enemies
-	var party_members = []
+
+	var party_members: Array[CharacterData] = []
 	for member_name in GameState.party:
-		var char_data = load("res://data/characters/" + member_name.to_lower() + ".tres")
-		if char_data:
-			# Apply bond modifiers before battle
-			BondManager.apply_bond_modifiers(char_data)
-			party_members.append(char_data)
-	
-	var enemies = default_enemies if not default_enemies.is_empty() else [load("res://data/characters/goblin.tres")]
+		var original := GameState.get_party_member(member_name)
+		if original == null:
+			continue
+		var member := original.duplicate(true) as CharacterData
+		if member_name == "Aria":
+			member.hp = int(GameState.player_stats.get("hp", member.hp))
+			member.mp = int(GameState.player_stats.get("mp", member.mp))
+		party_members.append(member)
+
+	var enemies: Array[CharacterData] = []
+	var pending: Dictionary = GameState.world_progress.get("pending_encounter", {})
+	var enemy_path := str(pending.get("enemy_path", ""))
+	if enemy_path.begins_with("res://data/characters/") and enemy_path.ends_with(".tres") and ResourceLoader.exists(enemy_path):
+		var encounter_enemy := load(enemy_path) as CharacterData
+		if encounter_enemy != null:
+			enemies.append(encounter_enemy)
+	if enemies.is_empty():
+		for fallback_enemy in default_enemies:
+			if fallback_enemy != null:
+				enemies.append(fallback_enemy)
+	if enemies.is_empty():
+		enemies.append(load("res://data/characters/goblin.tres") as CharacterData)
+
 	battle_manager.init_battle(party_members, enemies)
-	
-	# Detect boss battle
-	var is_boss_battle = battle_manager.is_boss_battle()
-	if is_boss_battle:
-		print("=== BOSS BATTLE DETECTED ===")
-		var bosses = battle_manager.get_bosses()
-		for boss_unit in bosses:
-			if boss_unit.character_data is BossData:
-				var boss = boss_unit.character_data as BossData
-				print("Boss: ", boss.display_name)
-				print("Phases: ", boss.phase_thresholds.size())
-	
-	# Show intro effects
-	EffectsManager.flash_screen(Color.WHITE, 0.3)
-	
-	if show_debug:
-		print("Battle started!")
 
-func _on_battle_started() -> void:
-	if show_debug:
-		print("Battle initialized!")
-	battle_ui.update_battle_display()
-
-func _on_turn_changed(unit: CombatUnit) -> void:
-	if show_debug:
-		print("\n--- %s's turn (Speed: %d) ---" % [unit.character_data.display_name, unit.character_data.speed])
-	
-	battle_ui.update_battle_display()
-	
-	if unit.is_player:
-		# Wait for player input via UI
-		pass
-	# Enemy acts automatically
-
-func _on_unit_acted(unit: CombatUnit, action: String) -> void:
-	if show_debug:
-		print("%s performed: %s" % [unit.character_data.display_name, action])
-
-func _on_unit_defeated(unit: CombatUnit) -> void:
-	if show_debug:
-		print("%s was defeated!" % unit.character_data.display_name)
-	battle_ui.show_message("%s was defeated!" % unit.character_data.display_name)
+func _on_action_selected(action: String, target: CombatUnit) -> void:
+	var accepted := battle_manager.execute_action(action, target, battle_ui.selected_skill, battle_ui.selected_item_id)
+	if not accepted and not battle_manager.battle_over:
+		battle_ui.show_action_menu(battle_manager.current_unit)
 
 func _on_battle_ended(victory: bool, rewards: Dictionary) -> void:
-	if show_debug:
-		if victory:
-			print("\n=== VICTORY ===")
-			print("Experience gained: ", rewards.get("experience", 0))
-			print("Gold gained: ", rewards.get("gold", 0))
-		else:
-			print("\n=== DEFEAT ===")
-	
-	# Visual effects
-	if victory:
-		AudioManager.play_sfx("res://assets/audio/victory.ogg")
-		EffectsManager.flash_screen(Color.YELLOW, 0.5)
-	else:
-		AudioManager.play_sfx("res://assets/audio/defeat.ogg")
-		EffectsManager.flash_screen(Color.RED, 0.5)
-	
-	# Apply rewards to party
 	if victory:
 		_apply_battle_rewards(rewards)
-	
-	# Show battle results screen
-	await get_tree().create_timer(2.0).timeout
-	get_tree().change_scene_to_file("res://scenes/World/WorldMap.tscn")
+	_persist_party_after_battle(victory)
+	if victory:
+		var pending: Dictionary = GameState.world_progress.get("pending_encounter", {})
+		var encounter_id := str(pending.get("id", ""))
+		if not encounter_id.is_empty():
+			var completed_id := "encounter_" + encounter_id
+			if not GameState.world_progress.completed_events.has(completed_id):
+				GameState.world_progress.completed_events.append(completed_id)
+	GameState.world_progress.erase("pending_encounter")
+	GameState.world_progress["current_scene"] = WORLD_SCENE
+	SaveManager.save_game()
 
-## Apply experience and level ups
+	if victory:
+		battle_ui.show_result("VICTORY!  +%d XP  +%d gold\nReturning to Greyhaven..." % [int(rewards.get("experience", 0)), int(rewards.get("gold", 0))])
+	else:
+		battle_ui.show_result("DEFEAT.  The party regroups in Greyhaven.")
+	await get_tree().create_timer(1.8).timeout
+	get_tree().change_scene_to_file(WORLD_SCENE)
+
 func _apply_battle_rewards(rewards: Dictionary) -> void:
-	var exp_per_member = rewards.get("experience", 0) / battle_manager.party_units.size()
-	var gold_gained = rewards.get("gold", 0)
-	
-	GameState.party_gold += gold_gained
-	
-	print("\nApplying rewards:")
+	var experience := maxi(0, int(rewards.get("experience", 0)))
+	var gold := maxi(0, int(rewards.get("gold", 0)))
+	GameState.party_gold += gold
+	GameState.party_experience += experience
+	var per_member := int(experience / maxi(1, battle_manager.party_units.size()))
 	for unit in battle_manager.party_units:
-		if unit.character_data:
-			var level_ups = unit.character_data.add_experience(exp_per_member)
-			
-			print("%s gained %d XP" % [unit.character_data.display_name, exp_per_member])
-			
-			for level_up in level_ups:
-				print("  %s leveled up to %d!" % [unit.character_data.display_name, level_up["level"]])
-				if not level_up["new_skills"].is_empty():
-					print("  New skills learned:")
-					for skill in level_up["new_skills"]:
-						print("    - %s" % skill.skill_name)
-			
-			# Increase bond after battle
+		var original := GameState.get_party_member(unit.character_data.display_name)
+		if original != null and per_member > 0:
+			original.add_experience(per_member)
+		if GameState.companions.has(unit.character_data.display_name):
 			BondManager.increase_bond(unit.character_data.display_name, 5)
-	
-	print("Party gained %d gold!" % gold_gained)
+	var items: Dictionary = rewards.get("items", {})
+	for item_id in items:
+		var amount := int(items[item_id])
+		if amount > 0:
+			InventoryManager.add_item(str(item_id), amount)
 
-## Handle player action selection from UI
-func _on_action_selected(action: String, target: CombatUnit) -> void:
-	if action == "attack":
-		battle_manager.execute_action("attack", target)
-	elif action == "defend":
-		battle_manager.execute_action("defend")
-	elif action == "skill":
-		# TODO: Handle skill selection
-		battle_manager.execute_action("attack", target)
-	elif action == "item":
-		battle_manager.execute_action("item")
-
-func _on_attack_button_pressed() -> void:
-	if battle_manager.current_unit and battle_manager.current_unit.is_player:
-		var targets = battle_manager.get_valid_targets(battle_manager.current_unit)
-		if not targets.is_empty():
-			battle_manager.execute_action("attack", targets[0])
-
-func _on_defend_button_pressed() -> void:
-	if battle_manager.current_unit and battle_manager.current_unit.is_player:
-		battle_manager.execute_action("defend")
-
-func _on_item_button_pressed() -> void:
-	if battle_manager.current_unit and battle_manager.current_unit.is_player:
-		battle_manager.execute_action("item")
-
-func _on_skill_button_pressed() -> void:
-	if battle_manager.current_unit and battle_manager.current_unit.is_player:
-		battle_manager.execute_action("skill")
+func _persist_party_after_battle(victory: bool) -> void:
+	for unit in battle_manager.party_units:
+		var name := unit.character_data.display_name
+		var original := GameState.get_party_member(name)
+		if original == null:
+			continue
+		# Regrouping at half HP prevents a loss from producing an unwinnable reload.
+		original.hp = maxi(1, unit.current_hp) if victory else maxi(1, int(original.max_hp / 2))
+		original.mp = maxi(0, unit.current_mp)
+		if name == "Aria":
+			GameState.player_stats["hp"] = original.hp
+			GameState.player_stats["mp"] = original.mp
+			GameState.player_stats["max_hp"] = original.max_hp
+			GameState.player_stats["max_mp"] = original.max_mp
+			GameState.player_stats["level"] = original.level
+			GameState.player_stats["experience"] = original.experience

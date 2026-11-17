@@ -2,6 +2,7 @@ extends Node2D
 
 const GREYHAVEN_LANDMARK := preload("res://scenes/World/greyhaven_landmark.gd")
 const GREYHAVEN_REFERENCE_OVERHAUL := preload("res://scenes/World/greyhaven_reference_overhaul.gd")
+const BATTLE_ENCOUNTER := preload("res://scenes/World/battle_encounter.gd")
 
 func _ready() -> void:
 	GameState.world_progress.current_scene = "res://scenes/World/WorldMap.tscn"
@@ -10,6 +11,9 @@ func _ready() -> void:
 	_add_landmark_layer()
 	_add_reference_overhaul()
 	_add_cottage_world_collision()
+	_restore_player_position()
+	_add_encounters()
+	_update_objective()
 	SaveManager.save_game()
 
 func _prepare_reference_composition() -> void:
@@ -106,3 +110,49 @@ func change_scene(scene_path: String) -> void:
 	GameState.world_progress.current_scene = scene_path
 	SaveManager.save_game()
 	get_tree().change_scene_to_file(scene_path)
+
+func _restore_player_position() -> void:
+	var position_data: Variant = GameState.world_progress.get("return_position", [])
+	if position_data is Array and position_data.size() == 2:
+		var player := get_node_or_null("Gameplay/Player") as Node2D
+		if player != null:
+			player.global_position = Vector2(float(position_data[0]), float(position_data[1]))
+
+func _add_encounters() -> void:
+	var gameplay := get_node_or_null("Gameplay")
+	if gameplay == null:
+		return
+	# Greyhaven's first three optional fights are deliberately spaced along the
+	# east road and corruption approach, away from the initial player spawn.
+	var encounters := [
+		{"id": "road_goblin", "name": "Goblin Scout", "enemy": "goblin", "position": Vector2(1180, 945)},
+		{"id": "forest_wolf", "name": "Forest Wolf", "enemy": "wolf", "position": Vector2(1345, 1090)},
+		{"id": "ruin_bandit", "name": "Bandit Guard", "enemy": "bandit", "position": Vector2(1510, 770)}
+	]
+	for info in encounters:
+		var completed_id := "encounter_" + str(info["id"])
+		if GameState.world_progress.completed_events.has(completed_id):
+			continue
+		var marker := Area2D.new()
+		marker.name = "Encounter_" + str(info["id"])
+		marker.set_script(BATTLE_ENCOUNTER)
+		marker.set("encounter_id", str(info["id"]))
+		marker.set("encounter_name", str(info["name"]))
+		marker.set("enemy_path", "res://data/characters/%s.tres" % info["enemy"])
+		marker.position = info["position"]
+		gameplay.add_child(marker)
+
+func _update_objective() -> void:
+	var hud := get_node_or_null("HUD")
+	if hud == null:
+		return
+	var cleared := 0
+	for encounter_id in ["road_goblin", "forest_wolf", "ruin_bandit"]:
+		if GameState.world_progress.completed_events.has("encounter_" + encounter_id):
+			cleared += 1
+	var objective := Label.new()
+	objective.position = Vector2(39, 124)
+	objective.add_theme_font_size_override("font_size", 16)
+	objective.add_theme_color_override("font_color", Color(0.95, 0.85, 0.65))
+	objective.text = "Greyhaven patrols: %d/3 cleared" % cleared if cleared < 3 else "Greyhaven patrols cleared! Return to the road."
+	hud.add_child(objective)

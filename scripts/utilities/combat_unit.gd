@@ -5,6 +5,9 @@ var is_player: bool = false
 var current_hp: int = 0
 var current_mp: int = 0
 var is_defending: bool = false
+var is_restrained: bool = false
+var struggle_attempts: int = 0
+var grab_immunity_turns: int = 0
 
 func is_defeated() -> bool:
 	return current_hp <= 0

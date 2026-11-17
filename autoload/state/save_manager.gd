@@ -80,6 +80,15 @@ func _capture_character_states() -> Dictionary:
 			states[character_name] = {
 				"hp": char_data.hp,
 				"mp": char_data.mp,
+				"level": char_data.level,
+				"experience": char_data.experience,
+				"skill_points": char_data.skill_points,
+				"max_hp": char_data.max_hp,
+				"max_mp": char_data.max_mp,
+				"attack": char_data.attack,
+				"defense": char_data.defense,
+				"magic": char_data.magic,
+				"speed": char_data.speed,
 				"corruption_stage": char_data.corruption_stage,
 				"captured": char_data.captured
 			}
@@ -91,7 +100,16 @@ func _restore_character_states(states: Dictionary) -> void:
 		if char_data != null:
 			var state: Dictionary = states[character_name]
 			char_data.hp = state.get("hp", char_data.hp)
-			char_data.mp = state.get("mp", char_data.mp)
+			char_data.mp = int(state.get("mp", char_data.mp))
+			char_data.level = int(state.get("level", char_data.level))
+			char_data.experience = int(state.get("experience", char_data.experience))
+			char_data.skill_points = int(state.get("skill_points", char_data.skill_points))
+			char_data.max_hp = int(state.get("max_hp", char_data.max_hp))
+			char_data.max_mp = int(state.get("max_mp", char_data.max_mp))
+			char_data.attack = int(state.get("attack", char_data.attack))
+			char_data.defense = int(state.get("defense", char_data.defense))
+			char_data.magic = int(state.get("magic", char_data.magic))
+			char_data.speed = int(state.get("speed", char_data.speed))
 			char_data.corruption_stage = state.get("corruption_stage", 0)
 			char_data.captured = state.get("captured", false)
 

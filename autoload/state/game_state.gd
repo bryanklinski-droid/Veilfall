@@ -66,6 +66,21 @@ func reset_new_game() -> void:
 		companions[companion_name]["captured"] = false
 		companions[companion_name]["corruption_stage"] = 0
 
+
+	# In-memory .tres resources survive scene changes. Restore the authored
+	# character baselines so New Game cannot inherit previous run levels/HP.
+	for character_id in ["Aria", "Elara", "Lyra", "Selene", "Vivienne", "Freya"]:
+		var path := "res://data/characters/%s.tres" % character_id.to_lower()
+		if not ResourceLoader.exists(path):
+			continue
+		var clean := ResourceLoader.load(path, "", ResourceLoader.CACHE_MODE_IGNORE) as CharacterData
+		var cached := load(path) as CharacterData
+		if clean == null or cached == null:
+			continue
+		for property_name in ["level", "experience", "skill_points", "max_hp", "hp", "max_mp", "mp", "attack", "defense", "magic", "speed", "corruption_stage", "captured"]:
+			cached.set(property_name, clean.get(property_name))
+		cached.learned_skills.clear()
+
 func recruit_companion(companion_name: String) -> void:
 	if not companions.has(companion_name):
 		return
